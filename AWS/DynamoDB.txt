@@ -1,0 +1,72 @@
+How to integrate DynamoDB with spring boot application : 
+Next we will deploy same spring boot application in aws eleastic beanstalk
+
+Dynamo db are managed noSQL databses optimized for perfromance at scale.
+
+These databases are unstructured. They do not have specific data model or 
+is not organized in pre-defined manner.
+
+Structure of dynamodb : 
+
+RollNo : 01                       
+Name : Bhupindar
+Class : M.Tech                  ==> Item
+Age : 31
+
+-------------------------
+
+RollNo : 30
+Name : Aman
+Branch : CSE                    ==> Item
+Fav.color : Red
+
+-------------------------
+
+RollNo : 32
+Hobby : BasketBall
+Location : Meerut               ==> Item
+Position : Sr.Trainer
+Contact : +917387304317
+
+--------------------------
+
+Name, RollNo, Hobby, Location are called as attribute. Items are made up of attributes.
+RollNo is common in all the items. Hence RollNo is primary key.
+Table is the collection of all items.
+An item consist of a primary or a composite key and flexible number of attributes.
+When there are more than one primary key then it is composite key.
+Lets say RollNo and EnrollmentNo are composite key.
+Aggregate size of the item cannot be more than 400KB
+For item size more than 400KB, put it in a S3 bucket and refer URL of S3 bucket in item of a table.
+
+Read capacity unit : 
+
+What amount of data you can read , what is your capacity to read. On that basis your bill will be calculated.
+1) Eventually consistant
+2) Stronly consistant
+
+1 R.C.U = 4KB for strongly consistant
+2 R.C.U = 2KB for eventually consistant
+
+Eventually consistant is faster as compared to strongly consistant. Because eventually consistant reads only settled data
+or the data that is properly committed. It does not wait for the data that is being replicated to finish and return just older records.
+Hence eventually consistant are cheaper as compared to strongly consistant.
+Where as strongly consistant wait for records to get replicated across many servers and then return results. Hence a little delay.Strongly consiatant
+also does not garanty the data if there's been a delay in replication due to things like n/w connectivity.
+
+Write capacity unit : 
+
+1 W.C.U = 1 KB
+
+Dynamo DB are more used in an application where read is more frequent operation.
+Sacn search the table based on a specific field. Where as query search the table based on primary key.
+For global tables, replicas will be created in different regions.Streams need to be enabled to use global tables.
+
+
+
+
+
+
+
+
+

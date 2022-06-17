@@ -1,0 +1,32 @@
+How to deploy your application on AWS EC2 instance: 
+
+1) Create a jar of your spring boot application
+2) Connect EC2 instance from putty
+#Open Puttygen
+#load the .pem file generated while creating an EC2 instance
+#it will convert that file in to ssh key.
+#Now save this private key as a file with any name
+#You can find hostname of EC2 instance when you go to AWS console and click connect.
+#Open putty
+#Enter hostname
+#Click hostname -> data
+#Enter Autologin username which can be found again on AWS console and click connect.
+#Go to ssh -> Auth -> Browse the private key that is converted using puttygen
+And connect to the instance.
+
+3) Command to install java : yum install java-1.8.0-openjdk
+now if you do run java -version it will show older version
+Now run alternatives --config java
+It will show two versions
+select the number with latest one.
+Now java -version will show latest java.
+
+4) Now we need this jar in our EC@ instance
+# First upload jar in S3 bucket after ceating a bucket
+# Click on jar and make this jar as public.
+# Copy object URL so that it can be downloaded to EC2 instance.
+
+command wget jar-url
+
+Run spring boot application using command
+java -jar jar-name

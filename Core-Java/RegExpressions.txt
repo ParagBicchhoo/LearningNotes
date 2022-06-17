@@ -1,0 +1,3 @@
+If you want to represent a group of string in particular pattern then we should go for regular expression.
+Eg-> We can write a regular expression to represent all valid email ids.
+

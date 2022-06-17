@@ -1,0 +1,305 @@
+Basics Learning : 
+
+Java 8 new features : 
+
+1) Lambda expressions : Are introduced to bring functional programming capabilities to java. To reduce the overall size of a java program.
+2) Method references : Referencing methods of functional interfaces by their names instead of invoking them directly. Using functions as parameters.
+3) Default methods : interfaces will have default methods impelementation.
+4) New tools − New compiler tools and utilities are added like ‘jdeps’ to figure out dependencies
+5) Stream API : New stream API to facilitate pipeline processing
+6) Date time API : Improved date time API
+7) Optional : Emphasis on best practices to handle null values properly
+8) Nashorn, JavaScript Engine − A Java-based engine to execute JavaScript code.
+
+Lambda expressions important characteristics : 
+
+1) Optional type declarartion :  Compiler automatically interpret the type of parameters passed
+2) Optional paranthesis for variables of methods : If method has less than 2 parameters then paranthesis are optional.
+3) Optional curly braces : If method body has only one statement then curly braces are optional.
+4) Optional return statemnt :  If method body has only one statement then return statement is not compulsory.
+
+Method references : 
+
+Method references help to point to methods by their names. Method references are described using symbol  "::".
+Method refernce can be used to pint to following types of methods : 
+a) Static methods
+b) Instance methods
+c) Constructors using new operator (TreeSet :: new) 
+
+Functional interfaces defined in java.util.Function package : 
+1) Predicate
+It is a functional interface with method test to return a boolean value. This interface is used to test a particular condition.
+
+Default methods : 
+
+Default methods are added in java 8 because some of the interfaces in Collection API does not have forEach method impelentation in it like List.
+And adding that method will break the current implementation of Collection API.
+So that List , Collection interfaces will have this method as a default method and classes impelemting these interfaces will not have to implement it.
+
+With default functions in interfaces there is a possibility that class impelementing two interfaces with same default methods there will be an ambiguity.
+This is how it can be resolved : 
+1) Write your own implementation of that method in class.
+2) call the methods using super keyword. : InterfaceName.super.methodName
+
+Streams : 
+
+With streams you can process data in declarative way just like SQl statements
+Streams are sequence of objects from source which supports aggregate functions just like sql.
+
+Characteristics of stream : 
+
+1) Provide set of elements in sequential manner. It never stores the elements.
+2) Streams takes Collection, Arrays as a input.
+3) Streams supports aggregate operations like filter map limit reduce and so on.
+4) Pipelining : Most of the stream operations return straem itself so that the results can be pipelined. Collect is the terminal operation which is performed at the end of the process
+to mark the end of the stream.
+
+Collection interface has two ways to generate streams : 
+1) stream() : Returns a sequential stream considering collection as it's source
+2) parallelStream() : Returns a parallel stream.
+
+Agreagate functions : 
+
+1) forEach : to iterate over streams
+2) map : map an element to it's results
+3) filter : eliminte an element based on criteria
+4) limit : limit number of elements
+5) sorted : to sort the elements
+6) Collectors
+7) statistics collectors are introduced to calculate all statistics when stream processing is being done.
+
+Optional class : 
+
+Optional container is used to hold not null objects.
+public final class Optional<T> extends Object
+
+Self doubts : 
+
+1) Why default methods
+2) why static methods
+3) Why method references
+4) Difference between stream and parallel streams.
+
+1) 
+In a typical design based on abstractions, where an interface has one or multiple implementations, 
+if one or more methods are added to the interface, all the implementations will be forced to implement them too. Otherwise, 
+the design will just break down.
+
+In this way, backward compatibility is neatly preserved without having to refactor the implementers.
+
+2) 
+Java interface static method helps us in providing security by not allowing implementation classes to override them.
+
+3)
+Java provides a new feature called method reference in Java 8. Method reference is used to refer method of functional interface. 
+It is compact and easy form of lambda expression. 
+Each time when you are using lambda expression to just referring a method, you can replace your lambda expression with method reference.
+
+4) 
+Parallel streams divide the provided task into many and run them in different threads, utilizing multiple cores of the computer. 
+On the other hand sequential streams work just like for-loop using a single core. ... 
+Parallel execution of streams run multiple iterations simultaneously in different available cores.
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Main objective of lambda expression : To bring functional programming benifits to java.
+What is lambda expression : It is an anonymous function(nameless function)
+
+Functional Interface : An interface with only one abstract method are called functional 
+intefaces.(SAM - Single abstract method)
+
+Example : 
+
+Runnable
+Comparable
+Callable
+ActionListener
+Comparable
+
+If you want to invoke lambda expression : FI must be required.
+
+return keyword loophole : Without curly braces we cannot use return keyword.
+Within curly braces If we want to return value  , we must use return statement.
+
+Now to call lambda expressions we must go for Functional interfaces which contains single abstract methods.
+
+Note : Fuctional interface can contain any number of default method and any number of static methods
+----------------------------------------------------------------------------------------------------------------------------------------------------
+We can use @functionalInterface annotation to declare an interface as a functional interface.
+
+Case 1: @functionalInterface
+Interface A{
+public void m1();
+}
+ @functionalInterface
+Interface B{
+}
+
+Valid case
+
+Case 2 : 
+@functionalInterface
+Interface A{
+public void m1();
+}
+ @functionalInterface
+Interface B extends A{
+public void m1();
+}
+valid case as m1 is overriden
+
+Case 3 : 
+
+@functionalInterface
+Interface A{
+public void m1();
+}
+ @functionalInterface
+Interface B extends A{
+public void m2();
+}
+Invalid case
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+*****Imp : We can assign a lambda expression to functional interface only.
+
+e.g.
+
+Interface Interf {
+public void m1(int a);
+}
+
+class Test{
+public static void main(String[] args){
+
+Interf i = (a) -> syso("Hello");
+i.m1();
+}
+}
+----------------------------------------------------------------------------------------------------------------------------------------------------
+How compiler can guess the type of arguments in lambda expressions.
+
+Ans : Arguments we define in lambda expression are nothing but the arguments of single 
+abstract method defined inside the fuctional interface assocaited with it.
+Hence compiler can guess the arguments.
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Anonymous inner class case : 
+case1:
+Thread t = new Thread(){
+
+};
+case2:
+Runnable r = new Runnable(){
+
+};
+
+Now this anonymous class extends Thread class and implement Runnable interface 
+respectively in case 1 and 2.
+
+If an anonymous inner class is a functional interface then only you can replace 
+that anonymous inner class with lambda expression.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Why default methods : 
+
+So that every implementation class should not have to implement it.
+How to call default methods : Call it using implementation class object.
+You can override default method in your implementation class if you are not 
+happy with its implementation provided in an interface.
+During implementation default keyword cannot be used in class.
+Simply implement default method like : 
+
+public void m1(){
+}
+
+Object class methods cannot be used as default method in an interface because 
+Object class methods are already available in implementation class.
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Why static methods in an interface : 
+Class is a heavy concept and if you want to define only static methods why to go for 
+heavy but simply go for light thing which is an interface
+As static method is nowhere related to object why go for a class
+These static methods can be directly called using Interface name and this is the only way to call it.
+It cannot be called using implementation class of that interface.
+You can also add main method inside Interface from 1.8 version onwards
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Predefined Functional Interfaces : 
+
+Predicate - method test() - return boolean
+Function  - method apply() - return some object
+Consumer -  method accept() - does not return anything
+Supplier - method get() - does not take input and return something. Eg. date supplier, 
+Random OTP supplier
+
+Two argument predefined functional interfaces : 
+
+BiPredicate - two input arguments predicate
+BiFunction - two input arguments Function
+BiConsumer - two input arguments Consumer
+
+Primitive functional interfaces : 
+
+IntPredicate
+IntFunction
+IntConsumer
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Streams : 
+
+When we want to process objects from the collection then we should go for streams.
+
+Method to get stream.
+
+java.util.Stream s = c.stream();
+
+Stream methods : 
+
+stream() - returns a stream which can be used for processing
+parallelStream() - with multithreading
+filter() - take a predicate to return elements based on filter.
+map() - take a function to return a separate updated list
+collect() - collect elements from map or filter
+count() - count elements of map or filter.
+sorted() - sort elements of a stream (ascending order) - To change sorting order pass 
+comparator object lambda expression inside sorted() method.
+min() - need to provide comparator for sorting
+max() -need to provide comparator for sorting
+get() - to get  a single element
+forEach() - take Function and that function will be performed
+toArray() - to convert collection of objects to array.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Optional keyword need to understand : 
+
+Optional harnesses the type system for doing work that you'd otherwise have to do all in your head: remembering whether or not a given reference may be null.
+This is good. It's always smart to let the compiler handle boring drugework, and reserve human thought for creative, interesting work.
+
+Without Optional, every reference in your code is like an unexploded bomb. Accessing it may do something useful, or else it may terminate your program wth an exception.
+
+With Optional and without null, every access to a normal reference succeeds, and every reference to an Optional succeeds unless it's unset and you failed to check for that. 
+That is a huge win in maintainability.
+
+Unfortunately, most languages that now offer Optional haven't abolished null, so you can only profit from the concept by instituting a strict policy of "absolutely no null, ever".
+ Therefore, Optional in e.g. Java is not as compelling as it should ideally be.
+ 
+It also reduce the complexity as compared to null checks.
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Why method references were introduced in java 8 : 
+
+Java provides a new feature called method reference in Java 8. Method reference is used to refer method of functional interface.
+It is compact and easy form of lambda expression.
+Each time when you are using lambda expression to just referring a method, you can replace your lambda expression with method reference.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+

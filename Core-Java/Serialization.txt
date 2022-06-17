@@ -1,0 +1,46 @@
+=====================================================================================================================================
+
+Saving a state of an object to a file is called as serialization.
+Whenever we want to send an object over a network , we cannot send object directly as it may be insecured and objects are 
+bulky in size that is the reason why we send state of those objects and hence we serialize that object.
+Serialization can be achieved with two classes.
+
+If we want to write something in a file ,we need FileOutputStream and
+if we want to write an object somewhere we need ObjectOutputStream.
+
+This is how we achieve serailization : 
+
+Dog d1 = new Dog();
+
+FileOutputStream fos = new FileOutputStream("abc.txt");
+ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+oos.writeObject(d1);
+
+In the same way we need FileInputStream and ObjectInputStream for deerailization;
+
+FileInputStream fis = new FileInputStream("abc.txt");
+ObjectInputStream ois = new ObjectInputStream(fis);
+
+Dog d2 = (Dog)ois.readObject(); -- Typecasted to Dog
+
+If we want to ignore some field from object ,we declare that field as transient. Once the field is declared as transient , on 
+receiver side that field's default value will be deserialized.
+
+E.g. in Dog class we have two fields int age=10, String breed = "Lab", and if we declare both fields as transient then 
+their values after deserialization will be 0 and null respectively after typecasting.
+
+=====================================================================================================================================
+
+Serial Version UID (SVUID): 
+
+At the time of serialization, JVM saves an unique identifier for every serializable object based on ".class" file of the
+serializable object that unique identifier is called as serial version UID.(Note : .class file at sender and receiver are different)
+
+At the time of deserialization JVM will use this SVUID.
+
+Receiver JVM will generate a SVUID for this class and both should be equal.
+
+Otherwise JVM will throw "InvalidClassException".
+
+=====================================================================================================================================

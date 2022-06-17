@@ -1,0 +1,367 @@
+Theory : 
+
+Hibernate is one of the best ORM tool which is used for persisting the data available in market.
+ORM stands for object relational mapping
+Concept of storing a data is called as persitance
+Normally we use JDBC to connect your java application with database
+Hibernate can directly save an object in database.
+Now class structure will be same as table structure.
+
+Other ORM tools : Ibatis, JPA, TopLink
+
+======================================================================================================================================================
+
+Hibernate Implementation : 
+
+Add following dependencies in pom.xml : 
+
+1) Core Hibernate O/RM Functionality
+2) Mysql connector
+
+Lets create a bean/POJO
+
+@Entity --> Allow object to store in DB
+public class Alien {
+
+@Id
+private in aid;
+
+private String aname;
+private string color;
+
+// getters and setters
+
+}
+
+public class App{
+
+public static void main(String args[]){
+
+	Alien telusko = new Alien();
+	telusko.setAid(101);
+	telusko.setAname("Parag");
+	telusko.setColor("Maroon");
+
+	Configuration con = new Configuration().configure().addAnnotatedClass(Alien.class);
+
+	Sessionfactory sf = con.buildSessionfactory();  -- > This method is depricated;
+
+	Session session = sf.openSession();
+	
+	Transaction tx = session.beginTransaction(); 
+	session.save(telusko);
+	tx.commit();
+}
+
+}
+
+You need hibernate plugin in your eclipse so that you can do hibernate configurations.
+
+Go to help -> Eclipse marketplace -> search for hibernate -> Install JBoss Tools 4.3.1 final
+
+Configuration file : 
+
+We provide databse url, creadentials in cfg file.
+
+search for hibernate in create new file and it will create a file called hibernate.cfg.xml
+Fill the details and it will create a file.
+
+If you want to create tables by default you need to add follwoing in cfg file : 
+
+<property name="hbl2ddl.auto" update> 
+
+If you change the default name of cfg file you need to mention it in configure method.
+
+======================================================================================================================================================
+
+If you don't want to use depricated method : buildSessionfactory
+
+public static void main(String args[]){
+
+	Alien telusko = new Alien();
+	telusko.setAid(101);
+	telusko.setAname("Parag");
+	telusko.setColor("Maroon");
+
+	Configuration con = new Configuration().configure().addAnnotatedClass(Alien.class);
+	
+	ServiceRegistry reg = new ServiceRegistryBuilder().applySettings(con.getproperties().buildServiceRegistry());
+
+	Sessionfactory sf = con.buildSessionfactory(reg); this parametarized method is not depricated.
+
+	Session session = sf.openSession();
+	
+	Transaction tx = session.beginTransaction(); 
+	session.save(telusko);
+	tx.commit();
+
+}
+
+======================================================================================================================================================
+
+Some more annotations : 
+
+1) lets say I want table name as different : 
+
+@Entity(name = "alien_table")
+
+2) If we dont want to change entity name but just a table name : 
+
+@Table(name="alien_table")
+
+3) I want different column name
+@Column(name="alien_name")
+
+4) Declare field as @Transient
+That field will not be stored
+
+ 
+======================================================================================================================================================
+
+How to fetch data in hibernate : 
+
+Alien telusko = new Alien();
+	telusko.setAid(101);
+	telusko.setAname("Parag");
+	telusko.setColor("Maroon");
+
+	Configuration con = new Configuration().configure().addAnnotatedClass(Alien.class);
+	
+	ServiceRegistry reg = new ServiceRegistryBuilder().applySettings(con.getproperties().buildServiceRegistry());
+
+	Sessionfactory sf = con.buildSessionfactory(reg); this parametarized method is not depricated.
+
+	Session session = sf.openSession();
+	
+	Transaction tx = session.beginTransaction(); 
+	Alient a = (Alien) session.get(Alien.class, 101);
+	tx.commit();
+	
+	Another method to fetch data : load
+	
+======================================================================================================================================================
+
+How to use embeddable objects or fields : 
+
+@Entity
+public class Alien {
+
+@Id
+private in aid;
+
+private String aname;
+private string color;
+
+// getters and setters
+
+}
+
+Lets say aname is broke down in firstname, middlename and lastname
+
+So I create a new class , Aname and create three variables like above.
+If I donot want to create a new table with Aname then make Aname class as @Embeddable
+
+this new class variables will be embedded in same table
+
+If I want new table then I will need to declare this class as @Entity
+
+Now my Alien class becomes : 
+
+@Entity
+public class Alien {
+
+@Id
+private in aid;
+
+private Aname aname;
+private string color;
+
+// getters and setters
+
+}
+
+Code
+
+public static void main(String args[]){
+
+	Alien telusko = new Alien();
+	Aname aname = new Aname();
+	aname.setFname("Parag");
+	aname.setMiddleName("Prakashrao");
+	aname.setLastName("Vinchurkar");
+	telusko.setAid(101);
+	telusko.setAname(aname);
+	telusko.setColor("Maroon");
+
+	Configuration con = new Configuration().configure().addAnnotatedClass(Alien.class);
+	
+	ServiceRegistry reg = new ServiceRegistryBuilder().applySettings(con.getproperties().buildServiceRegistry());
+
+	Sessionfactory sf = con.buildSessionfactory(reg); this parametarized method is not depricated.
+
+	Session session = sf.openSession();
+	
+	Transaction tx = session.beginTransaction(); 
+	session.save(telusko);
+	tx.commit();
+
+}
+
+======================================================================================================================================================
+
+Hibernate Relations : 
+
+@Entity
+class Laptop {                                                                     
+	
+	@Id
+	private int lid;
+	private String lname;
+}
+
+@Entity
+class Student {                   
+	
+	@Id
+	private int rollNo;
+	private String name;
+	private string marks;
+	
+	@OneToOne
+	Laptop laptop;
+}
+
+Now student table will have one more column called as lid which will indicate a laptop of the student;
+
+
+Now consider a scenario where I want to establish a relation like One student can have many laptops. Then 
+I will have my student class like : 
+
+
+@Entity
+class Student {                   
+	
+	@Id
+	private int rollNo;
+	private String name;
+	private string marks;
+	
+	@OneToMany
+	private List<Laptop> laptops;
+}
+
+In this situation ,in student table I cannot write multiple laptopIds comma separated in one row
+neither I can create anothe row for another laptop due to rpimary key
+
+In such situation, a new table is created named student_laptop with all the mappings by id.
+
+Another approach : 
+
+I donot want to create another table and I want to add another column in laptop table named as 
+rollNo and I will certainly know which laptop is assigned to which student as student is one and laptops are many : 
+
+@Entity
+class Student {                   
+	
+	@Id
+	private int rollNo;
+	private String name;
+	private string marks;
+	
+	@OneToMany(MappedBy="student")
+	private List<Laptop> laptops;
+}
+
+@Entity
+class Laptop {                   
+	
+	@Id
+	private int lid;
+	private String lname;
+	
+	@ManyToOne
+	private Student student;
+}
+
+In this case still a new table will be created.
+So in your laptop class you have to mention that mapping is done by Student class.
+
+ManyToMany relation : 
+
+@Entity
+class Student {                   
+	
+	@Id
+	private int rollNo;
+	private String name;
+	private string marks;
+	
+	@ManyToMany(MappedBy="student")
+	private List<Laptop> laptops;
+}
+
+@Entity
+class Laptop {                   
+	
+	@Id
+	private int lid;
+	private String lname;
+	
+	@ManyToMany
+	private List<Student> students;
+}
+
+If we donot write mappedBy, both the classes will have their subordinate tables.
+
+Laptop will create laptop and laptop_student table and Student will create student and student_laptop table.
+We don't want that, mapping should be created by only one table.
+
+
+
+======================================================================================================================================================
+
+Fetch Type Eager And Lazy : 
+
+By default if you have laptop in your query of getting students , if you use session.get method it will not fetch laptop details.
+Because fetch type is by default lazy.
+
+If you want lapto details too : Save laptop variable and use a1.getLaptop() method to get it.
+This time it will fire a query.
+
+How to make it eager : 
+
+	@ManyToMany(MappedBy="student", fetch = FetchType.EAGER)
+	private List<Laptop> laptops;
+
+Eaager type uses left outer join to fetch values.
+
+======================================================================================================================================================
+
+Hibernate Caching : 
+
+When you have to access same data many times, instead of firing same query again and again, we use caching.
+
+When we run same query for the same session is called as first level cache.
+If another session fires the same query then data will not be available.
+In that case we will use second level cache.
+
+All sessions can share this cache. First level cache is default behaviour of hibernate, where as for second level cache we have to use external 
+library.
+
+ehcache is best library. Add it to pom.xml....provides features
+
+hibernate-ehcache : for integration of ehcache and hibernate 
+
+By default second level cache is disabled in hibernate.cfg.xml , you have to enable it.
+
+======================================================================================================================================================
+
+Difference between get and load method in hibernate?
+
+
+
+
+
+
+
+

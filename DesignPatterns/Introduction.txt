@@ -1,0 +1,6 @@
+GOF design patterns are divided into three groups : 
+
+1) Creational design patterns : These patterns control object creation , initialization and class selection.
+2) Behavioural design patterns : These patterns control communication, interaction and messaging between objects.
+3) Structural design patterns : These patterns organize relationship between objects and classes.
+

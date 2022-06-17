@@ -1,0 +1,621 @@
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+BootStrapping : 				
+Installing Spring security (Form-Based Authentication overview): 
+
+1) Add Spring-boot-starter-security dependency inside pom.xml.
+2) As soon as you relaunch spring boot application, and refresh a web page a login form will appear
+3) Username is "user" and password can be seen from console.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Basic Authentication : 
+
+1) Client sends a GET request to server
+2) Server responds with 401 Unauthorized
+3) Client Sends a GET request with Basic64 encoded username-password
+4) Server responds with 200-OK
+
+package com.demo.security
+
+@Configuration
+@EnableWebSecurity
+class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception{
+		
+		http
+			.authorizeRequests()
+			.anyRequest()
+			.authenticated()
+			.and()
+			.httpBasic();
+			
+	}
+
+}
+
+1) Restart the server
+2) Reload the page
+3) A popup will appear from top for basic authentication
+
+Username is "user" and password can be seen from console.
+
+Drawback of basic authentication : No way to logout, client has to send password every single time.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Antmatchers : 
+
+e.g. -> You want index.html to have access for everyone : 
+
+@Configuration
+@EnableWebSecurity
+class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception{
+		
+		http
+			.authorizeRequests()
+			.antMatchers(...antPatters:"/","index","//css/*","/js/*")
+			.permitAll()
+			.anyRequest()
+			.authenticated()
+			.and()
+			.httpBasic();
+			
+	}
+
+}
+
+Now index.html, css.js will be whitelisted
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Create a user and store it in "in memory" database : 
+
+@Configuration
+@EnableWebSecurity
+class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception{
+		
+		http
+			.authorizeRequests()
+			.antMatchers(...antPatters:"/","index","//css/*","/js/*")
+			.permitAll()
+			.anyRequest()
+			.authenticated()
+			.and()
+			.httpBasic();
+			
+	}
+	
+	@Override
+	Bean
+	protected UserDetailsService userDetailsService(){
+	
+	UserDetails annaSmithUser = User.builder()
+					.username("anna smith")
+					.password("password")
+					.roles("STUDENT")
+					.build();
+					
+	
+	return new InMemoryUserDetailsManager(annaSmithUser);
+	}
+}
+
+If we try to run this and try to login using above user we get an error : 
+IllegalArgumentException : No password encoder used.
+Password enccoding is must in spring boot security.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Password encoding with Bcrypt : 
+
+@Configuration
+public class PasswordConfig {
+	
+	@Bean
+	public PasswordEncoder passwordEncoder(){
+		return new BcryptPasswordEncoder(strength :10);
+		
+	}
+}
+
+@Configuration
+@EnableWebSecurity
+class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
+
+	private final PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	public ApplicationSecurityConfig(PasswordEncoder passwordEncoder){
+		this.passwordEncoder = passwordEncoder;
+	}
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception{
+		
+		http
+			.authorizeRequests()
+			.antMatchers(...antPatters:"/","index","//css/*","/js/*")
+			.permitAll()
+			.anyRequest()
+			.authenticated()
+			.and()
+			.httpBasic();
+			
+	}
+	
+	@Override
+	Bean
+	protected UserDetailsService userDetailsService(){
+	
+	UserDetails annaSmithUser = User.builder()
+					.username("anna smith")
+					.password(passwordEncoder.encode("password"))
+					.roles("STUDENT")
+					.build();
+					
+	
+	return new InMemoryUserDetailsManager(annaSmithUser);
+	}
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Roles And Permissions : 
+
+@Configuration
+@EnableWebSecurity
+class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
+
+	private final PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	publicApplicationSecurityConfig(PasswordEncoder passwordEncoder){
+		this.passwordEncoder = passwordEncoder;
+	}
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception{
+		
+		http
+			.authorizeRequests()
+			.antMatchers(...antPatters:"/","index","//css/*","/js/*")
+			.permitAll()
+			.anyRequest()
+			.authenticated()
+			.and()
+			.httpBasic();
+			
+	}
+	
+	@Override
+	Bean
+	protected UserDetailsService userDetailsService(){
+	
+	UserDetails annaSmithUser = User.builder()
+					.username("anna smith")
+					.password(passwordEncoder.encode("password"))
+					.roles(ApplicationUserRoles.STUDENT.name())
+					.build();
+					
+	UserDetails lindaUser = User.builder()
+					.username("linda")
+					.password(passwordEncoder.encode("password123"))
+					.roles(ApplicationUserRoles.ADMIN.name())
+					.build();
+					
+	
+	return new InMemoryUserDetailsManager(annaSmithUser, lindaUser);
+	}
+}
+
+public enum ApplicationUserRoles {
+	STUDENT(Sets.newHashSet()) , // no permissions for student
+	ADMIN(ApplicationUserPermissions.COURSE_READ, ApplicationUserPermissions.COURSE_WRITE, ApplicationUserPermissions.STUDENT_READ, ApplicationUserPermissions.STUDENT_WRITE,);
+	
+	private final Set<ApplicationUserPermissions> permissions;
+	
+	ApplicationUserRoles(Set<ApplicationUserPermissions> permissions;){
+		this.permissions=permissions;
+	}
+	
+	public Set<ApplicationUserPermissions> getPermissions(){
+		return permissions;
+	}
+	
+}
+
+public enum ApplicationUserPermissions { 
+	
+	STUDENT_READ("student:read"),
+	STUDENT_WRITE("student:write"),
+	COURSE_READ("course:read"),
+	COURSE_WRITE("course:write");
+	
+	private final String permission;
+	
+	// constructor as we have curly brace after parameters
+	ApplicationUserPermissions(String permission){
+		this.permission=permission;
+	}
+	
+	public String getPermission(){
+		return permission;
+	}
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+How we are uing to use role based authentication to secure our APIs : 
+
+@Override
+	protected void configure(HttpSecurity http) throws Exception{
+		
+		http
+			.authorizeRequests()
+			.antMatchers(...antPatters:"/","index","//css/*","/js/*").permitAll()
+			.antMatchers(...antPatters:"/api/**").hasRole(ApplicationUserRoles.STUDENT.name())   // Now /api will only be accessible to student role
+			.anyRequest()
+			.authenticated()
+			.and()
+			.httpBasic();
+			
+	}
+	
+If someone else with other role try to access it, he will get 403 Access Forbidden output
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Permission Based Authintication : 
+
+@Override
+	protected void configure(HttpSecurity http) throws Exception{
+		
+		http
+			.authorizeRequests()
+			.antMatchers(...antPatters:"/","index","//css/*","/js/*").permitAll()
+			.antMatchers(...antPatters:"/api/**").hasRole(ApplicationUserRoles.STUDENT.name())
+			.antMatchers(HttpMethod.DELETE,...antPatters:"/management/api/**").hasAuthority(ApplicationUserPermissions.COURSE_WRITE.name())			
+			.anyRequest()
+			.authenticated()
+			.and()
+			.httpBasic();
+			
+	}
+	
+As of now users only know about roles and have no pior knowledge about permissions.
+Order of the antmatchers does matter. Lets say you athorize an API A without mentioning a method(GET, PUT, POST, DELETE). and after that you mention antmatcher with method for API A.
+Now API A is open and second antMatcher doesn't hold any importance.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Permission based authentication on method level with annotation : 
+
+Write this annotation before API GetMapping : 
+
+@PreAuthorize("hasAnyRole('ROLE_ADMIN, ROLE_ADMIN_TRAINEE')")
+@PreAuthorize("hasAuthority('student:write')")
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CSRF (Cross site request forgery) : 
+
+These are basically additional security for session ID(which is sent as a part of cookie).
+Hacker send a malicious link which looks like an actual link. As soon as he click on it, he has the information of your session id.
+Now he can use this valid session to do transactions from your account. So as an additional security to session ID ,CSRF tokens are used
+With these CSRF tokens server knows where this request has come from.(From which website/server the request has come from)
+These CSRF tokens are generated by web application backend server randomly and sent to the valid website.
+On every request, it is validated.
+So that other websites cannot make cross domain request because of the fact that this website does not have knowledge of this new token.
+
+With anti-CSRF tokens : 
+
+Client sends a request to server
+Server sends back a CSRF token
+Client submit a request with CSRF token
+Server validates the request and process it only if CSRF token is valid.
+
+If you are using a service that is used by non-browser client then you can disable CSRF.
+
+If we enable interceptor from postman , we get CSRF token from cookies section.
+Now we can use this CSRF token for next request as a header.
+
+The CSRF token in fact could be the standard authentication cookie when using this method, and this value is submitted via cookies as usual 
+with the request, but the value is also repeated in either a hidden field or header, of which an attacker cannot replicate as they cannot read the value in the first place.
+
+Once the CSRF token has been received for the session, there is no need to regenerate it as an attacker employing a CSRF exploit has no method of retrieving this token. 
+If a malicious user tries to read the user's CSRF token in any of the above methods then this will be prevented by the Same Origin Policy. 
+If a malicious user tries to retrieve the CSRF token server side (e.g. via curl) 
+then this token will not be associated to the same user account as the victim's auth session cookie will be missing from the request 
+(it would be the attacker's - therefore it won't be associated server side with the victim's session).
+
+The same-origin policy is a critical security mechanism that restricts how a document or script loaded by one origin can interact with a resource from another origin.
+
+It helps isolate potentially malicious documents, reducing possible attack vectors. 
+For example, it prevents a malicious website on the Internet from running JS in a browser to read data from a third-party webmail service (which the user is signed into)
+or a company intranet (which is protected from direct access by the attacker by not having a public IP address) and relaying that data to the attacker.
+
+Definition of an origin
+Two URLs have the same origin if the protocol, port (if specified), and host are the same for both.
+
+@Configuration
+@EnableWebSecurity
+class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception{
+		
+		http
+			.csrf.csrfTokenrepository(CookiesCsrfTokenRepository.withHttpOnlyFalse())
+			.and()
+			.authorizeRequests()
+			.antMatchers(...antPatters:"/","index","//css/*","/js/*")
+			.permitAll()
+			.anyRequest()
+			.authenticated()
+			.and()
+			.httpBasic();
+			
+	}
+	
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Form Based Authentication : 
+
+@Configuration
+@EnableWebSecurity
+class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception{
+		
+		http
+			.authorizeRequests()
+			.anyRequest()
+			.authenticated()
+			.and()
+			.formLogin();
+	}
+
+}
+
+Once logged in .....login works on SessionId.
+Spring securiity uses inMemory database to store SessionId.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Override the default form provided by Spring Security jar : 
+
+@Configuration
+@EnableWebSecurity
+class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception{
+		
+		http
+			.authorizeRequests()
+			.anyRequest()
+			.authenticated()
+			.and()
+			.formLogin()
+			.loginPage("/login").permitAll();
+	}
+
+}
+
+Add a new dependency : Spring-Boot-Starter-Thymeleaf : It is a template engine that provides support for HTML file / XMLs
+In resources create a new folder called templates.And inside templates create a new file called login.html
+Now create a class called templateController
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Redirect After Success Login : 
+
+@Configuration
+@EnableWebSecurity
+class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception{
+		
+		http
+			.authorizeRequests()
+			.anyRequest()
+			.authenticated()
+			.and()
+			.formLogin()
+			.loginPage("/login").permitAll()
+			.defaultSuccessUrl(defaultSuccessUrl:"/courses",alwaysUse:true);
+	}
+
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Remember Me : 
+
+By default session Id expires after 30 minutes of user inactivity.
+So spring boot security provides a way to extend this time.
+
+@Configuration
+@EnableWebSecurity
+class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception{
+		
+		http
+			.authorizeRequests()
+			.anyRequest()
+			.authenticated()
+			.and()
+			.formLogin()
+			.loginPage("/login").permitAll()
+			.defaultSuccessUrl(defaultSuccessUrl:"/courses",alwaysUse:true)
+			.and()
+			.rememberMe(); --> default 2 weeks/ We can also configure our own time
+	}
+
+}
+
+A new remember-me cockie will be generated and will be stored in database.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Logout : 
+
+Spring security deletes sessionId and rememberMe cookies.
+
+We can also customize this on our own : 
+
+@Configuration
+@EnableWebSecurity
+class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception{
+		
+		http
+			.authorizeRequests()
+			.anyRequest()
+			.authenticated()
+			.and()
+			.formLogin()
+			.loginPage("/login").permitAll()
+			.defaultSuccessUrl(defaultSuccessUrl:"/courses",alwaysUse:true)
+			.and()
+			.rememberMe() --> default 2 weeks/ We can also configure our own time
+			.and()
+			.logout()
+			.logoutUrl("/logout")
+			.clearAuthentication(true)
+			.invalidateSession(true)
+			.deleteCookies("JSESSIONID","remember-me")
+			.logoutSuccessUrl("/login"); 
+	}
+
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Remember me is a feature that allows a user to access into application without re-login. 
+But we can avoid this re-login by using remember me feature. ... 
+It stores user's identity into the Cookie or database and use to identify the user.
+
+Clicking the “Remember Me” box tells the browser to save a cookie so that if you close out the window for the site without signing out, 
+the next time you go back, you will be signed back in automatically. Make sure that you have your browser set to remember cookies, 
+or this function will not work.
+
+Change default remember me cookie of 2 weeks : 
+
+@Configuration
+@EnableWebSecurity
+class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception{
+		
+		http
+			.authorizeRequests()
+			.anyRequest()
+			.authenticated()
+			.and()
+			.formLogin()
+			.loginPage("/login").permitAll()
+			.defaultSuccessUrl(defaultSuccessUrl:"/courses",alwaysUse:true)
+			.and()
+			.rememberMe()
+			.tokenValiditySeconds(TimeUnit.Days.toSeconds(21)
+			.key("somethingVerySecured");
+	}
+
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Database Authentication : 
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+JWT (Jason web tokens) : 
+
+https://medium.com/swlh/why-do-we-need-the-json-web-token-jwt-in-the-modern-web-8490a7284482
+
+JWTs are alternative for session IDs
+
+User send a request with username and password.
+Server genarates a token and send it back to client.
+Next time client can authorize the request based on this token.
+
+Just like any other 'tokens', JSON Web Tokens (JWT) is a form of 
+secret that's used for authentication (who you are) and authorization
+(what you can do). Similarly, a SessionID can also be used for 
+authentication and authorization.
+
+JWT Implementation : 
+
+Liabraries Required: 
+1) jjwt-api
+2) jjwt-impl
+3) jjwt-jackson
+
+
+class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
+	private final AuthenticationManager authenticationManager;
+
+	@Override
+	public Authentication attemptAuthentication(HttpServletRequest request , HttpServletResponse response) throws AuthenticationException{
+	
+		// grab the username and password sent by the user;
+		try{
+			UsernameAndPasswordAuthenticationrequest authenticationRequest = 
+				new ObjectMapper().readValue(request.getInputStream(), 	UsernameAndPasswordAuthenticationrequest.class);
+			Authentication authentication = new UsernameAndPasswordAuthenticationToken(
+				authenticationRequest.getUsername(),
+				authenticationRequest.getPassword()
+			);
+			Authentication authenticate = authenticationManager.authenticate(authentication);
+			
+			return authenticate;
+			
+		} catch(IOException e){
+			throw new RuntimeException(e);
+		}
+		
+	}
+
+
+}
+
+class UsernameAndPasswordAuthenticationrequest{
+
+	private String username;
+	private String password;
+	
+	// Empty Constructor;
+	// Getters and setters;
+
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Stateless vs Stateful : 
+
+Stateless applications are the ones that does not store information about previous operation. 
+Every time it process information from scratch just like first time.
+
+A Stateful application remembers specific details of a user like profile, preferences, and user actions.
+For example, your shopping cart while using any website in Cloud.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Learn OAuth2 : 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

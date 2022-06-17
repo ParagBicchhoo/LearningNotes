@@ -1,0 +1,177 @@
+Limitations of arrays : 
+
+1) Arrays are fixed in size where as Collection is growable.
+2) Arrays can hold only homogenious data elements where as collection can also hold heretogenious elements but 
+   we can resolve this prolem by Object Arrays.
+3) Array implementation is not based on any data structure and hence in built method support is not available. 
+
+Collections disadvantages : 
+
+performance wise arrays are better.
+
+===============================================================================================================================
+
+Collection is a root interface of Collection framework which defines most common methods which can be used for any collection.
+
+Collection vs Collections : 
+
+Collection is an interface where as Collections is an utility class which has several utility methods defined.
+
+Hierarchy : 
+
+1) Collection(I)
+2) List(I)
+3) ArrayList(C), LinkedList(C), Vector(C)
+4) Child class of Vector is Stack
+
+
+1) Collection(I)
+2) Set (I)
+3) HashSet(C)
+4) LinkedHashSet(C)
+
+1) Collection(I)
+2) Set (I)
+3) SortedSet(I)
+4) navigableSet(I)
+5) TreeSet(C)
+
+1) Collection(I)
+2) Queue(I)
+3) PriorityQueue, BlockingQueue
+4) Child classes of blocking queue are PriorityBlockingQueue and LinkedBlockingQueue
+
+1) Map(I)
+2) HashMap(C)
+3) LinkedHashMap(C)
+
+1) Map(I)
+2) IdentityHashMap(C)
+
+1) Map(I)
+2) WeakHashMap(C)
+
+1) Map(I)
+2) HashTable(C)
+3) Dictionary and Properties are subclasses of HashTable.
+
+*** Map is not a child interface of Collections.
+
+===============================================================================================================================
+
+***ArrayList -> Insertion order is preserved , duplicated are allowed, heterogeneous objects are allowed , null insertion is possible.
+
+Constructors : 
+
+Default initial capacity = 10;
+Once it reaches max value new capacity = current *(3/2) +1;
+
+Difference between ArrayList and Vector : 
+
+1) All methods of Vector are synchronized where are for ArrayList they are not
+2) Multiple threads can access ArrayList simultanuously and not Vector
+3) In Vector, Threads are required to wait and hence performance is not good
+
+How to get synchronized version of ArrayList?
+
+Collections.synchronizedList()
+
+Similarly we can do for Set and Map.
+
+If frequent operation is insertion do not go for Arraylist go for LinkedList.
+
+***LinkedList -> Insertion order is preserved, duplicates are allowed, heterogenious objects allowed, null insertion is possible.
+Implements Serializable and Clonable interface but not RandomAccess interface.
+Best suitable is when frequent opertion is insertion or deletion in the middle.
+Worst choice if frequent opertion is retrieval.
+
+***Stack -> methods : push, pop, peek() - > only return top of stack donot remove it where as pop() remove as well as return top element.
+empty() -> check if empty
+
+***HashSet -> Underlying data structure is HashTable, Duplicate objects are not allowed, If we try to add duplicates we
+won't get Compilation Error, Insertion order is not preserved.
+Heterogenuous objects are allowed. Null insertion is possible only once.
+Implements Serializable and Clonable interface.
+
+===============================================================================================================================
+
+Cursors (To get objects one by one from collection) : 
+1) enumeration : Works only in case of legacy classes like Vector
+We get only read access and we cannot perform remove operation
+methods : elemnts(), hasMoreElements(), nextElement()
+
+2) Iterator : Work in all Collections it is a universal cursor.
+can also perform remove operation.
+methods : iterator(), hasNext(), next(), remove();
+
+3) ListIterator : Work in all Collections,
+Can move in both directions
+methods : 
+hasNext(), hasPrevious(), next(), previous().
+
+===============================================================================================================================
+
+Difference between HashSet and LinkedHahSet : 
+1) For hashSet underlying data structure is hashTable and for LinkeHashSet it is combination of Hatable and LinkedList.
+2) In LinkedHashSet insertion order is preserved and in Hashset it is not preserved.
+
+Main important operations of LinkedHashSet and LinkedHashMap is in implementation of cache where duplicated are 
+not allowed and insertion order is preserved.
+
+***SortedSet : Represent group of individual objects according to some sorting order.
+methods : first(), last(), hedset(Object obj) -> returns the subset where elemnts are less that obj,
+tailset(Object obj) -> returns the subset where elemnts are greater that obj,
+subset(Object o1, Object o2)
+
+***TreeSet : Underlying data structure is Balanced Tree.
+Duplicates are not allowed, Insertion order is not preserved because objects are inserted in some sorting order.
+Heterogeneous objects are not allowed else we will get ClassCastException.
+Null Insertion is not possible. But for Empty TreeeSet one null insertion is allowed.
+
+===============================================================================================================================
+
+Difference between Comparable and Comparator : 
+
+Class of the objects we want to sort implements Comparable and override method compareTo(Object obj).
+Therefore comparable sort only single sorting sequence where as ,
+
+We create separate classes like AgeComparator , NameComparator which extends Comparator interface , 
+we override compare method in it and pass theese AgeComparator, NameComparator to Collectons.sort(l, AgeComparator) like this ,
+Hence in Comparator we have multiple sorting sequences.
+
+===============================================================================================================================
+
+Entry is an iterator for Map.
+
+Hashmap vs HashTable : Hashtable methods are Synchronized.
+
+Identity HashMap : 
+
+Integer I1 = new Integer(10);
+Integer I2 = new Integer(10);
+
+In hashmap, I1.equals(I2) returns true hence I1 and I2 are duplicate keys.
+Where as in identity hashmap == operator is used for comparison hence I1 and I2 will not be duplicate keys
+
+WeakHashMap :  As name suggest it is weak.
+HashMap objects are eligible for GC even there is no external reference to it.
+Where as WeakHashMap becomes eligible for GC.
+
+===============================================================================================================================
+
+PriorityQueue :  If we want to process some elements in some priority order then we need to pass Comparator to this 
+Priority queue so that we can process them according by some sorting order.
+
+===============================================================================================================================
+
+Deque : Double ended queue 
+
+We can add and remove elements at and from both ends of Deque.
+It acts like a combo of stack and queue
+
+===============================================================================================================================
+
+****IMP****
+LinkedList implements both List and Queue interfaces.
+
+===============================================================================================================================

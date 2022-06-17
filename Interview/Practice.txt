@@ -1,0 +1,106 @@
+Singleton design pattern : 
+
+public class Logger {
+
+	private static Logger logger;
+	
+	privte Logger(){
+	
+	}
+	
+	public static Logger getInstance(){
+	
+		if(logger==null){
+			
+			synchronized(Logger.class) {
+			
+				if(logger==null)
+					logger = new Logger(); 
+			
+			}
+		
+		}
+		
+		return logger;
+	
+	
+	}
+
+}
+
+============================================================================================================================================================================
+
+Second highest salary query : 
+
+select * from salary group by salary order by salary desc limit 1,1;
+
+select name, max(salary) from employee where salary in (select salary from employee MINUS select max(salary) from employee); 
+
+
+
+============================================================================================================================================================================
+
+ITERATING OVER A HASHMAP : 
+
+
+1) Entryset
+2) Iterator
+3) Individual iteration
+4) forEach Method
+
+1) Hashmap<String, String> hm = new HashMap<String, String>();
+
+hm.put();
+
+for(Map.Entry<String ,String> entry : hm.entrySet()){
+
+	syso(entry.getKey());
+	syso(entry.getValue());
+
+}
+
+2)  Hashmap<String, String> hm = new HashMap<String, String>();
+
+hm.put();
+
+Iterator<Map.Entry<String, String> itr = hm.entrySet().iterator();
+
+while(itr.hasNext()){
+
+	Map.Entry<String ,String> entry = itr.next();
+	
+	syso(entry.getKey() + " "+ entry.getValue());
+
+}
+
+3)for each loop on hm.keySet(), hm.values()
+
+4)forEach method consumer as lambda expression.
+
+============================================================================================================================================================================
+
+Immutable class : 
+
+public class Immutable { 
+
+	private int i;
+	
+	public Immutable(int i){
+	
+		this.i=i;
+	}
+	
+	public Immutable modify(int i){
+		
+		if(this.i==i) {
+			return this;
+		} else {
+			return new Immutable(i);
+		}
+	}
+}
+
+============================================================================================================================================================================
+
+Write a program to find the repeatative characters in a string
+Write a program to eleminate repeatative characters in a string

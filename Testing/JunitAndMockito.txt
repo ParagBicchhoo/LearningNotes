@@ -1,0 +1,183 @@
+8) Mockito framework basics and handson
+
+All your tests should be in src/test/java.
+Add dependencies junit and mockito-all
+Create a new Junit test case.
+
+class structure : 
+
+public class FirstMockitoTest {
+
+	@Test
+	public void test(){
+		assertTrue(true);
+	}
+
+} 
+
+Run it as Junit Test
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+Lets say we want to test a particular method of a class then that class is called as SUT(System under test)
+Lets say we have a particular interface who's implementation is not with us. Then that interface is called as dependency. Instead 
+of this interface it can also be a web service, which is developed by anther team or a repository layer.
+
+E.g. our application : fetch user related data of todo tasks list for user from another implementation class or a web service.
+Now we have to write a functioanlity which returns a todo tasks list related to spring only.
+So ToDoService is the interface that they have provided and ToDoServiceImpl is the class that we have created to create functionality
+"get to do list of users" which are spring related.
+
+Now as we cannot have the core implementation class we create a sample implementation class which is called as stub.
+
+Create a stub named as ToDoServceStub. Stub is a sample implementation of dependency.
+and test ToDoServiceImpl using ToDoServiceStub.
+Stub is a simple java class that return some kind of dummy data.
+
+Create a stub in src/test/java. ToDoServiceStub in our case.
+Then write ToDoServiceStubTest and finally test using assertThat.
+
+There are many disadvantages associated with stubs like if there are multiple conditions to test then stubs becomes 
+more complicated.
+
+Now to overcome these disadvantages mockito comes into picture where we create mocks instead of stub.
+
+Examaple : 
+
+I have a third party interface called as TodoService which is used to return todos for a user.
+
+public interface TodoService {
+
+	public List<String retrieveTodods(String user);
+}
+
+I create a class which is TodoBusinessImpl
+
+This class is system under test (SUT)
+public class TodoBusinessImpl 
+{
+	// this is dependency
+	private TododService todoService;
+	
+	// Constructor with field setting here so that a stub or mock can be injected in place of above dependency .
+
+
+	// We want to do the unit testing of this particular method.
+	public List<String> retrieveToDosRelatedToSpring(String user) {
+	
+	List<String> filteredToDos = new ArrayList<String>();
+	List<String> todos = todoService.retrieveToDos(); --> this implementation is not with us. Hence we have to craete a stub or mock for it 
+
+	filteredToDos = todos.stream().filter(x-x.contains("spring").collect(Collectors.toList());
+	
+	return filteredToDos;
+
+	}
+
+}
+
+// Create a stub : 
+
+class ToDoServiceStub implements ToDoService {
+
+	@override
+	public List<String retrieveTodos(String user){
+
+	return Arrays.asList("Hi string", "Hi spring java", "Hi String Boot");
+
+	}
+
+}
+
+// As we are testing a service layer
+public class ToDoBusinessImplStubTest {
+	
+	@Test
+	public testToDosRelatedToSpring_usingStub(){
+
+		ToDoService todoServiceStub = new toDoServiceStub();
+	
+		ToDoBusinessImpl doDoBusinessImpl= new ToDoBusinessImpl(toDoServiceStub);
+		List<String> todosRelatedToSpring = toDoBusinessImpl.retrieveToDosRelatedToSpring("Dummy");
+		assertThat(2, todosRelatedToSpring.size());
+	}
+	
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+Disadvantages with stub : 
+
+Problem with stub is that whenever I want to test a new scenario for the same SUT, then I need to add another @test annotated method.
+If there comes a new method in your dependency then you also need to impelemnt that method in you stub.
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+Starting with mocks : 
+
+class ToDoServiceMock implements ToDoService {
+
+	@override
+	public List<String retrieveTodos(String user){
+
+	return Arrays.asList("Hi string", "Hi spring java", "Hi String Boot");
+
+	}
+
+}
+
+
+// As we are testing a service layer
+// if we don't tell the mock to do anything then it will return an empty list. These are called nice mocks
+public class ToDoBusinessImplStubTest {
+	
+	@Test
+	public testToDosRelatedToSpring_usingMock(){
+
+		ToDoService todoServiceMock = Mockito.mock(TodoService.class);
+
+		ArrayList<String> todos = Arrays.asList("Hi string", "Hi spring java", "Hi String Boot");
+
+		Mockito.when(todoServiceMock.retrieveToDos("Dummy")).thenReturn(todos);
+	
+		ToDoBusinessImpl doDoBusinessImpl= new ToDoBusinessImpl(toDoServiceMock);
+		List<String> todosRelatedToSpring = toDoBusinessImpl.retrieveToDosRelatedToSpring("Dummy");
+		assertThat(2, todosRelatedToSpring.size());
+	}
+	
+}
+
+Mock method allow to create a mock of an interface or a class.
+Objects which need to be mocked i.e. those which are externalized or layers like repository need to be taken as an argument from
+constructor so as to pass mocks to these classes.
+
+We can also mock internal interfaces like List Interface.
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+Mockito using Spring boot : 
+
+Mockito for Spring boot application : 
+
+@RunWith(SpringRunner.class)    --> Runner class is used to run JUnit tests typically by reflection.
+@SpringBootTest
+public class SprinBootApplicationTest {
+
+	@Autowired or @InjectMock
+	private UserService userService;
+
+	@MockBean or @Mock
+	private UserRepository userRepository;
+
+	public void getUsersTest() {
+		
+		Mockito.when(userRepository.findAll()).thenReturn(Stream.of(new User(376, "Danile", 31, "USA"), new User(958, "Huy", 35, "UK"))
+			.collect(Collectors.toList()));
+		Mockito.assertEquals(2, service.getUsers.size());
+
+	}	
+
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------
+

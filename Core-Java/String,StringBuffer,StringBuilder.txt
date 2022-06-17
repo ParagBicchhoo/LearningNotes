@@ -1,0 +1,185 @@
+Difference between String and Stringuffer
+
+Facts : 
+1) == operator always always meant for refernce comparison...if both references pointing to same object it returns true.
+2) Object class equals method meant for reference comparison or address comparison. In the String class equals method is overridden for content comparison.Where as 
+in StringBuffer class this method is not overriden and Object class method is overriden
+
+
+-> String is immutable and StringBuffer Objects are mutable
+Once we create a String object we cannot change its contents that's why they are immutable where as StringBuffer we can change its contents.
+In string if we try to do any changes in that object a new object will be created with those changes and if we donot assign that object to reference variable ,
+it will be eligible for garbage collection.
+
+case1 : 
+
+String s1 = new String("Parag");        s1 --> "Parag" (Object1)
+String s2 = new String("Parag");        s2 --> "Parag" (Object2)
+sopn(s1==s2)                           -->  false as both refernces pointing to different object
+sopn(s1.equals(s2))                    -->   true as String class equals method is meant for content comparison
+
+StringBuffer s1 = new StringBuffer("Parag");         s1 --> "Parag" (Object1)
+StringBuffer s2 = new StringBuffer("Parag");         s2 --> "Parag" (Object2) 
+sopn(s1==s2)                             -->  false as both refernces pointing to different object
+sopn(s1.equals(s2))                      -->   false as StringBuffer class equals method is not overriden and Object class equals method will be called which is meant for reference
+                                               comparison
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+String s = new String("Parag");  --> new object will be created in HeapArea(s->"Parag") and one in scp("Parag") without actual reference variable but implicitly 
+a reference variable will be maintained by JVM for future use.From 1.7 onwards scp moved to heap area only which was in method area or PERMGEN in 1.6 and older.
+
+String s = "Parag"; --> Only one object will be created in scp area (s->"Parag"). First JVM will check if there is any object with this same content. If object is already there it will
+reuse the same object. or new reference object will be created.
+
+For every string literal one copy will be created in String constant pool.
+Because of runtime operation if any object is getting created that object will be created in heap area but not in SCP(e.g. -> s.concat("abc"))
+
+String s1 = new String("Parag");   
+String s2 = new String("Parag");
+String s3 = "Parag";
+String s4 = "Parag";
+
+How many objects will be created ?
+
+Heap -- s1 -> "Parag" , s2 -> "Parag"
+SCP  --   s3,s4 -> "Parag"
+
+Hence total 3 objects will be created.
+
+String s = new String("Parag");
+s.concat("Vinchurkar") - Runtime operation (Only in heap) + one literal Vinchurkar in SCP
+s=s.concat("Prakashrao") - Runtime operation (Only in heap) + one literal Prakashrao in SCP and s will now start pointing to "ParagPrakashrao" (s->"ParagPrakashrao")
+
+Heap -> "Parag" (Eligible for GC), "ParagVinchurkar"(Eligible for GC) , s->"ParagPrakashrao"
+
+SCP -> "Parag" , "Vinchurkar" , "Prakashrao"
+
+Objects in heap area not having any reference variable pointing to it becomes eligible for GC and Objects in SCP are never become eligible for GC as implicit reference variable is 
+maintained by JVM for future reference
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+String s1 = new String("Spring");  
+s1.concat("Fall");
+String s2 = s1.concat("Winter");
+s2.concat("Summer");
+sopn(s1) -> Spring
+sopn(s2) -> SpringWinter
+
+Find output and show heap scp table
+
+Heap : s1-> "Spring" "SpringFall"(GC) s2-> "SpringWinter" "SpringWinterSummer"(GC)
+SCP : "Spring" "Fall" "Winter" "Summer"
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+String s1 = new String("You cannot change me");  
+String s2 = new String("You cannot change me");  
+
+sopn(s1==s2); false
+
+String s3 = "You cannot change me";
+sopn(s1==s3); false
+
+String s4 = "You cannot change me";
+sopn(s3==s4); true
+
+String s5 = "You cannot" + " change me"; Concatenation will happen at compile time only
+sopn(s4==s5); true
+
+String s6 = "You cannot";
+String s7 = s6 + "change me";  Runtime operation (Imp loophole : But if due to runtime operation there is no change in existing object then same object will be reused in heap also(E.g.->
+an object s1->"parag" exist in heap and we perform s2 = s1.toLowerCse() then new object will not be created in heap but s2 will also point to same object s1 is pointing to))
+sopn(s4==s7); false
+
+final String s8 = "You cannot";
+String s9 = s8 + "change me"; Compile time operation
+sopn(s4==s9) true
+
+Heap : s1-> "You cannot change me" s2-> "You cannot change me" s7-> "You cannot change me"
+SCP : s3,s4,s5,s9->"You cannot change me" s6,s8->"You cannot" "change me"
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Why strings are immutable ?
+
+Example : voter registration form | There are 1 crore people with same city name as hyderabad | Every time new object "hyderabad" will not be created but will be 
+reused from SCP. Now all 1 crore references are pointing to this city hyderabad.
+Now lets say strings are mutable and one of the perosn change city from hyderabad to mumbai....this will affect all those other references changing city of other people also.
+So strings are kept immutable. Now another object will be created with city mumbai and this reference will point towards this city mumbai.
+Performance and memory utilization will be improved with SCP.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Why SCP is available for String and not for StringBuffer?
+
+Most commonly used object in java is string object and hence special previllage for String to manage memory and performance.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Why String is immutable where as StringBuffer as mutable?
+
+In String just because of SCP same object can be reused....so in String if we change one object remaining references will be affected as same object is pointed by many references.
+That is why immutability was introduces in string.
+
+If StringBuffer already does not have SCP hence immutability is not needed.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+In addition to String any other object immutable?
+
+All wrapper class objects are immutable :
+
+Byte
+Short
+Integer
+Character
+Boolean
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+How to create your own immutable class?
+
+class Test {
+private int i;
+Test(){
+this.i=i;
+}
+public Test modify(int i){
+	if(this.i==i){
+		return this;
+	} else {
+		return new Test(i);
+	}
+}
+}
+}
+
+Test t1 = new test(10);
+t1-> i=10;
+Test t2 = t1.modify(100); -> content change -> new object should be created
+Test t3 = t1.modify(10);  -> no content change -> existing object should be reused
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Significance of declaring an object as final : It does not make it immutable but that reference variable cannot be resigned to new object but in that object you can perform
+changes.
+
+It is impossible to make StringBuffer as immutable because methods of StringBuffer are implemented for mutability .
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Every method in String buffer is synchronized and hence only one thread will be able to access that object. Once first thread complete operation then only second thread wiil
+get chance. Hence StringBuffer is thread safe.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Is String thread safe?
+
+String object is always thread safe because if anyone try to make any change to string object we cannot change it but with those changes a new object will be created.
+So immutability eventually make string thread safe.
+
+All immutable objects by default are thread safe like all wrapper classes and your own created immutable class also.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------

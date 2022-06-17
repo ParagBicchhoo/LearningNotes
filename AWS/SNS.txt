@@ -1,0 +1,24 @@
+SNS stands for simple notification service.
+Whatever notifications we receive in our phone are managed by service like AWS SNS only.
+
+It is a push notification service. In pull notification srevice, server will go to queue and 
+explicitly ckeck if there are any messages. i.e. in pull server is pulling the messages forcefully.
+SQS is an example of pull notification service.
+
+Here queue is going to SNS to supply the messages.
+E.g. server is sending message to user that you need to recharge.
+In push notification server is reaching the consumer that your bill is pending, or recharge need to be done.
+
+Messages publish to SNS topic will be delivered to consumer immediately.
+
+Publisher and subscriber communicate through topic.
+Who are publishers -> AWS account holders can be publishers.
+Who are subscribers -> AWS account holders or Only requesters with  certain endpoints.
+
+Create a topic. Once topic is created,
+Then i need to decide whom i want to send these messages to.
+So I need to create subscriptions.
+Select a protocol like email.
+endpoint will contain email id.
+Whenever you publish a message, messages will be sent to all the subscribers.
+

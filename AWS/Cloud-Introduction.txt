@@ -1,0 +1,32 @@
+Cloud video by JAVA techie on youtube.
+
+AWS Introduction : 
+
+***WHAT is AWS (Amazon web services) : AWS is a cloud infrastructure where we can host our application.
+In 2006 Amazon started to offer IT services to the market in the form of Web services which is now a days 
+called as cloud computing.
+
+Cloud computing is just a term used for storing and accessing data over the internet. Now this data is not stored in a hard-disk of your local 
+computer but is stored and accessed from a remote server.
+
+***WHY AWS : 
+
+Assume I want to host an application. Now to host it I need to purchase a server. 
+if there is a database integration, I will need to purchase a database.
+If I am using java I need to install JDK.
+It means I need to setup a complete infrastructure to host an application. (1st disadvantage)
+Lets assume my application is up and running and user is using my application,
+Even if user is not accessing your application you will need to pay for that because you purchased these components. (2nd disadvantage)
+So in future if huge amount of requests are coming to my server I will need to scale my application. Again this will be charged.
+
+How can you overcome these issues using AWS ?
+
+AWS will offer you to create one virtual machine, inside that virtual machine you add a server, you can add a database, and some more cloud components.
+So if I want to scale my appliction, I have no need to purchase a server, I can simply specify how many instances of servers I want.
+
+In AWS world this virtual machine is called as EC2 instance. EC2 stands for elastic compute cloud.
+
+***HOW : 
+
+1) create an aws account.
+2) Create an EC@ instance, at last step it will create a key pair file with extension .pem. Save that file to acess EC@ instance from anywhere.

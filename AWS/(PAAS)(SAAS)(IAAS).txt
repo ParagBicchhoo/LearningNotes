@@ -1,0 +1,15 @@
+SaaS, PaaS, and IaaS are simply three ways to describe how you can use the cloud for your business.
+
+On-premise : Here you manage everything like Application, Data, Runtime, Middleware, OS, Virtualization, Server, Storage, Networking.
+
+IAAS : (Infrastructure as a service) : Here infra will be provided as a service by others (generally cloud providers) like Virtualization, Server, Storage, Networking.
+Rest of the things are managed by you only like Application, Data, Runtime, Middleware, and OS.
+Example : AWS EC2 (it is a plain container where you install a platform(like java, tomcat server) you want and deploy an application)
+
+PAAS : (Platform as a service) : Here platform will be provided as a service by others (generally cloud providers) like Runtime, Middleware, OS, Virtualization, 
+Server, Storage, Networking.
+Rest of the things are managed by you only like Application, Data.
+Example : Amazon Elastic beanstalk (It is a container specially designed for deploying your applications. You can manually select OS, Application platform like java  here).
+
+SAAS :  (Software as a service) : Here you can use complete software as a service. You only need to consume the benifits.
+Example : DropBox (where you store your files) , Zendesk (It is a ticketing tool)

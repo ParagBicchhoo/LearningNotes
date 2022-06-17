@@ -1,0 +1,336 @@
+1) Difference between DiverManager and DataSource to get JDBC connection : 
+
+There are two ways to get JDBC connection in java : 
+
+1) Using Driver manager :  Connection con = DriverManager.getConnection()
+
+2) Using DataSource ds.getConnection()
+
+When getting connection from DriverManager, a new connection object will be created and will be returned.
+Where as in DataSource a connection object will be returned from existing connection pool and new connection pool object will not be created.
+
+Hence using DataSource is good performance wise and is according to Industrial standard.
+
+=============================================================================================================================================================
+
+2) How do doubly linked list perform delete better as compared to singly linked list?
+--> 
+
+Here is some code that made it clearer to me... Having:
+
+class Node{
+      Node next;
+      Node prev;
+}
+DELETE a node in a SINGLE LINKED LIST -O(n)-
+
+You don't know which is the preceeding node so you have to traverse the list until you find it:
+
+deleteNode(Node node){
+    prevNode = tmpNode;
+    tmpNode = prevNode.next;
+
+    while (tmpNode != null) {
+        if (tmpNode == node) {
+            prevNode.next = tmpNode.next;
+        }
+        prevNode = tmpNode;
+        tmpNode = prevNode.next;
+    }
+}
+
+DELETE a node in a DOUBLE LINKED LIST -O(1)-
+
+You can simply update the links like this:
+
+deleteNode(Node node){
+    node.prev.next = node.next;
+    node.next.prev = node.prev;
+}
+
+Doubly linked list also insertion slower as compared to doubly linked list.
+
+=============================================================================================================================================================
+
+3) Static block vs static method : 
+
+1. Static initialization blocks are used to write logic that you want to execute during the class loading even before main method is executed.
+2. They are used to initialize the static variables.
+
+Static methods are used for Utility just like Collections class which has static methods and they can be called using class name.
+
+=============================================================================================================================================================
+
+4) int v Integer
+
+Integer is an object where as int is primitive.
+Java is an object oriented langauge and most of the times we need to handle objects and primitives don't fit in in such a way.
+Example ArrayList al = new ArrayList();
+al.add(1) - CE
+To resolve such problems we wrap primitives to make them an object.
+
+=============================================================================================================================================================
+
+5) Object class methods : 
+
+getClass
+hashCode
+equals
+toString
+clone
+notify
+notifyAll
+wait
+finalize
+
+=============================================================================================================================================================
+
+6) How to break singleton design pattern : 
+
+One way would be if we donot declare synchronize method in getSingleInstance then more than one object can be created.
+
+It can break if the class is Serializable
+It can break if its 'Clonable`
+You can break by Reflection (I believe)
+it can break if multiple classloaders are loaded the class
+
+HOW??????????
+
+=============================================================================================================================================================
+
+7) Protected vs default : 
+
+Protected access specifier is visible within the same package and also visible in the subclass outside the package whereas the 
+Default is a package level access specifier and it can be visible in the same package
+
+=============================================================================================================================================================
+
+8) Autoboxing : 
+
+Autoboxing is the automatic conversion that the Java compiler makes between the primitive types and their corresponding object wrapper classes. 
+For example, converting an int to an Integer, a double to a Double, and so on. 
+If the conversion goes the other way, this is called unboxing.
+
+=============================================================================================================================================================
+ 
+https vs http
+
+
+=============================================================================================================================================================
+ 
+Written questions : 
+ 
+design patterns : singleton 
+second highest salary 
+iterate hashmap 
+coding: reverse string
+
+In Practice.txt
+
+=============================================================================================================================================================
+
+Design patters : builder, Abstract Factory ,Factory ,Proxy, DI, Adapter, Observer.
+
+builder : setter methods.
+Abstract Factory : It follows a principle of Factory of factory design.
+
+e.g. I have four shapes , rectangle, square, roundedRectangle, roundedSquare they will implement an interace named as shape
+So first I will create two Abstract classes named as NormalShape and Roundedshape which will give me shape(method) and
+roundedShape(method). These two classes will extend Abstract factory which will have getShape method.
+This Abstract factory will be used by Factory producer and which in tern will be used by class with main method.
+Then i will create a class a class named s Shape which will be parent class of aboave two.
+
+Factory design pattern is generally used in an organization when you don't want to reveal your class name across the organization.
+
+In that case I create a separate class which return the instances of my classes.
+E.g. I have some classes like Android, IOS, Windows which implements interface OS.
+So I wll create an OperatingSystemFactory which have mehod named as getInstance(String alias)
+If I pass open to it, it will return android
+and instances will be according to aliases I pass.
+
+=============================================================================================================================================================
+
+Dependency Injection : 
+
+Passing dynamic input to POJO classes is called as dependency injection.
+In spring application we pass these dynamic input from xml file using setter injection or constructor args.
+Lets say I have classes like HitachiHarddrive, Apple HardDrive and an interface named as Harddrive so I will simply 
+autowire this HradDrive interface  whereever I want to use it and now I can use any method of above classes.
+So Dependency injection is helping to achieve a concept of loose coupling.
+
+=============================================================================================================================================================
+
+Difference between @Component and @Bean.
+
+@Component Preferable for component scanning and automatic wiring.
+
+When should you use @Bean?
+
+Sometimes automatic configuration is not an option. When? Let's imagine that you want to wire components from 3rd-party libraries (
+you don't have the source code so you can't annotate its classes with @Component), so automatic configuration is not possible.
+
+The @Bean annotation returns an object that spring should register as bean in application context. 
+The body of the method bears the logic responsible for creating the instance.
+
+=============================================================================================================================================================
+
+
+Adapter design pattern just act like an adapter.
+Lets say I have a class named as Socket which provides single o/p of 240v.
+And a Volt class which is used to measure volts
+So in between these two classes I can use Adapter class which has three methods : 
+
+
+get3Volts, get12Volts, get120Volts
+
+Proxy design pattern limit the functionality of a code.
+Lets say I have a program that runs commnands on a system and I want my class to be used by some client side application.
+Then I will create a proxy class which will limit the functionalities.
+
+=============================================================================================================================================================
+
+What is modifier @Qualifier used for : 
+
+Lets say I have two classes Car and Bike with @Component annotation which implements Vehicle interface and both these classes have start method and I want to 
+Autowire this interface Vehicle and use it in that case if I want to use start method it will create an Amguity.
+To resolve this conflict @Qualifier annotation is used which indicate which component to be considered.
+
+=============================================================================================================================================================
+
+Introduce yourself : 
+
+1) I am Parag Vinchurkar. 
+2) Currently I am residing in Amravati district of maharashtra and working as a Research and developement engineer in dassault systemes at pune.
+3) I have 5 years of experience in Core Java, Hibernate, Spring, Spring boot, mysql, Apache ActiveMQ and Amazon S3 blob storage.
+4) My responsibilities include design and development of RESTful web services using Spring framework and providing technical support and knowledge to my junior co-workers.
+5) In these years of my work experience I have worked across various domains and diverse applications like designing an ETL tool, web application and RESTful web services.
+6) I have worked for some of the clients like GE and British Telecom.
+7) I also have strong aptitude, good reasoning skills and interpersonal skills.
+
+=============================================================================================================================================================
+
+How spring boot annotations work internally : 
+
+@SpringBootApplication
+@AutoConfigure
+@RestController
+
+And many more.....
+
+=============================================================================================================================================================
+
+1) What is indexing in databases? why ? how? types? differences.
+Indexing works same as the indexing we give to a book so that we could easily be able to find the records.
+We build the indexing based on a column(this columns is mostly the highly used column in where clause).
+Even if one of the condition in where clause is indexed then also it helps to execute query faster. 
+cause it has already serched for first clause condition and for second condition
+it has to serach very less number of records.
+Databse find all possible ways to execute query and choses the optimal path.
+we can create multiple indexes for same table with different cloumns and we can also create a multi column index.
+While creating multi column index order matters.
+Indexes generally takes time to create like 7 minutes, 4 minutes
+
+Disadvantages : 1) Indexes in databases are not free, they require storage.
+                2) When you add data to a database, it need to create new records and update all relevant indexes.
+
+
+How indexing works internally? : 
+
+Lets say I am creating an index for column first_name then it creates a separate storage in db where first names are arranged in ordered way and each of 
+these ordered element has an pointer in memory associated to it. And these pointers are linked to every row in a db.
+And most important part : search in these indexes are perfromed using binary search as they are ordered.
+
+
+Types of indexes : 1) Primary 2) Clustered 3) Secondary
+
+terms : 
+Ordered : ascending or descending order
+Unordered : no specific order
+key : uniqueness in values 
+Non key : no uniqueness, values are repeating
+-------------------------------------------------------------------
+                  =     Key          =        Non-Key             =
+-------------------------------------------------------------------
+Ordered File      =   Primary I      =        Clustered I         =
+-------------------------------------------------------------------                                          
+Unordered File    =   Secondary I    =        Secondary I         =
+------------------------------------------------------------------- 
+
+Once you apply primary key to a table....primary index is created automatically. because primary keys are ordered unique keys.
+If data is sorted but non key like 1122345566677777 then we use clustered indexing.
+For unordered data we use secondary index.
+"Starting index of book" is like primary index and "last index of book" is like secondary index.
+
+=============================================================================================================================================================
+
+2) Solid principle design patterns.
+
+=============================================================================================================================================================
+
+3) Difference between callable and runnable interface.
+
+             Runnable interface 	                                                            Callable interface
+It is a part of java.lang package since Java 1.0	                         It is a part of the java.util.concurrent package since Java 1.5.
+It cannot return the return of computation.	                                 It can return the result of the parallel processing of a task.
+It cannot throw a checked Exception.	                                     It can throw a checked Exception.
+In a runnable interface, one needs to override the run() method in Java.	 In order to use Callable, you need to override the call()
+It can create a new thread.                                                  It cannot create a new thread.
+
+=============================================================================================================================================================
+
+4) JVM memory management.
+
+=============================================================================================================================================================
+
+5) Executor service in detail.
+
+It has 5 methods for scheduling a thread.
+1) SingleThreadExecutor
+2) FixedThreadPoolExecutor
+3) CachedThreadPoolExecutor
+4) ScheduledThreadPoolExecutor
+5) WorkStealingPool : If task is big. we break task into smaller pieces using fork and perform the task.
+
+es.submit() takes callable or runnable as an argument.
+callable can return a future object to get results of individual threads.
+call method return type is Object hence it can also return String.
+
+=============================================================================================================================================================
+
+6) Blocking queue.
+If we are trying to enque an element in a already full queue then it will block that queue until some other thread deque element from it.
+Same thing happens with dequeing . i.e. If we try to deque an element from an empty queue it will remain in blocked state unless other thread
+enque an element in it.
+
+=============================================================================================================================================================
+
+7) What is lombok dependency and what it is used for ?
+
+Lombok is used to reduce boilerplate code for model/data objects, e.g. it can generate getters and setters for those objects automatcally by using
+lombok annotations.
+
+The easiest way is to use @Data annotation.
+Some more annotations : @AllArgsConstructor, NoArgsConstructor
+
+=============================================================================================================================================================
+
+8) Why beans are made serializable in java?
+
+First we need to understand the different scopes of beans in Spring IOC container : 
+1) Singleton : Only one object of a single bean defination is created in IOC container.
+2) Prototype : Any number of object instances of a single bean defination are created.
+3) Request : Each HTTP request will have it's own instance of a bean created for a single bean defination.
+4) Session : Scopes single bean defination to the lifecycle of a single HTTP session.
+5) Global session : Scopes single bean defination to the lifecycle of a global HTTP session.
+
+Difference between session and global session : Global session is used when your application has portlet container. portlet container is made up of
+some portlets. Each portlet has diferent session. But if you want to store variables global for all portlets in your applucation then you should
+store them in global session.
+
+In practice it is not explicity necessary for a java bean to be serializable. Without serailizable also it works fine.
+It's however useful when you want to store them as a 'plain' on harddrive or send them 'plain' over a network.
+For example when you are using a session scoped bean and server is configured to persist a session then you might face an exception
+"NotSerializableException".
+
+=============================================================================================================================================================
+

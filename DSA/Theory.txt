@@ -1,0 +1,118 @@
+1) Introduction : 
+
+Data structure is a way of organizing data so that it can be used effectively.
+
+Data structures make a difference between a OK product and an excellent product.
+
+2) Abstract data types vs Data structure : 
+
+Abstract data type is the abstraction of data structures which provides only an interface a data structure must adhere to.
+
+Abstract data types : List, queue, Map, vehicle 
+Data structures : Dynamic array linked list, stack based queue, Tree map, Car
+
+3) Computational complexity analysis : 
+
+Big-o-notation : It gives upper bound of the complexity in worst case.
+
+n- size of the input
+Complexities ordered from smallest to largest : 
+
+Constnt time : O(1)
+Logarithmic time : O(log(n))
+Linear time : O(n)
+Linearithmic time : O(nlog(n))
+Quadratic time:  O(n^2)
+Cubic time : O(n^3)
+Exponential time : O(b^n)
+Factorial time : O(n!)
+
+Example : 
+
+Finding all subsets of a set : O(2^n)
+Finding all permutations of a string : O(n!)
+Sorting using merge sort : O(nlog(n))
+Iterating over all the cells of a matrix size mxn : O(mn) 
+
+4) Static and dynamic arrays : 
+
+Dynamic arrays are the one which grows dynamically during runtime. Change the size to double if the memory exceeds.
+
+1) Recursion
+
+1) Recursion is calling the function itself from the same function.
+2) In some case writing recursion algorithms are easy as compared to writing iterative code.
+3) Recursion increase the memory utilization of code as a new copy of variables will be maintained by every function call.
+4) Every recursive function has a base case which is used to limit the number of recursive calls and a recursive call which works as a loop in iterative calls.
+
+Example of recursive codes : 
+
+1) Fibbonacci series
+2) Factorial of a number
+3) Tower of hanoi
+
+2) Backtracking with brute force approach: 
+
+Brute force approach says to try all possible solutions and pickup a desired solutions.
+Example :  3 students have to be arranged in 3 chairs 
+           Number of ways = 3! = 6 
+
+Representation of solution in state space tree : 
+
+            B1   B2   G1
+
+            B1   G1   B2
+
+            B2   G1   B1
+
+            B2   B1   G1
+
+            G1   B1   B2	
+
+            G1   B2   B2
+
+Problems of backtracking will have some constraints.
+
+In above problem one of the constraints could be G1 will not sit in between B1 and B2.
+
+Accordingly 2 ways will be killed. These are called as bounding function.
+
+Brute force strategy is used by one more strategy called as Branch and bound strategy. 
+
+Back tracking follow deapth for search (DFS) while Branch and bound follows Breadth for search (DFS) 
+
+Example N-Queens problem for backtracking : Arrange 4 queens on 4x4 chess board so that no two queens attack each other. 
+
+
+Stack :
+
+Placing one pile on another is basically a stack and if you want to remove piles you simply remove the top one first and upto bottom one.
+So stack is basically First in last out.
+
+Queue :
+
+It is a data structure that can simply be comared with any queue in front of a counter. Where new element will added at the rear end and first element will always 
+be ready to be served. This makes queue a last in last out data structure.
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Arrays : Store contagious elements.
+
+Memory management : 
+
+int[] arr = new int[8];
+
+all reference variables and function calls go in stack. Hence arr will go in stack and integer array actual values or object we can say
+will go in heap memory.
+
+In c, c++ memory allocation is going to be continuous for arrays where as in java it is different because there are no pointers.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+**Tricks and Tips : 
+
+Log can save a loop.
+e.g. I want to find number of digits in a number .
+Answer : [log10(number) + 1]
+

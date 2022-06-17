@@ -1,0 +1,40 @@
+Why do we need access management?
+
+--> To manage different rights to different users and roles.
+IAM is a service in aws using which you can give permissions to different users
+who are using the same aws account.
+
+A company can have single AWS account in which different employees of
+company can work.
+
+E.g. there is a developer in a company who can only work on EC2 and
+Elastic beanstalk.
+There is a db administrator who need only to work on Dynamodb and RDS
+
+So using IAM users account, they will have only access to concerned services.
+
+====================================================================================
+
+4 different components in IAM service :
+
+1) Users
+2) Groups
+3) Roles
+4) Policies
+
+The very first time we create an AWS account is a root account.
+
+Go to IAM service
+Click on users
+enter username
+you can give two types of access to user
+1) Programatic access (enables access key id and secret access key for AWS API, CLI and 
+other development tools).
+2) AWS management console access (enables password o allow access) 
+
+Groups are combinations of users and we can assign a policy to a group.
+
+Roles are assigned to an application. Lets say we create an EC2 instance and we host 
+a web application in it. Now this web application has to interact with S3 services.
+So I will attach this role to EC2 instance to interact with S3.
+

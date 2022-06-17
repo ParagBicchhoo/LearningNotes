@@ -1,0 +1,41 @@
+Concurrent-Collection : 
+
+Why : 
+
+1) Most of the traditional collections like ArrayList, HashMap are not thread safe.
+And there is always a chanche of data inconsistancy.
+
+2) Thread safe collections like hashtable, vector, Collections.synchronizedList(), Collections.synchronizedSet(),
+Collections.synchronizedMap() can only be accessed by one thread at a time. It increases waiting time of thread
+impacting overall performance. Hence these are not performance wise up to the mark.
+
+***IMPORTANT***
+3) Suppose I have collection object , while one thread is iterating this collection object, by mistake if other thread
+tried to modify this collection , immediately iterator fails raising "ConcurrentModificationException"
+
+Because of these problems traditional collection is not suitable for multithreaded scalable applications.
+
+To overcome these problems we should go for Concurrent-Collection.
+Because of different locking mechanisms performance of concurrent collections is good.
+
+What : 
+
+Important classes : 
+1) ConcurrentHashMap 
+2) CopyOnWriteArrayList 
+3) CopyOnWriteArraySet
+
+How :
+
+In a normal hashtable 16 buckets are there by default, to perform read operation thread does not require lock, any number
+of read operations can be perfromed. But to perform write operation object lock is required. The question is which lock?
+In hashtable complete object (16 buckets) lock is required.
+
+Where as in ConcurrentHashMap bucket level lock is required as lock for every bucket is maintained by JVM.
+It is also called a segment locking concept.
+
+How many locks you required is concurrency level and can be supplied to this HashMap using constructors.
+Constructor can also have one argument of fillRatio : After what percentage of Map is filled new hashMap will be created 
+internally by JVM as JVM keep on increasing size of HashMap as it keep filling.
+
+

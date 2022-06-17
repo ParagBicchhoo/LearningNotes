@@ -1,0 +1,111 @@
+In spring boot you don't have to focus on configurations and you can directly focus on code.
+
+
+public class DemoApplication{
+
+@SpringBootApplication
+public static void main(String []args){
+
+	ConfigurableApplicationContext context = SpringApplication.run(DemoApplication.class, args);
+
+}
+
+How to define scope of an object : 
+
+@Component
+@Scope(value="prototype")
+public class Alien{
+}
+
+Now every time a bean is requested , a new object will be created. And spring container will not create an object now when the container has started.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+By default @Autowired searches the object by object name.
+@Qualifier searches object by provided name : 
+
+@Autowired
+@Qualifier("lap1")
+Laptop laptop;
+
+@Component("lap1")
+public class laptoop{
+
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Web Application using Spring Boot : 
+
+views are created inside src/main/webapp
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Ways to send data to server : 
+
+localhost:8080/home?name=parag
+
+1) Old servlet technology method
+
+public String homeController(HttpServletRequest request){
+
+	String name = request.getParameter("name");
+	return "home";
+	
+}
+
+2) 
+
+localhost:8080/home?name=parag
+
+public String homeController(String name){
+
+	syso(name);
+	return "home";
+	
+}          
+
+           OR
+		   
+localhost:8080/home?myName=parag
+		   
+public String homeController(@RequestParam("myName") String name){
+
+	syso(name);
+	return "home";
+	
+}          
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Spring boot Auto-configurations : 
+
+Whenever we create a new Project using spring mvc I need to do lot of configurations like :
+Component scan, dispatcher servlet, view resolver (which is used in MVC to work with views), 
+datasource if I am working with hibernate, Multipart resolver if I am working with Multipart file upload.
+To avoid this springBoot autoconfiguration is used.
+
+When you add Spring boot starter data JPA dependency in pom.xml it gives all related dependecy jar for JPA like : 
+Spring ORM, Hibernate
+Like for spring-boot-starter-web it gives embedded tomcat server, jackson dependency, RestTemplate etc.
+It also give autoconfigure jar with it.
+now inside META-INF you can see a file called as spring.factories.
+In this file all AutoConfiguration classes are written. Like SpringDataJpaAutoConfigurations and all.
+If you go to this class
+
+@SpringBootAplication is a combination of three annotations : 
+@Configurations for java based configurations,
+@ComponentScan to enable component scanning -> All the packages and subpackages will be autoscanned which are under the 
+root package on which @SpringBootApplication is applied.
+@EnableAutoConfiguration
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Spring-Boot-Starters : 
+
+Spring boot starter parent  : It provides default configurations like maven plugins maven jar plugin, war plugin.
+It also help to maintain different versions of other dependencies. other dependencies inherit the version from this parent 
+starter.
+
+There are other starters as well like mentioned in above question
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------

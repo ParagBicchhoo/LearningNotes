@@ -1,0 +1,65 @@
+The bean initialization in Spring is based on Factory Design Pattern. 
+The BeanFactory (org. ... BeanFactory) interface with bunch of abstract methods allow us to initialize different beans providing fundament for Dependency Injection. 
+Basically each getBean() method is an implementation of Factory Design Pattern.
+
+Lets say we create an Appplication in an organization where our classes are public and it is gonna used across the organization.
+Practically we cannot expose out class names and cannot let everyone out class names. That is why we create a separate Factory class 
+which return the instances of our class.
+
+public Interface OS {
+
+	public void getSpecs();
+
+}
+
+public class Android implements OS{
+
+    @Override
+	public void getSpecs(){
+		System.out.println("Most powerful OS");
+	}
+
+}
+
+public class IOS implements OS{
+    
+	@Override
+	public void getSpecs(){
+		System.out.println("Most secure OS");
+	}
+
+}
+
+public class Windows implements OS{
+    
+	@Override
+	public void getSpecs(){
+		System.out.println("Most popular OS");
+	}
+
+}
+
+public class OperatingSystemFactory {
+
+	public OS getInstance(String alias){
+	
+		if(alias.equals("open")
+			return new Android();
+		else if(alias.equals("closed")
+			return new IOS();
+		else return new Windows();
+	
+	}
+}
+
+public class FactoryMain(){
+	
+	public static void main(String[] args){
+		
+		OperatingSystemFactory osf = new OperatingSystemFactory();
+		OS os = osf.getInstance("open");
+		os.getSpecs();
+	}
+	
+}
+

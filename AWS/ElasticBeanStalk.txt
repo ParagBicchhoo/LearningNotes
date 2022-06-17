@@ -1,0 +1,27 @@
+These are specially designed to deploy an application and you can use it.
+Hence they are PAAS servers where you only need to take care of your application and data rest of the things 
+are managed by Elastic beanstalk.
+
+How to deploy spring boot web application on AWS server using elastic beanstalk : 
+
+In this case you no need to create an EC2 instance, neither you need to add jar or war file to S3 bucket.
+This step will be taken care by elastic beanstalk itself.
+
+High level architecture of elastic beanstalk : 
+
+When we will create an elastic bean stalk environment it will create an EC2 instance internally.
+Inside that EC2 instance it will install or register a tomcat server.
+And inside tomcat server we can deploy our web application.
+This web application war file will be store in S3 bucket.
+EC2 instance will load the war file and deploy in tomcat server.
+There will be AWS elastic load balancer which will help us to redirect our request to particular web application.
+
+How it works : 
+
+Go to service elastic beanstalk 
+create application
+it will have many options like server like tomcat 
+upload your code using upload option (war file) 
+and create an application.
+
+Application is now ready to use....

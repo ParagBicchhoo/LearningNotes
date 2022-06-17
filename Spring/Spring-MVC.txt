@@ -1,0 +1,92 @@
+Basics : 
+
+1) In typical servlet based application when client sends the request it goes to web.xml file 
+2) In that file we mention for which request you want to call which controller.
+3) It is very difficult to manage these all controllers
+4) For each request there is one controller. In Spring MVC we have something called as multi-action controller
+5) Now in spring mvc to handle all request we need one more controller which is front controller and this front controller is by default given to you by spring mvc and 
+in spring mvc it is called as dispatcher servlet
+6) So all the requests should know that you are using spring mvc and how can you do that? In web.xml file we just need to mention that all requests should go through disatcher servlet.
+7) Whenever a request go to web.xml file , request go to dispatcher-servlet but this dispatcher-servlet is a configurable class. So we need to create a file called as configuration
+file for dispatcher servlet.
+Name of this file should be something-servlet.xml.
+This something is servletName inside servlet tag of web.xml file. and this file should be in parallel to web.xml
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+How to create simple spring mvc application (xml based configurations): 
+
+1) Create a normal web project in eclipse
+2) Take web.xml file for web mvc from internet and mention dispatcher servlet class in it.
+3) Configure app-servlet.xml file and mention component scan in it of all the packages where you have kept all the components.
+4) Create a controller java class with annotations @Controller for class and @RequestMapping for method and mention mappings inside it.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Spring mvc with annotations : 
+
+Now we need to replace app-servlet.xml with a class
+
+@Configuration
+@Component-Scan(basePackages ={ })
+public class Config{
+
+}
+
+Now we need to replace web.xml file : 
+
+we will create a class to replace it : 
+
+As soon as we extend class AbstractAnnotationConfigDispatcherServletInitializer three methods will be overriden.
+1) getservletmapping :  metion servlet mapping here
+2) getServletConfigClass : mention above class Config in it 
+3) getrootConfigClasses
+
+
+public class MyWebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+	
+}
+
+We can also achieve this like : 
+
+ public class MyWebInitializer implements WebApplicationInitializer {
+ 
+         @Override
+         public void onStartup(ServletContext servletContext) throws ServletException {
+ 
+                 AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
+                 ctx.register(WebConfig.class);
+                 ctx.setServletContext(servletContext);
+                 ctx.refresh();
+ 
+                 ServletRegistration.Dynamic servlet = servletContext.addServlet("dispatcher", new DispatcherServlet(ctx));
+                 servlet.setLoadOnStartup(1);
+                 servlet.addMapping("/");       
+         }
+ 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 
+Class based configurations : 
+
+Now we need to replace web.xml file : 
+
+we will create a class to replace it : 
+
+As soon as we extend class AbstractAnnotationConfigDispatcherServletInitializer three methods will be overriden.
+1) getservletmapping :  mention servlet mapping here
+2) getServletConfigClass : 
+3) getrootConfigClasses : mention above class Config in it (Dispatcher servlet)
+ 
+web.xml file is replaced just like above example with only one change(here it dispatcher servlet will be mentioned in getrootConfigClasses)
+ 
+Now to replace app-servlet.xml file (dispatcher servlet config file): 
+
+@Configurations
+@EnableWebMvc
+@Component-Scan(basePackages ={ })
+public class MVCConfig extends WebMvcConfigurerAdapter {
+
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
