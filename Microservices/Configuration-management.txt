@@ -1,0 +1,29 @@
+17) config server : Spring cloud config server.
+
+go to start.spring.io
+maven dependency : config server (artifact id : spring cloud config server)(Central management of configurations via GIT)
+Go to springBootApplication class and add annotation : @EnableConfigServer
+This config server now need to know where to pull up the values from. So we will pull up the values from GIT.
+Go to application.properties and property spring.cloud.config.server.git.uri = git-uri
+Lets say this configServer is hosted on port 8888.
+To get application.yml file from git use following URL : 
+localhost:8888/<file-name>/<profile>  --> localhost:8888/<application/default
+
+Now each and every microservice can access this application.yml file.
+
+How credentials are secured : 
+
+Apply authentication on configuration server.
+Always use secured channels like HTTPS when configurations are in transit.
+A sensitive configuration data should never traverse the network through an unencrypted channel.
+To enable ssl apply some configurations in application.properties file.
+Use secured ,private repositories as a configuration source.
+Store password in encrypted format.
+Disable the decrypting at cloud config server.
+Dycrypt them directly at client side. It has an encrypt key associated with it.
+
+Goals
+externalized
+environment specific
+Consistent
+version history

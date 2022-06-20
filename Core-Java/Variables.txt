@@ -1,0 +1,9 @@
+Atomic : These are thread safe versions of variables.
+
+Volatile : For each thread a copy of original variable is created and changes are performed in that variable.
+
+Synchronized : A method or a block can be synchronized, this keyword make sure that, only one thread can access the method 
+or a block on a given object.
+
+Transient variable are used in serialization context. If we donot want any variable to be used while serialization 
+and deserialization then transient variables are used.

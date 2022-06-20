@@ -50,13 +50,46 @@ The orchestrator handles the commands and events with the help of axon framework
 
 Circuitbreaker design pattern : 
 It is a part of fault tolerance.
-If one of the services is peroforming slow or poor then it is not a good choice to
+If one of the services is performing slow or poor then it is not a good choice to
 continuously burden it with more requests, and wait for that service to recover.
 This is how microservices become fault taulerent.
-This can be achieved with the help of hystrix. Annotation @Enablecircuitbreaker annotation.
+This can be achieved with the help of hystrix(Spring-cloud-starter-netflix-hystrix). Annotation @Enablecircuitbreaker 
+annotation in application class.
+Add @HystrixCpmmand to methods that need circuit breaker. Lets say there is a method that makes an external call and it
+can become slow.
+Configure Hystrix behaviour. We can also leave everything default to make hystrix beak circuit by its own parametsrs.
+Parameters while configuring hystrix : 
+1) HystrixCommand("fallBackMethod"="getFallBackcatalog")
+2) commandProperties = @HystrixProperty (name = "timeout" -> After what time a timeout should happen
+, requestVolumeThresold -> How many requests that it needs to see , errorThreasoldPercentage : percentage number of requests failed to break 
+the circuit out of seen requests , sleepWindowInMilliSecs : how long circuit breaker gonna last before it picks up again)
+ 
+There are following scenarios  : 
 
-[***] Hystrix in detail videos of Java brain
+1) Service go down : Solution : Create multiple instances of services. 
+2) Microservice instance is slow : 
+Problem with threads :  Lets say a server has some concurrency. i.e. it has preconfigured value for
+maximum number of threads it can operate on at a time. Let the value be 12.
+There are 3 microservices. One of them is slow. Now request come to slower mS. First thread calls that slower mS.
+Consequently lets say few more requests come for that slower mS. Now all threads are consumed to serve slower mS.
+And as all the threads are consumed even not affected microservices are also affected due to this.
 
+One of the solution is to use timeouts. Adding timeouts to RestTemplate. If requests that are coming are fater than what4
+timeout can do? Hence this is not a good solution.
+
+When a circuit should break?
+Every circuit breaking needs to be triggered by something.
+
+Hystrix dashboard provides information data display about your application on a dashboard.
+Display different circuit breakers, what are the circuit breakers that are open, what are closed.Number of requests coming.
+Timeout happening. 
+You can setup a turbine to setup the dashboard for cluster of microservices.
+Add hystrix dashboard binaries in to pom.xml
+Spring-cloud-starter-netflix-hystrix-dashboard
+Spring boot starter actuator.
+
+@EnableHystrixDashBoard
+ 
 ---------------------------------------------------------------------------------------------------------------------------------------
 Strangler design pattern : This is a type of decomposition design pattern
 
@@ -277,6 +310,44 @@ Whatever service this @LoadBalanced annotated restTemplate will call that servic
 
 =======================================================================================================================================
 
-Spring Cloud Sleuth with Zipkin 
-Spring cloud contract
-Spring cloud security
+Spring Cloud Sleuth with Zipkin : 
+
+Distributed log tracing and it's need : 
+
+In real world projects there are 100s of microservices involved. Lets say there occurs an issue in one of the microservices.
+Or there occurs latency issue in one of it. hence one microservice is taking more time than others.
+Then how would we know that which microservice is causing the issue.
+Without any tracing mechanism it is difficult.
+
+To resolve such issue we use spring cloud sleuth and zipkin.
+Spring cloud sleuth is used to generate and attach traceId, spanId to the logs so that these then used by tools like zipkin 
+and ELK for storage and analysis.
+
+Zipkin is a distributed tracing system. It helps to gather timming data needed to troubleshoot latency problems 
+in service architecture.Features include both collection and lookup of this data.
+
+Spring cloud sleuth has following components : 
+
+1) Application name : [Microservice1][Microservice2] etc.
+2) TraceId : This id is same in every microservice for a given request.
+3) SpanId : Same in same method.
+4) Zipkin export flag : This boolean indicates whether flag should be exported to zipkin or not
+
+And finally we will be sending logs of all the microservice to zipkin server.
+
+implementation : 
+
+Dependencies : 
+
+Spring-cloud-starter-sleuth in each microservice pom.xml.
+Download the zipkin jar file from maven and run it in cmd.
+java -jar zipkin-server-file-name.jar
+Zipkin will start in 9411 port.
+Add spring-cloud-starter-zipkin dependency to all microservices.
+open zipkin dashboard on localhost:9411 and click find traces.
+here you can find detailed logs per microservice. and time took to execute.
+
+=======================================================================================================================================
+
+Microservices project story : 
+

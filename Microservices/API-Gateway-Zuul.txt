@@ -1,0 +1,32 @@
+4) Go through zuul video of how to configure API gateway.
+
+API gateways(zuul proxy) are used to route the traffic in microservices and also used for filtering the requests like providing
+security.
+It also act as server side load balancer.
+There are 4 filters in zuul : 
+1) Pre-filter -> Executed before the request is routed to microservice.
+2) Route-filter -> During routing route filter will be called
+3) Post-filter -> Once the response from microservice comes, Post-filter will be called.
+4) Error-Filter -> If there comes an error from microservice then error filter gets called.
+
+Create a API gateway as a spring boot project : Hospital Gateway.
+Add zuul dependency
+In SpringBootApplication java file add annotation @EnableZuulProxy -> Now this will behave as a API gateway.
+In each microservice we need to specify the spring.application.name attribute like
+spring.application.name = doctor-service
+spring.application.name = diagnosis-service
+For that we need to configure the URL pattern. Got application.properties file of gatway and specify following configs : 
+zuul.routes.doctor-service-url=http://localhost:8081/doctor-api
+zuul.routes.diagnosis-service-url=http://localhost:8082/getDiagnosis
+Lets say it is running on default port 8080
+
+Create a package filter
+Create above 4 filters and extends each by zuulFilter
+override all these methods from zuulFilter class to above mentioned 4 filters : 
+1) filterType return String
+2) filterOrder return int value of order of filter
+3) shouldFilter return boolean
+4) public Object run() -> What need to be executed in filter.
+
+Just call localhost:8080/diagnosis-service -> diagnosis service will be called becasue we have defined routing in API gateway which is
+running on port 8080.

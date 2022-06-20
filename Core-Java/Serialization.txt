@@ -44,3 +44,24 @@ Receiver JVM will generate a SVUID for this class and both should be equal.
 Otherwise JVM will throw "InvalidClassException".
 
 =====================================================================================================================================
+
+One of the in project examples of serialization is in cache implementation. The objects which we want to implement cache on using tool
+like redis need to be serialized.
+
+8) Why beans are made serializable in java?
+
+First we need to understand the different scopes of beans in Spring IOC container : 
+1) Singleton : Only one object of a single bean defination is created in IOC container.
+2) Prototype : Any number of object instances of a single bean defination are created.
+3) Request : Each HTTP request will have its own instance of a bean created for a single bean defination.
+4) Session : Scopes single bean defination to the lifecycle of a single HTTP session.
+5) Global session : Scopes single bean defination to the lifecycle of a global HTTP session.
+
+Difference between session and global session : Global session is used when your application has portlet container. portlet container is made up of
+some portlets. Each portlet has diferent session. But if you want to store variables global for all portlets in your applucation then you should
+store them in global session.
+
+In practice it is not explicity necessary for a java bean to be serializable. Without serailizable also it works fine.
+It's however useful when you want to store them as a 'plain' on harddrive or send them 'plain' over a network.
+For example when you are using a session scoped bean and server is configured to persist a session then you might face an exception
+"NotSerializableException".
