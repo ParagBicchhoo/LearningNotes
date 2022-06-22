@@ -1,0 +1,17 @@
+Spring profiles helps seggregating your application configurations and make them available to specific 
+environments only.
+
+We have different environments in our application like dev, QA, production.
+Now configuration files are environment specific.
+You can also use @Profile on beans.
+Example : OracleDataSource or MysqlDataSource.
+
+Create separate config file application-dev.properties, application-prod.properties files for each environment.
+Only include environment specific properties to that file.
+
+Finally create one parent application.properties file like : 
+
+spring.application.name = Spring profiles
+spring.profiles.active = test
+
+================================================================================================================================= 

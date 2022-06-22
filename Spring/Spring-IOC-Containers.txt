@@ -137,6 +137,18 @@ The Display will call Multiply’s method to get the result and display it. This
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+If we autowire an interface which has multiple implementation classes then there occurs NoUniqueBeanDefinationException if interface is Autowired.
+Then to resolve this @Primary annotation is used.
+The bean which you have annotated as @primary will be considered.
+Either class can be annotated with @Primary or the bean inside the class can be annotated with @Primary.
+
+The problem with @Primary annotation is it doesn't really narrow down the ambiguity but just mark the prefered ones.
+
+Second way to resolve this is to use @Qualifier annotation. Bean ambiguity will be resolved acording to name.
+Just use @Qualifier annotation at the place where interface is autowired.
+
+===========================================================================================================================================================================================
+
 
 
 

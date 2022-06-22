@@ -619,3 +619,65 @@ For example, your shopping cart while using any website in Cloud.
 Learn OAuth2 : 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+JWT implementation : 
+
+Create a new Spring boot project and add following dependencies : 
+
+Spring boot starter web
+Spring-security
+
+Create a REST endpoint called as /hello.
+Now since Spring security is added to the classPath, thats gonna be a default behaviour for spring security.
+It's gonna create a user out of the box. And this controller will be behind that authentication wall.
+Hence only authenticated users are gonna be able to access that API.
+Now I dont want that default behaviour and I want to seed the user.
+
+public class SecurityConfig extends webSecurityConfigurerAdapter {
+	
+	@Autowired
+	private MyUserDetailsService myUserDetailsService
+
+	@Override
+	protected void configure(AuthenticationManagerBuilder authManagerBuilder) {
+
+		authManagerBuilder.userDetailsService(myUserDeatailsService);
+
+	}
+
+	@Override
+	public void configure(HttpSecurity http) {
+		http.csr().enable().
+			
+	}
+
+	@Bean 
+	public PasswordEncoder passwordencoder() {
+	
+		return new BCryptPasswordencoder();
+
+	}
+
+}
+
+public class MyUserDetailsService {
+
+	public UserDetails loadUserByUsername(String username) {
+		
+		
+
+	}
+
+
+}
+
+Create a class JWTAuthBase or JwtUtil which has some utility methods like createToken, extractClaims which is used to extract some parameters like username 
+all claims from JWT token.
+
+
+Create one more class JWTFilter extends OncePerRequestFilter which takes token from header. And do authorization with JWTUtil methods.
+
+in webSecurity class add http.addFilterBefore(jwtFilterClassObject, UsernamePasswordAuthenticationFilter.class).
+
+Crrate a class LoginController which authenticate with username and password and returns JWT Token.
+
+ 

@@ -127,7 +127,13 @@ Event sourceing : Create events regarding changes in application state. Events h
 ---------------------------------------------------------------------------------------------------------------------------------------
 Branch pattern : Simultanous processing requests from multiple microservices.
 ---------------------------------------------------------------------------------------------------------------------------------------
-CQRS design pattern, Event sourcing.
+CQRS(Command Query Responsibility Seggregation) design pattern, Event sourcing. (Database pattern)
+Separate database for commands i.e. create, update and delete requests and separate database query i.e. for view which is a select 
+query. Now to replicate the data from one db to another either even sourcing is used or database replication methods are used.
+
+Benifits : Responsibility seggregation which is the core principle of microservices.
+Flexibility to choose database for views. We can choose other databases for views as well.
+Easy to scale.
 ---------------------------------------------------------------------------------------------------------------------------------------
 Event driven architecture
 =======================================================================================================================================

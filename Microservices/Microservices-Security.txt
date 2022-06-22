@@ -1,0 +1,33 @@
+Best practices for microservices security : 
+
+1) Carry the login information everywhere via a stateless protocol like OAuth. Every service talking to other services carry
+oAuth token with them. And it get propogated throughout the system.
+
+2) Traffic between microservice consumer and endpoint need to be encrypted. But there found a lot of security vulnerabilities 
+with SSL 3.0, TLS 1.0.
+Recommendation use TLS 1.2
+
+OAuth2 for securing microservices : 
+
+OAuth is meant for authorization and not authentication.
+It was originally created for a service to authorize a service.
+Your service wants to authorize with google drive to read certain photos.
+You cannot ask the user for his credentials.
+This is where OAuth comes in.
+
+OAuth2 flow : 
+
+1) Authorization code flow : 
+
+User has logged in to photo printing server but my photo is on google drive. fetch my photos from google drive.
+Printing server go to Google drive and says my user wants to access resource from your drive.
+Authorization server(google drive) goes to user (resource owner) and say this client(printing service) wants to access you files.
+Are you okay with that? If yes authorization server sends token to photo printing service.
+Client uses this token to get second toekn which is access token.
+
+2) Flow in microservices : 
+
+mS1 wants to call mS2 API. And mS2 has an access to database. mS2 has an Auth Server with it. mS1 will make a call to Auth server and 
+it provides a certain client_id. Like hey I am this microservice. mS2 provides an access token to mS1 which provides information mS1 need like
+profile information. Now mS1 makes call to mS2 to ask for profile info authorized with access token.
+
