@@ -1,0 +1,9 @@
+Basic docker commands : 
+
+docker run redis : this command will start the image in a container.
+docker ps : list running containers
+docker build : is used to build an image from an existing docker file.
+docker stop <container_id> 
+docker start <container_id>
+docker ps -a : List all the containers which are running or not running.
+

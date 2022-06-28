@@ -31,3 +31,21 @@ mS1 wants to call mS2 API. And mS2 has an access to database. mS2 has an Auth Se
 it provides a certain client_id. Like hey I am this microservice. mS2 provides an access token to mS1 which provides information mS1 need like
 profile information. Now mS1 makes call to mS2 to ask for profile info authorized with access token.
 
+Client -> is a website or a service [Client is my website]
+Client makes a request to resource owner[me] whether I can access this resource.
+Resource owner[me] talks to authorization server[google auth server] and auth server grant the client a token for access.
+Client gives token to resource server[google drive]
+Resource server checks the validity of token with auth server.
+If valid resource server gives access.
+
+=====================================================================================================================================================
+
+Implementation : 
+
+Go to OAuth2 playground website and register a client.
+Click on register a client.
+You will receive client_id and client_secret
+
+
+                              
+

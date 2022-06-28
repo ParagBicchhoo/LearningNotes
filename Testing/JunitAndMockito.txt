@@ -173,7 +173,7 @@ public class SprinBootApplicationTest {
 		
 		Mockito.when(userRepository.findAll()).thenReturn(Stream.of(new User(376, "Danile", 31, "USA"), new User(958, "Huy", 35, "UK"))
 			.collect(Collectors.toList()));
-		Mockito.assertEquals(2, service.getUsers.size());
+		Mockito.assertEquals(2, userService.getUsers.size());
 
 	}	
 
