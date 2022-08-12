@@ -38,3 +38,5 @@ Roles are assigned to an application. Lets say we create an EC2 instance and we 
 a web application in it. Now this web application has to interact with S3 services.
 So I will attach this role to EC2 instance to interact with S3.
 
+====================================================================================
+
