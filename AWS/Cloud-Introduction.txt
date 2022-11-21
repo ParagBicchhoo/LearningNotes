@@ -30,3 +30,21 @@ In AWS world this virtual machine is called as EC2 instance. EC2 stands for elas
 
 1) create an aws account.
 2) Create an EC@ instance, at last step it will create a key pair file with extension .pem. Save that file to acess EC@ instance from anywhere.
+
+==========================================================================================================================================================
+
+AWS Global infrastructure : 
+
+AWS has regions and regions has availability zones connected to each other.
+These availability zones are connected using low latancy high throughput link.
+Availability zones has one or more discrete data centers with redundant power, networking and connectivity.
+Main motive of this infrastructure is availability and scalability and high fault tolerance.
+
+AWS points of presence or edge locations : 
+
+There are 205 edge locations across different cities.
+Now consider a scenario if the users of an application is distributed across world and actual data center is close 
+for a newyork guy than china guys. So china guy will experience a latency.
+To mitigate this issue they have created edge locations so that request will be routed through these third party edge locations.
+These edge locations send data through cloudfront to desired datacenter.
+
