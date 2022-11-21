@@ -8,9 +8,9 @@ Only one load balancer for entire application.
 Unless and until server side load balancer has an information about the new instance added to one of the microservices, 
 it will not send request to this new instance.
 
-Client side load balancing : 
+Client side load balancing :
 One load balancer per microservice.
-@EnableRibbon(name="nameOfAppWhichNeedToBeLoadBalaned", configuration= "Configuration.class")
+@EnableRibbon(name="nameOfAppWhichNeedToBeLoadBalanced", configuration= "Configuration.class")
 in application.yml, define what are different list of servers where this application is running.
 Disable ribbon eureka in applicaion.yml becasue eureka is also capable of load balancing.
 restTemplate need to be @LoadBalanced. 
@@ -30,5 +30,15 @@ But this is not effective load balancing.
 @LoadBalanced also helps restTemplate to identify services names registered on Eureka Server.
 One service name can have multiple instances associated with it. Thats how load balancing is done.
 Whatever service this @LoadBalanced annotated restTemplate will call that service will be load balanced.
+
+=======================================================================================================================================
+
+For distributing traffic among servers Ribbon uses following rules : 
+
+1) RoundRobinRule : One by one request serving
+2) AvailabilityFilteringRule : A load balancer rule that filter out servers that are in a circuit breaker state or that have active
+connections which exceeds a configurable limit.
+3) WeightedResponseTimeRule : Rule that use the average/percentile response times to assign dynamic "weights" per Server which is 
+then used in the "Weighted Round Robin" fashion.
 
 =======================================================================================================================================

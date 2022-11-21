@@ -1,0 +1,7 @@
+1) How are interceptors implemented where we can do authentication and authorization.
+2) How deployment will happen on insuremo when we build a repository full of microservices lets say 200 microservices.
+Will the deployment happen like deploy each microservice manually?
+3) Build a microservices one by one and build all components around it and deploy it on AWS ECS.
+4) Learn about docker and kubernetes. and how microservices and built in containerized app and deployed on kubernetes cluster. 
+Try to deploy your microservice on kubernetes as well.
+5) 

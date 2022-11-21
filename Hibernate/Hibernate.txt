@@ -3,7 +3,7 @@ Theory :
 Hibernate is one of the best ORM tool which is used for persisting the data available in market.
 ORM stands for object relational mapping
 Concept of storing a data is called as persitance
-Normally we use JDBC to connect your java application with database
+Normally we use JDBC to connect your java application with database.
 Hibernate can directly save an object in database.
 Now class structure will be same as table structure.
 
@@ -350,14 +350,13 @@ library.
 
 ehcache is best library. Add it to pom.xml....provides features
 
-hibernate-ehcache : for integration of ehcache and hibernate 
+hibernate-ehcache : for integration of ehcache and hibernate s
 
 By default second level cache is disabled in hibernate.cfg.xml , you have to enable it.
 
 ======================================================================================================================================================
 
 Difference between get and load method in hibernate?
-
 
 
 

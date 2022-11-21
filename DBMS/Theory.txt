@@ -1,4 +1,4 @@
-Slef join : 
+Self join : 
 
 Employees who are also managers : 
 

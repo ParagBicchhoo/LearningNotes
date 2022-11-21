@@ -7,7 +7,7 @@ Serialization can be achieved with two classes.
 
 If we want to write something in a file ,we need FileOutputStream and
 if we want to write an object somewhere we need ObjectOutputStream.
-
+  
 This is how we achieve serailization : 
 
 Dog d1 = new Dog();

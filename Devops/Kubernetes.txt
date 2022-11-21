@@ -1,0 +1,84 @@
+How to manage all these different components (microservices)?
+Orchestrators helps us in deploying and managing the containers dynamically.
+More people are using : scale up the application.
+Something went down : Heal the application like restarting.
+
+Kubernetes helps us in doing this.
+
+On a hight level Kubernetes is a container orchestrator. On a granular level it is much more than only being a container orchestrator.
+
+Components of Kubernetes  :  
+
+Cluster : 
+
+Control planes(Master node) + nodes (Worker nodes)
+
+Nodes can be considered as virtual machine
+Control plane or master node : 
+
+Worker nodes : Are nothing but where your applications will be running.
+Control plane will manage the worker nodes
+
+Kubectl communicate with control plane.
+
+Collection of worker nodes and control plane is called as kubernetes cluster.
+
+Kubectl : Is the kubernetes CLI command line tool.
+Kubectl will communicate with control plane and say I want to start 10 applications.
+This communication can happen in two ways : 
+1) Declarative way : You create a manifest file you write code in that and it happens. This is important. You will give that file to control plane via
+Kubectl.
+2) Imperative way : You are giving some commands to your cluster.
+
+Microservices run on worker nodes.
+
+Pod : is a scheduling unit in kubernetes.
+
+Worker node is a server.
+It has container runtime in it.
+Container runtime has a pod
+and pod has containers.
+
+Steps : 
+
+1) Create micropservices
+2) Conatainerize it.
+3) Put every container in pods
+4) Deploy these pods ito controllers.(Deployemnt controller, Job controller are the types of controllers in kubernetes where deployment one is the default one)
+
+Control Plane : 
+
+Collection of various components that helps us to manage overall cluster.
+It has following capabilities : 
+
+Control plane has a API server amd kubectl communicates with API server.
+
+
+One of the components of control plane is etcd. which is a database. With which API server will communicate
+And then there is controller manager which will communicate with API server.
+Another there is a scheduler.
+
+API server has certain endpoints which are used by kubectl to give certain commands like hey take this yml file which is a pod defination and create a pod.
+These files are also called as kubernetes manifest files. Often times this can get very complex but tools like monocle make files creation extremely easy.
+Controllers take care of how many pods should be running and their health. Controller manager take care of controllers.
+Controller managers has 4 functionalities : 
+1) Desired state : need to create 5 pods
+2) Current state : Something goes down. desired state was 5 pods but only 4 pods are running.
+3) Differences : 
+4) Make the changes : 
+
+Scheduler will schedule the pods on worker nodes. Lets check which worker node is empty and best suited for it.
+
+Architecture of kubernetes : 
+
+Worker node architecture :
+Components : 
+
+1) Kube proxy : It is responsible for networking. This will povides IP address to nodes.
+
+2) Kubelet : it is on every worker node. It will listen to API server. 
+
+3) Container runtime : 
+
+  
+ 

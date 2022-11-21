@@ -82,7 +82,7 @@ If frequent operation is insertion do not go for Arraylist go for LinkedList.
 
 ***LinkedList -> Insertion order is preserved, duplicates are allowed, heterogenious objects allowed, null insertion is possible.
 Implements Serializable and Clonable interface but not RandomAccess interface.
-Best suitable is when frequent opertion is insertion or deletion in the middle.
+Best suitable is when frequent opertion is insertion or deletion at the start or end.
 Worst choice if frequent opertion is retrieval.
 
 ***Stack -> methods : push, pop, peek() - > only return top of stack donot remove it where as pop() remove as well as return top element.
@@ -156,6 +156,22 @@ Where as in identity hashmap == operator is used for comparison hence I1 and I2 
 WeakHashMap :  As name suggest it is weak.
 HashMap objects are eligible for GC even there is no external reference to it.
 Where as WeakHashMap becomes eligible for GC.
+
+If we set the key of map element as null even when that key is present in hashmap , that entry will be deleted.
+These are best in case of cache implementation.
+Hence keys of WeakHashmap are weak reference types.
+
+An entry in a WeakHashMap will automatically be removed when its key is no longer in ordinary use, 
+meaning that there is no single Reference that point to that key. When the garbage collection (GC) process discards a key, 
+its entry is effectively removed from the map, so this class behaves somewhat differently from other Map implementations.
+
+Strong references : 
+Integer prime = 1;
+
+Soft references : 
+Integer prime = 1;  
+SoftReference<Integer> soft = new SoftReference<Integer>(prime); 
+prime = null;
 
 ===============================================================================================================================
 

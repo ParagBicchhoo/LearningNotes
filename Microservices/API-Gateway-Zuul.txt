@@ -4,8 +4,8 @@ API gateways(zuul proxy) are used to route the traffic in microservices and also
 security.
 It also act as server side load balancer.
 There are 4 filters in zuul : 
-1) Pre-filter -> Executed before the request is routed to microservice.
-2) Route-filter -> During routing route filter will be called
+1) Pre-filter -> Executed before the request is routed to microservice. : This can be typically used for authentication and authorization.
+2) Route-filter -> During routing, route filter will be called.
 3) Post-filter -> Once the response from microservice comes, Post-filter will be called.
 4) Error-Filter -> If there comes an error from microservice then error filter gets called.
 

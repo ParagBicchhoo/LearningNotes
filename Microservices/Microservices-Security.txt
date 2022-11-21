@@ -1,3 +1,12 @@
+What is OAuth2 :
+
+Oauth which stands for Open authorization is a standard designed to allow a website or a application to access resources 
+hosted by other web apps on behalf of a user.
+
+Examples : 1) When you login using facebook to a third party application, facebook grant access to users information to third 
+party websites without sharing the users password and other private sensitive data.
+
+
 Best practices for microservices security : 
 
 1) Carry the login information everywhere via a stateless protocol like OAuth. Every service talking to other services carry
@@ -21,13 +30,15 @@ OAuth2 flow :
 
 User has logged in to photo printing server but my photo is on google drive. fetch my photos from google drive.
 Printing server go to Google drive and says my user wants to access resource from your drive.
-Authorization server(google drive) goes to user (resource owner) and say this client(printing service) wants to access you files.
-Are you okay with that? If yes authorization server sends token to photo printing service.
-Client uses this token to get second toekn which is access token.
+Authorization server(of google drive) goes to user (resource owner) and say this client(printing service wensite) wants to access you files.
+Are you okay with that? If yes, you as a resource owner enter your your google username and password and authorization server sends a code to photo printing
+service to access the token.
+Client uses this codeto get token which is access token.
+This access token can be used to get the resources.
 
 2) Flow in microservices : 
 
-mS1 wants to call mS2 API. And mS2 has an access to database. mS2 has an Auth Server with it. mS1 will make a call to Auth server and 
+mS1 wants to call mS2 API.And mS2 has an access to database. mS2 has an Auth Server with it. mS1 will make a call to Auth server and 
 it provides a certain client_id. Like hey I am this microservice. mS2 provides an access token to mS1 which provides information mS1 need like
 profile information. Now mS1 makes call to mS2 to ask for profile info authorized with access token.
 
@@ -46,6 +57,24 @@ Go to OAuth2 playground website and register a client.
 Click on register a client.
 You will receive client_id and client_secret
 
+Password flow : Client take your username and password and send that to authorization server.
+In that case user won't see authorization server login dialog. in this case you will see printing website page to enter your username and password.
 
-                              
+=====================================================================================================================================================
+
+Client credentials flow : This flow is best when there is machine to machine communication
+
+1) Client which is a website itself send client_id and client_secret to the authorization server.
+2) Authorization server send back a bearer toekn which is again used by client to access the resource from resource server.
+3) Resource server validate this token from authorization server and return the response to client in case the token is valid.
+
+=====================================================================================================================================================
+
+Implementation : 
+
+1) include dependency spring-security-oauth2 in pom.xml
+2) Create one spring boot application called as authorization server (@EnableAuthorizationServer)
+3) Create one spring boot application called as resource server (@EnableResourceServer)
+
+=====================================================================================================================================================
 

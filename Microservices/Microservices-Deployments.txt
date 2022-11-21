@@ -1,5 +1,5 @@
 Add docker file plugin to pom.xml file. (Docker file maven plugin)
-Inside goals of plugin also add bu;ild and push goal so that it will build the docker file to create a 
+Inside goals of plugin also add build and push goal so that it will build the docker file to create a 
 docker image and push the image to our docker registry.
 Create a Dockerfile parallel to pom.xml only.
 

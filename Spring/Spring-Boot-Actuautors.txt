@@ -1,0 +1,23 @@
+Spring boot actuators provides secured endpoints for monitoring and managing your spring boot application.
+
+To enable spring boot actuators add spring-boot-starter-actuator dependency in pom.xml.
+
+management.port = 9090 -> If you want separate port for spring boot actuators endpoints.
+
+Some important actuators endpoints : 
+
+/metrics : To view application metrics such as memory used, memory free, threads, classes, system, system uptime etc.
+/env : To view the list of environment variables used in application.
+/beans : To view spring beans and its types, scopes and dependency.
+/health : To view the application health.
+/info : To view information about spring boot application.
+/trace : To view the list of traces of your REST endpoint.
+
+Spring boot admin server is an application used used to manage and monitor your microservice application.
+
+Dependencies : spring-boot-admin-server, spring-boot-admin-server-ui
+
+Spring boot admin client : 
+
+Dependencies : Spring-boot-starter-admin-client and spring-boot-starter-actuators
+

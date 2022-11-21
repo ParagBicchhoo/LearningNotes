@@ -1,0 +1,16 @@
+1) Single responsibility principle : 
+
+Real life example : You arrange a party and ask your friends to work on everything. At the end you have more than plates and glasses,
+not enough drinks and no snacks at all. Here there is something wrong with your friends responsibilities.
+
+# Class size should be small - that you should describe the behavior of class in one snetense.
+Ask following questions : 
+Can the class be described in one sentence?
+Is it fewer than 25 words?
+Does it have zero instances of if, or and but
+Does it have one responsibility
+
+# Everything within a class should do one thing, so there is only one reason for a class to change.
+
+# Classes that adhere to the SRP, tend to have high cohesion.
+Consider a class 

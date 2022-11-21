@@ -104,7 +104,7 @@ Has a relation is also known as composition or aggregation.
 No specific relation to implement has a relation.
 Write engine once and creating object use it anywhere. Hence it provides reusability.
 
-Difference between composition and aggregation : 
+Difference between composition and association: 
 
 Both are has a relation. 
 Example University is Container class and Different department classes are contained Objects.
@@ -351,7 +351,7 @@ If the parent class method is final then it cannot be overriden.
 
 parent class Abstract method must be overriden in child class to provide implementation.
 
-Lets say class A has method m1 implemented then class B whcih is a child of A can override this method without providing implememntation.
+Lets say class A has method m1 implemented then class B which is a child of A can override this method without providing implememntation.
 method m1 in class B will be abstract hence class b will also be abstract.
 Now child class of B must implement this abstract method.
 Advantage  : We can stop the availability of parent method implementation to the next level child classes.
@@ -378,7 +378,7 @@ least to most accessible modifiers -> private > default> protected> public.
 
 Execptions in overriding : 
 
-runtime exception and its child classes(NullPointerexception, Classcast	, ArithmaticException), error and its child classes are unchecked.
+runtime exception and its child classes(NullPointerexception, ClasscastException , ArithmaticException), error and its child classes are unchecked.
 Remaining are checked exeption.
 throwable is checked
 
@@ -386,7 +386,7 @@ IOException checked,
 FileNotFound -> checked
 EOFException checked
 Exception checked
-Interrupted -> Checked
+InterruptedException -> Checked
 
 Rules in overriding : 
 

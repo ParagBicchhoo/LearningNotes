@@ -3,7 +3,7 @@ Concurrent-Collection :
 Why : 
 
 1) Most of the traditional collections like ArrayList, HashMap are not thread safe.
-And there is always a chanche of data inconsistancy.
+And there is always a chances of data inconsistancy.
 
 2) Thread safe collections like hashtable, vector, Collections.synchronizedList(), Collections.synchronizedSet(),
 Collections.synchronizedMap() can only be accessed by one thread at a time. It increases waiting time of thread

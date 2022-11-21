@@ -20,8 +20,8 @@ Lambda expressions important characteristics :
 
 Method references : 
 
-Method references help to point to methods by their names. Method references are described using symbol  "::".
-Method refernce can be used to pint to following types of methods : 
+Method references help to point to methods of functional interfaces by their names. Method references are described using symbol  "::".
+Method refernce can be used to point to following types of methods : 
 a) Static methods
 b) Instance methods
 c) Constructors using new operator (TreeSet :: new) 
@@ -51,7 +51,8 @@ Characteristics of stream :
 1) Provide set of elements in sequential manner. It never stores the elements.
 2) Streams takes Collection, Arrays as a input.
 3) Streams supports aggregate operations like filter map limit reduce and so on.
-4) Pipelining : Most of the stream operations return straem itself so that the results can be pipelined. Collect is the terminal operation which is performed at the end of the process
+4) Pipelining : Most of the stream operations return stream itself so that the results can be pipelined. 
+Collect is the terminal operation which is performed at the end of the process
 to mark the end of the stream.
 
 Collection interface has two ways to generate streams : 
@@ -113,7 +114,6 @@ Runnable
 Comparable
 Callable
 ActionListener
-Comparable
 
 If you want to invoke lambda expression : FI must be required.
 
@@ -131,7 +131,7 @@ Interface A{
 public void m1();
 }
  @functionalInterface
-Interface B{
+Interface B extends A{
 }
 
 Valid case

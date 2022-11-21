@@ -29,7 +29,7 @@ This can be achieved with the help of hystrix(Spring-cloud-starter-netflix-hystr
 annotation in application class.
 Add @HystrixCpmmand to methods that need circuit breaker. Lets say there is a method that makes an external call and it
 can become slow.
-Configure Hystrix behaviour. We can also leave everything default to make hystrix beak circuit by its own parametsrs.
+Configure Hystrix behaviour. We can also leave everything default to make hystrix break circuit by its own parameters.
 Parameters while configuring hystrix : 
 1) HystrixCommand("fallBackMethod"="getFallBackcatalog")
 2) commandProperties = @HystrixProperty (name = "timeout" -> After what time a timeout should happen
@@ -49,7 +49,7 @@ And as all the threads are consumed even not affected microservices are also aff
 One of the solution is to use timeouts. Adding timeouts to RestTemplate. If requests that are coming are fater than what4
 timeout can do? Hence this is not a good solution.
 
-When a circuit should break?
+When a circuit should break? 
 Every circuit breaking needs to be triggered by something.
 
 Hystrix dashboard provides information data display about your application on a dashboard.
@@ -106,7 +106,7 @@ Now consider a scenario where in you need to log the details of VaccinationCente
 until the logs are printed. Thats why this can be handled with asynchronous calls. Which can be handled with aynchronous clients
 like Apache Active Mq  , RabbitMq and Kafka. 
 
-Examples of asynchronous calls : Logging, SMS Service, Messaging service.
+Examples of asynchronous calls : Logging, SMS Service, email service.
 
 ---------------------------------------------------------------------------------------------------------------------------------------
 Aggregator design pattern : Aggregator microservice collects a piece of data from each of the microservice and 
