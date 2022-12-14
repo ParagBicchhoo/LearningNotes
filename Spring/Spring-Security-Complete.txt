@@ -1,0 +1,107 @@
+SSL, HTTP and Firewalls are used to protect servers and not web application and data.
+Generally SSL, firewalls are taken care by server admins.
+
+Developer is responsible to secure web application.
+
+Spring boot dev tools dependency automatically detects changes and restarts application saving overall time.
+
+==========================================================================================================================================
+
+Servlets and filters in java applications : 
+
+Browsers can only understand http protocol
+Using this http protocol my web browser can send a request to my web application and since my java code cannot understand that 
+http protocol request, there is a middle man sitting between my java code and my browsers and we call that middle man servlet 
+containers or web servers like tomcat containers.
+
+So these conatiners will convert the http request that is coming to them to HttpServletRequest object and same object will be 
+given to the java code we are using in our web application. Very similarly when we are sending response back to the browser, 
+java code will send HttpServletResponse object to servlet container and container will convert that object into http message 
+so that browser can understand.
+
+So servlets are very important.
+No one uses them now directly because they are very complex in nature.
+
+Filters are special kind of servlets where every request intercepts before it goes to my web applcication.
+Here you can you some pre-work before request go to application.
+
+===========================================================================================================================================================
+
+Internal architecture of spring security : 
+
+1) User enter his credentials and send to backend application.
+2) The request is received by tomcat container and web application.
+3) If you already have spring security dependency inside pom.xml a default security mechnism will be in place.
+4) Request will go to spring security filters and it will check if the user is already logged in or not.If user is already logged in it 
+will not enforce a login page but will use existing session id to keep user logged in.
+5) Spring security filter will extract username and password from passed and convert that into Authentication Object because Authentication is 
+a standard object to store details of my end user.
+6) Once this Authentication object is formed, Spring security filers will handover this Authentication object to Authentication manager.
+7) Authentication manager will manage actual authentication logic. It will check what are all the Authentciation providers present in my web Application.
+I can define one or two or three providers. Now with this Authentication providers I can define actual logic of authentication.
+Wheather I want to validate user from database or LDAP server or from Authorization server or from cache.
+8) You can also leverage spring provided authentication providers which is UserDetailsManager/Service.
+9) Finally I would need to compare the detials provided by user and the one that were loaded from database or ldap. This comparison logic are 
+written by default in UserDetailsService.
+10) AuthenticationManager also communicate with PasswordEncoder interface.
+11) While giving back response Spring security filter will try to save my AuthenticationManager object into security context which will have 
+information like whether my authentication was successful or not ,what is the session id.
+
+===========================================================================================================================================================
+
+How spring security handles multiple requests without relogin : 
+
+A JsessionId cookie is created with each login and sent back to the server. This JsessionId is stored by securityContext inside spring app and 
+reverted as long as my browser send this cookie back to server the session is valid.
+This is not very secured and is replaced by some advanced features like JWT and OAuth2.
+
+===========================================================================================================================================================
+
+# In spring profiles we can create conditional beans where we will have separate beans based on different environments where in, in dev '
+environment we will have permitAll() condition and any security will not be enforced here.
+
+
+Classes and interfaces : 
+
+UserDetailsService(I) :: UserDetailsManager(I) :: InMemeryUserDetailsManager(C), JdbcUserDetailsManager(C), LdapUserDetailsmanager(C)
+
+UserDetailsService :: loadUserByUsername(String username)
+UserDetailsManager :: createUser, updateUser, userExists, deleteUser, changePassword.
+UserDetails(I) :: getAuthorities, getUsername, getPassword, is userAccountIsNonExpired.
+User :: Implementation class of UserDetails.
+
+Authentication is the return type in all scenarios where we are trying to determine if the authentication is successful or not.
+Like inside the AuthenticationProvider(DaoAuthenticationProvider is the default) and AuthenticationManager.
+UserDetails is the return type in all the scenarios where where we try to load the user info from the storage system.
+Like inside UserDetailsService and UserDetailsManager.
+
+Once the user details are loaded from the database, these details will be shared back to the AuthenticationProviders.
+So inside AuthenticationProviders once the authentication us successful, they are responsible to transform all that information along with
+successful reponse to Authentication object.
+
+Principle(I) :: Authetication(I) :: UsernamePasswordAuthenticationToken(C)
+
+Methods in Authentication class : 
+
+getName
+getPrinciple
+getAuthorities
+getCredentials
+getDetails
+isAuthenticated
+setAuthenticated
+eraseCredentials
+
+Methods in UserDetails class : 
+
+getUsername,
+getPassword,
+getAuthorities,
+isAccountNonExpired,
+isAccountNonLocked,
+isEnabled,
+IsCredentialsNonExpired,
+eraseCredentials.
+
+===========================================================================================================================================================
+

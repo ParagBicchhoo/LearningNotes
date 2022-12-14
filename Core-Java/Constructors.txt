@@ -1,0 +1,151 @@
+Need of constructors : Is to initialize an object. Where as new keyword is responsible to create an object.
+
+# Whenever a constructor is called when an object is initialized, an object is created with default values which are null for objects and 
+0 for int, 0.0 for float and all.
+
+================================================================================================================================================
+
+Rules : 
+
+1) Return type concept not applicable for contructors. Not even void. Compilor wil treat it as a method if void is given.
+It is always legal to name class name same as method. But it is not a recomendable approach.
+
+2) Which modifiers are allowed for constructors : 
+public(Anywhere you can create an object), default(Object can be created within the same package), 
+protected(Same package and only in child classes in outside package), private(Object can be created within the same class only). 
+Otherwise compilation error.
+
+3) Every class in java contains constructor. If I am not writing any constructor JVM will generate default constructor if you are not writting 
+at least one constructor.
+If atleast one constructor is there parametarized or non-parametarized, it won't generate constructor.
+rototype of default constructor  : no-arg, access modifier is same as class access modifier.
+[this rule is applicable for public and default. As class cannot be private and protected.]
+Default constructor contains only one line super(); --> It is a no-arg call to super constructor.
+If class is final : 
+
+4) First line inside every constructor should be either super() or this().
+If you are not writting any of this, compiler will put super();  
+
+5) super() should always be first statement and cannot be at line other than 1st. -
+6) Writting super() and this() is only allowed to write in constructor and is invalid for methods.
+7) this() means same class constructor call.
+8) Constructors can be overloaded.
+9) Constructor cannot be overriden.
+10) If you write constructor inside an interface : compilation error.
+11) Abstract class can contain constructor : whenever you are creating child class of this abstract class this constrcutor will be executed.
+12) Every variable in interfaces are public static final so as these variables cannot be reassigened then what is the need to these.
+13) Variables cannot be written inside an interface hence no constrcutor.
+14) If m1 method is throwing an exception and m1 is called from m2 then m2 is responsible to handle that exception
+
+===============================================================================================================================================
+Cases :
+
+1)
+
+1st statement in constructor : super()
+2nd statement : this()
+
+invalid as this() must be in first line only.
+
+2) 
+
+class Test {
+
+public void Test(){  ::: Invalid as Test is method because it has return type and super() cannot be called from method.
+
+super();
+}
+}
+
+case 2 : 
+
+class P {-
+
+String s = "P";
+
+}
+
+class c extends P {
+
+String s = "C";
+
+public void m1(){
+syso(s) : prints C
+syso(this.s) : Prints C
+syso(super.s) Prints P
+}
+
+}
+
+super and this keyword cannot be used in static area as they are objects and static is not related to object.
+
+3) 
+
+class P {
+
+P(){
+}
+}
+
+class C extends P {
+
+C(int i){
+}
+}
+
+C c =  new C(); : invalid as overriding is not valid for constructors
+
+4) class Test{
+
+Test(){
+this(10);
+}
+Test(int i) {
+this();
+}
+}
+
+Compilation error > In case there is a recursive call with constructor....compilation error. compilor will detect it.
+
+4) 
+
+class P {
+P(int i){
+}
+}
+class C extends P{
+}
+
+Invalid case as class c construtor will call super with no arg and there is no constrcutor with no arg in P.
+
+5) 
+
+class P {
+
+P() throws IOEXception {
+}
+}
+
+class C extends P {
+}
+
+As there is no constrcutor in C default constructor will do super call.
+And this compiler generated constructor will not be able to handle IOEception thrown by Constructor of class P.
+Hence invalid case - compilatiron error.
+
+How to handle this? 
+we cannot use try catch inside constructor as first line should be super hence we can handle this by throwing 
+IOException or its parent by child class constructor : 
+
+class P {
+
+P() throws IOEXception {
+}
+}
+
+class C extends P {
+C() throws IOException {
+}
+}
+
+=======================================================================================================================================================================

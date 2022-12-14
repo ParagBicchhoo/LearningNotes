@@ -316,6 +316,23 @@ c.marry(); -> child method
 P p1 = new C();
 p1.marry() -> If marry method is overriden, then child method will be called else parent method
 
+Note : When child class has a method with same signature as of parent, then that method will be called as overriden method whether 
+you give @Overriden annotation or not.
+If the parent method is private then if you create a child method with same signature with @Overriden annotation, 
+then it will give compilation error(because private methods cannot be overriden) and if you don't give @Overriden annotation
+then that method will be child specific and won't give any error.
+
+Now consider marry method is private and C class method is not overriden :
+
+P p1 = new C();
+p1.marry() -> It will call parent class method.
+
+Case with final is little different, if parent class method is final, then in child class you cannot create a method with same name.
+Whether you use @Overrident annotation or not.
+
+Parent class has method m1, child class has method m1 with same signature without @Overridden annotation.
+Then that will also be called overriding.
+
 ---------------------------------------------------------------------------------------------------------------------------
 
 Rules for overriding : 
@@ -388,7 +405,7 @@ EOFException checked
 Exception checked
 InterruptedException -> Checked
 
-Rules in overriding : 
+Rules in overriding: 
 
 1) If child class method throws any checked exception then parent class must throw same exception or its parent exception
 2) There are no rules for unchecked exception. unchecked exception can be thrown by any class.
@@ -404,7 +421,7 @@ child class : public void m1() throws Exception
 3) parent class : public void m1() throws Exception  (valid)                            3) Rule 1
 child class : public void m1() throws IOException
 
-4) parent class : public void m1() throws IOException (Invalid)                         4) Rule 1 violated
+4) parent -class : public void m1() throws IOException (Invalid)                         4) Rule 1 violated
 child class : public void m1() throws Exception
 
 5) parent class : public void m1() throws IOException   (Valid)                         5) Rule 1       
@@ -418,6 +435,63 @@ child class : public void m1() throws AE, CCE, NPE
 
 =====================================================================================================================================================================
 
-We cannot override non static method as static
+We cannot override non static method as static.
 
 =====================================================================================================================================================================
+
+Overriding with var-arg : 
+
+case 1: 
+
+class P {
+
+public void m1(int... x){
+syso("parent");
+}
+class C extends P {
+public void m1(int x){
+syso("child")
+}
+}
+
+P p = new P();
+p.m1(10) -- parent 
+
+C c = new C();
+c.m1(10) : child
+
+P p = new C();
+p.m1(10) :: parent method :: As method is not overriden and hence reference type will be used for method call.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+case 2 : 
+
+class P {
+int x = 888;
+}
+class C extends P {
+int x = 999;
+}
+
+class test {
+
+public static void main(String[] args){
+
+P p = new P();
+syso(p.x);  :: 888
+
+C c = new C();
+syso(c.x); :: 999
+
+P p1 = new C();
+syso(p1.x); :: This is not overriding as it is not vald for variables hence reolution is based on reference type hence ans is 888.
+
+}
+
+In this case whether the variables are static or non-static, rules are same answer wil always be same.
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+
+

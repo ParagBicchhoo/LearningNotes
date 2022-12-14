@@ -101,3 +101,39 @@ A class with T parameter is called generic class.
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+Parameterizable classes : 
+
+You can dynamically change the type of parameters used in class.
+For example there is a parameter called as age and you are not confirmed whether user will pass Integer value or String value or Double value.
+In this case you can create a variable named as age as type T and while creating and object of class, user will pass Integer or string as 
+input in type parameter and value.
+
+Example : Black box.
+
+public class GenericsTester {
+   public static void main(String[] args) {
+      Box<Integer> integerBox = new Box<Integer>();
+      Box<String> stringBox = new Box<String>();
+
+      integerBox.add(new Integer(10));
+      stringBox.add(new String("Hello World"));
+
+      System.out.printf("Integer Value :%d\n", integerBox.get());
+      System.out.printf("String Value :%s\n", stringBox.get());
+   }
+}
+
+class Box<T> {
+   private T t;
+
+   public void add(T t) {
+      this.t = t;
+   }
+
+   public T get() {
+      return t;
+   }   
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+

@@ -1,0 +1,51 @@
+Spring data is a umbrella project which has persistant layer implementation of many persistant technologies like
+Spring data JDBC .... mini version of JPA. It is conceptually light
+Spring data JPA ...it has many features like pagination, caching.
+Spring Data LDAP
+Spring Data MongoDb
+Spring data Redis
+
+and many......
+
+## The central interface in the spring data repository abstraction is Repository. It is simple marker interface.
+
+# CrudRepository -- provides basic persistant capabilities like create, read, update and delete.
+# PagingAndSortingRepository : Sometimes I wan't to sort the data or I want to apply the paginantion means I 
+don't want want all 10000 records I want them to be in a batch of 100 at a time.
+# Why they did not provide all these features in a single interface -- because of concept in SOLID called as interface seggregation.
+
+Every subproject in spring-data will have its own implementation interface like spring-data-jpa has JpaRepository.
+spring data mongo will have MongoRepository.
+JpaRepository extends PagingAndSortingRepository.
+
+Annotations : 
+@Repository
+@Table
+@Column
+@Id
+@Entity
+@Enumerated - java variable type is enum of string and database column is varchar
+@EnableJpaRepositories("package name where my repositories are available") - in main class 
+@EntityScan("package where my entity objects are available")
+
+Properties : 
+spring.datasource.url=jdbc:mysql://spring.cfgh.useast.rds.amazonaws.com/eazyschool
+spring.datasource.username=parag
+spring.datasource.password=vfghnvbfj
+spring.jpa.show-sql=true  --> Show sql queries on console in case of derived query methods
+spring.jpa.properties.hibernate.format_sql=true -- show them in good format
+
+===========================================================================================================================================
+
+CrudRepository<PojoClass, primaryKeyType>
+CrudRepository<Contact, Integer>
+
+Derived query methods in Spring data JPA : 
+
+List<Person> findByLastName(String lastName);
+Person findByEmail(String email);
+Person findByEmailAndLastName(String email, String lastName);
+
+Introducer : tell jpa that what to do : (find, read, query, get are same), count, Distinct
+Criteria : tell jpa criteria : And , OR.
+
