@@ -18,7 +18,7 @@ Otherwise compilation error.
 3) Every class in java contains constructor. If I am not writing any constructor JVM will generate default constructor if you are not writting 
 at least one constructor.
 If atleast one constructor is there parametarized or non-parametarized, it won't generate constructor.
-rototype of default constructor  : no-arg, access modifier is same as class access modifier.
+prototype of default constructor  : no-arg, access modifier is same as class access modifier.
 [this rule is applicable for public and default. As class cannot be private and protected.]
 Default constructor contains only one line super(); --> It is a no-arg call to super constructor.
 If class is final : 

@@ -13,7 +13,7 @@ Some important actuators endpoints :
 /info : To view information about spring boot application.
 /trace : To view the list of traces of your REST endpoint.
 
-Spring boot admin server is an application used used to manage and monitor your microservice application.
+Spring boot admin server is an application used to manage and monitor your microservice application.
 
 Dependencies : spring-boot-admin-server, spring-boot-admin-server-ui
 

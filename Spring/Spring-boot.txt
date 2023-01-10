@@ -81,7 +81,7 @@ public String homeController(@RequestParam("myName") String name){
 Spring boot Auto-configurations : 
 
 Whenever we create a new Project using spring mvc I need to do lot of configurations like :
-Component scan, dispatcher servlet, view resolver (which is used in MVC to work with views), 
+Component scan, dispatcher servlet, view resolver (which is used in MVC to work with views), error mapping page configuration,
 datasource if I am working with hibernate, Multipart resolver if I am working with Multipart file upload.
 To avoid this springBoot autoconfiguration is used.
 
@@ -98,6 +98,10 @@ If you go to this class
 @ComponentScan to enable component scanning -> All the packages and subpackages will be autoscanned which are under the 
 root package on which @SpringBootApplication is applied.
 @EnableAutoConfiguration
+
+When we return a bean from a rest controller method, that bean is converted in to desired format using HttpMessageConvert 
+that is configured via Spring boot auto-configuration.
+This bean must have getters in order to happen this conversion. 
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
