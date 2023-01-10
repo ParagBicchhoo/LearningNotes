@@ -38,9 +38,7 @@ This access token can be used to get the resources.
 
 2) Flow in microservices : 
 
-mS1 wants to call mS2 API.And mS2 has an access to database. mS2 has an Auth Server with it. mS1 will make a call to Auth server and 
-it provides a certain client_id. Like hey I am this microservice. mS2 provides an access token to mS1 which provides information mS1 need like
-profile information. Now mS1 makes call to mS2 to ask for profile info authorized with access token.
+Client credentials flow is generally used here.
 
 Client -> is a website or a service [Client is my website]
 Client makes a request to resource owner[me] whether I can access this resource.
