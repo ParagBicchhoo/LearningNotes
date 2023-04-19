@@ -1,0 +1,14 @@
+1) Dynamo db calculations of RCU and WCU with strongly consistant and eventuallly consistant
+formulas.
+
+2) Elastic beanstalk updrades revision : Rolling upgrade, immutable etc
+
+3) Amazon ECS Upgrades types revision : blue green with canary, rolling etc.
+
+4) CodeDeploy predefined configurations.
+
+5) S3 encryption types.
+
+6) S3 glacier, deep archive, intelligent tiering.
+
+From 221 to 258 go through all questions again and see if there are duplicates.
