@@ -12,3 +12,35 @@ formulas.
 6) S3 glacier, deep archive, intelligent tiering.
 
 From 221 to 258 go through all questions again and see if there are duplicates.
+
+7) Revise dynamo db partition key and sort key, local secondary index and global secondary index.
+
+8) Amazon cognito user pool vs identity pool
+
+9) CodeArtifact
+
+10) Gateway VPC endpoint vs Interface VPC endpoint.
+
+11) Inline policy.
+
+• AWS Managed Policy
+ • Maintained by AWS 
+ • Good for power users and administrators 
+ • Updated in case of new services / new APIs
+• Customer Managed Policy
+ • Best Practice, re-usable, can be applied to many principals
+ • Version Controlled + rollback, central change management 
+• Inline
+ • Strict one-to-one relationship between policy and principal
+ • Policy is deleted if you delete the IAM principal.
+
+12) Lambda@Edge are used to change the cloudfront responses. Cloudfront functions and lambda@Edge are kind of similar with few changes like: 
+CloudFront functions : Max memory 2MB, file system access, request body access no
+Lambda@Edge : 128 mb to 512 mb, files systems access, request body access yes.
+
+13) Lambda authorizer are used for security of API gateway to provide authentication and lambda function is used for an authorization.
+
+14) SSL termination refers to the process of decrypting encrypted traffic before passing it along to a web server
+
+15) Learn CodeGuru
+
