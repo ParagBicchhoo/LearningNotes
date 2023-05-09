@@ -15,7 +15,7 @@ From 221 to 258 go through all questions again and see if there are duplicates.
 
 7) Revise dynamo db partition key and sort key, local secondary index and global secondary index.
 
-8) Amazon cognito user pool vs identity pool
+8) Amazon cognito user pool vs identity pool when to use what.
 
 9) CodeArtifact
 
@@ -42,5 +42,9 @@ Lambda@Edge : 128 mb to 512 mb, files systems access, request body access yes.
 
 14) SSL termination refers to the process of decrypting encrypted traffic before passing it along to a web server
 
-15) Learn CodeGuru
+15) Learn CodeGuru\
+
+16) Cloudformation parameters.
+
+17) 
 
