@@ -1,0 +1,57 @@
+Spring AOP (Aspect oriented programming) is used to address cross cutting concerns within an application.
+Parts of the programs that are spanned from multiple parts of an application are called as Cross-cutting-concerns.
+
+Good examples of an aspects : logging, Auditing, Declarative transactions, Security, caching etc.
+
+Spring AOP let interceptors intercept an application.
+For example when a method is executed, you can add extra functionality before or after the method is executed.
+
+=============================================================================================================================
+
+Spring AOP core concepts : 
+
+Aspect : A module which has set of APIs providing cross cutting requirements.
+Logging module would be called AOP aspect for logging.
+
+Join Point : This represents the point in your application where you can plugin the aspect.
+Or Actual place in an application where an action will be taken using spring AOP framework.
+
+Advice : This the actual action to be taken before or after method execution.
+
+PointCut : This is the set of one or more joinPoints where an advice should be executed.
+You can specify Pointcuts using expressions or patterns.
+
+Introduction :  Allows you to add new methods or attributes to existing classes.
+
+Target Object : The object being advised by one or more aspects.
+
+Weaving : Weaving is the process of linking aspects with other applications types or 
+objects to create a new advised object.
+This can be done at compile time, load time or runtime.
+
+=============================================================================================================================
+
+Advice Types : 
+
+before : Run advice before the method execution.
+after : Run advice after the method execution.
+after-returning : Run advice after the method execution.
+after-throwing : Run advice after method execution but only if method exits by throwing an exception.
+around : Run advice before and after advised method is invoked.
+
+We can also create custom Advice annotation with marker interfaces in case the default advices are not applicable.
+
+public @interface Loggeable {
+
+	
+
+}
+
+@Loggeable
+public String getName() {
+
+	System.out.println("Name : " + name);
+
+}
+
+=============================================================================================================================

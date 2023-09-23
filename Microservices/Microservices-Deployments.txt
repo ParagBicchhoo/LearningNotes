@@ -1,0 +1,18 @@
+Add docker file plugin to pom.xml file. (Docker file maven plugin)
+Inside goals of plugin also add build and push goal so that it will build the docker file to create a 
+docker image and push the image to our docker registry.
+Create a Dockerfile parallel to pom.xml only.
+
+Docker file configurations : 
+
+FROM openjdk:11                                              -> What java version you are using
+ARG JAR_FILE = target/*.jar                                  -> local path of jar file
+COPY ${JAR_FILE} user-service.jar                            -> where to copy that jar file
+ENTRYPOINT ["java", "-jar", "/user-service.jar"]             -> What command to execute to run the jar file  
+EXPOSE 9002                                                  -> Port to keep reserved for this application
+
+Now we need to build this.
+Execute command : "mvn clean package Dockerfile:push" to build the docker file and push it to docker hub.
+
+Do above process for all the microservices.
+

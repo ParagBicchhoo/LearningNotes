@@ -1,0 +1,67 @@
+Types of version control system : 
+
+1) Centralized 
+2) Distributed
+
+Distributed version control system is better as even if central repository got corrupted or crashed every developer has local repository.
+
+GIT is distributed version control system tool.
+SVN is centralized version control system tool
+
+Reason why GIT is famous : 
+
+1) No single point of failure 
+2) Performance is good
+3) Without network also developer can continue his work
+4) Staging area is the biggest strength of GIT which is a virtual area.
+
+While committing changes from working directory to local repository we need to add files to staging area which exist between working directory and local repository.
+
+Use of staging area : Crosscheck or Double check changes before commit.
+
+Another important advantage of GIT : Branching and Merging
+
+All branches are isolated from each other.
+Hence multiple flows of developement are possible
+GIT is a freewere
+Provide support for multiple platforms
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1) git add --> Add files from working directory to staging area
+2) git commit --> Send staged changes to local repository
+3) git push --> Move local repository changes to remote repository
+4) git clone/git pull --> Bring files from remore repository to local repository
+cloning : creating duplicate copy , used only once i.e. first time
+pull : already working on a branch but want some updates.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Life Cycle Of File In GIT : 
+
+Every file in GIT is in one of the following state : 
+
+1) Untracked : New files created inworking directory - In WD
+2) Staged : Files which are added to staging area - Staging area
+3) In Repository/ Committed : Any file which is committed - Local repository
+4) Modified : Any file which is already tracked by git but it is modified in working directory. - In WD
+
+git status : To know status of files in all areas ( i.e. WD, Staging area, local repository 
+ls : List out all files in working directory - linux command
+git ls-files : List out all files in working directory which are tracked by git - git command
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+git init : To provide an empty repository to our workspace so that version control is available to our working directory
+Immidiately an empty repo is provided named .git (hidden dir)
+git status on random repo  : fatal not a git repository
+git status after git init : message : Nothing to commit
+
+git log : Show all commit history
+
+git commit -a -m 'message' : Add changes to staging and then commit , this is not applicable for newly created files but only for modified files.
+git status -s : concise output
+
+
+git config --> To check git configurtions like username , email etc.
+

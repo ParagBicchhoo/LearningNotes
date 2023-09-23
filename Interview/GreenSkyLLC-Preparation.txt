@@ -1,0 +1,261 @@
+1) Revise AWS from incubation program.
+2) AWS fargate overview
+3) OpenFeign overview
+4) MapStruct overview
+5) Redis overview
+6) LDAP with AD overview
+7) KeyCloak 
+8) OAuth2 implementation.
+9) All Learning Notes revision.
+10) Install Eclipse.
+
+===============================================================================================================================================
+
+2) AWS fargate overview : (Compute engine for amazon ECS)
+
+You have an application on your local, you dockerize your app to create a docker image and upload it to a repository like docker hub and 
+another option is Elastic container registry(ECR).
+ECR is fully managed, Highly available, Secure, Simplified overflow.
+
+One of the option is to use ECS .
+
+Another option is to use AWS fargate which has following advantages : 
+
+No cluster to manage
+Seamless scaling
+Pay for what you use
+Integrated with AWS ecosystem.
+Highly available.
+
+Is fargate serverless or a container?
+It's both.
+
+How it works in fargate : 
+
+Run your app in EC2 : 
+1) Create an EC2 instance
+2) Use IAM role for EC2 to communicate with ECR. 
+3) Connect the EC2 instance through putty and install the docker
+4) Start the docker.
+5) Create the docker image using dockerf file.
+6) Create a repository (ECR).
+7) Push the image into repository.
+8) Run this image in a fargate container.
+9) If you search fargate , you get ECS because fargate runs in an ECS cluster.
+10) Go to ECS, create a cluster. and select the option powered by AWS fargate which does not need any EC2.
+11) Create a task defination. Task is a collection of containers. Task CPU and memory are shared by containers running in Task. However
+you can allocate Container specific memory and CPU.
+12) Add containers to this task defination.
+13) Now run the task. Select launch type as fargate. Now we need to select task defination while running this task.
+14) Now if you go to instaces and see running instances, you will see our EC2 is not running even though our container is running.
+15) Hit the public IP to access the application.
+
+===============================================================================================================================================
+
+3) OpenFeign overview (Declarative REST client): 
+
+One of the advantages of feignclient over resttemplate is that we donot need to write any implementation to call
+other services.
+So there is no need to write unit test cases as there is no code to test in the first place.
+However it is advised to write integration test cases.
+It is declarative as there is no need to write implementation. So only need to create few abstract interfaces and 
+few annotations.
+It also support load balancing.
+Hystrix support for fallback mechanism
+
+Dependency : spring-cloud-starter-openfeign
+
+Code : 
+
+@FeignClient(url="https://jsonplaceholder.typicode.com", name = "USER-CLIENT")
+public interface UserClient {
+
+	@GetMapping("/users")
+	public List<UserResponse> getUsers();	
+
+}
+
+@SpringBootApplication 
+@restController
+@EnablefeignClient
+public class SpringCloudFeignApplication {
+	
+	@Autowired
+	private UserClient client;
+
+	@GetMapping("findAllUsers")
+	public List<UserResponse> getAllUsers() {
+		return client.getUsers();
+	}
+
+	public static void main(String[] args) {
+		
+		SpringApplication.run(SpringCloudFeignApplication.class, args);
+	}
+}
+
+===============================================================================================================================================
+
+4)Lombok and MapStruct overview : 
+
+Lombok is used to reduce a lot of boilerplate code from POJO classes or DTO classes.
+Like getters and setters , constructor without args , constructors with args and all.
+
+Mapstruct is a java bean mapper.
+For most of the applications you need lot of boilerplate code to convert one POJO to another.
+Most common types of conversions happen between persistant-backed entities and DTOs that go to client.
+
+So this problem is solved by mapstruct.
+
+Dependency : mapstruct-processor
+
+create a pojos : 
+
+public class SimpleSource {
+	private String name;
+	private String description;
+	//getters and setters
+}
+
+public class SimpleDestination {
+	private String name;
+	private String description;
+	//getters and setters
+}
+
+mapper : 
+
+@Mapper
+public interface SimpleSourceDestinationMapper {
+
+	SimpleDestination sourceToDestination(SimpleSource source);
+	SimpleSource destinationToSource(SimpleDestination destination);
+}
+
+Now this class is created by mapstruct for us : 
+
+public class SimpleSourceDestinationMapperImpl
+  implements SimpleSourceDestinationMapper {
+    @Override
+    public SimpleDestination sourceToDestination(SimpleSource source) {
+        if ( source == null ) {
+            return null;
+        }
+        SimpleDestination simpleDestination = new SimpleDestination();
+        simpleDestination.setName( source.getName() );
+        simpleDestination.setDescription( source.getDescription() );
+        return simpleDestination;
+    }
+    @Override
+    public SimpleSource destinationToSource(SimpleDestination destination){
+        if ( destination == null ) {
+            return null;
+        }
+        SimpleSource simpleSource = new SimpleSource();
+        simpleSource.setName( destination.getName() );
+        simpleSource.setDescription( destination.getDescription() );
+        return simpleSource;
+    }
+}
+
+===============================================================================================================================================
+
+Redis overview : 
+
+Redis is an key value store.
+It is also refered to as a data structures server since the keys can contain strings, hashes, lists, sets and sorted sets.
+
+@EnableCaching -> On a SpringBootApplication class
+@Cacheable -> Used on a layer(methods) whose response you want to cache. Like service layer methods, controller layer methods or Dao layer methods.
+@CacheEvict -> Lets say you are deleting a record from db and you also want to delete that record from your cache then this annotation is used.
+@cacheput -> Lets say you are update a record in db and you also want to update that record in your cache then this annotation is used.
+
+@cacheable parameters : @cacheable(key = "#id", value = "Product")
+
+key is the conditional parameter on the basis of which I want to fetch values from db.
+value is the hash of response that is returned by the layer method.
+
+Now I want to cache only those products whose price is less than 1000.
+@cacheable(key = "#id", value = "Product", unless = "#result.price > 1000")
+
+This means that the data will be cached unless the price of the product > 1000. Once the price is greater than 1000 it won't be cached.
+
+@cacheEvict example : @CacheEvict(key = "#id" ,value = "Product"); Using this annotation , if record from database is deleted it will also
+be deleted from cache.
+
+===============================================================================================================================================
+
+LDAP overview : 
+
+Lightweight directory access protocol.
+It stores organizational information.
+And also helps to store user information and help with authentication and authorization.
+Instead of database we take user information from LDAP active directory.
+
+There is an LDAP server where we will take info from.
+
+LDAP with spring boot : 
+
+Dependency : 
+
+1) Spring security
+2) unboundid-ldapsdk : It will setup a local instance of ldap for us to use
+3) spring ldap core -> Spring ldap library that integrates with ldap.
+4) spring-security-ldap -> integrates spring security with ldap.
+
+application.properties : 
+
+spring.ldap.embedded.port = 8389
+spring.ldap.embedded.ldif = classpath:ldap-data.ldif -> this is where data will be seeded in
+spring.ldap.embedded.base-dn = dc=springframework,dc=org   -> root node is org, springframework is below it.
+
+Next step is to tell spring security what to do when someone is trying to authenticate.
+
+Create a class 
+
+@EnableWebSecurity
+SecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	protected void configure(HttpSecurity http) throws Exception {
+
+		http.
+			authorizerequests().
+			anyRequest().fullyAuthenticated()
+			.and()
+			.formLogin();
+
+	}
+
+	protected void configure(AuthenticationManagerBuilder auth) throws exception {
+		http.ldapAuthentication()
+	}
+
+}
+
+===============================================================================================================================================
+
+KeyCloak Overview : 
+Open source identity and access management solution. It makes it easy to secure application and services with little to no code.
+
+OpenId : Open specification for authentication and single-sign-on (SSO).
+
+Download the keycloak server and run a batch file to run the server.
+
+Client in keycloak is the applications which can connect to the keycloak.
+In our case our SpringBootApplication is the client of Keycloak.
+
+A Realm can have multiple clients.
+
+Configurations for Keycloak are very much similar to ldap and normal db authentication. Except it extends 
+KeyCloakWebSecurityConfigurerAdapter class.
+
+And in this class you need to configure it.
+application.properties file need to configure some parameters like realm, client and all.
+
+Now you can manage authorization based on annotation @RolesAllowed("admin").
+This annotation is method specific.
+E.g. getAllEmployees is allwed to be accessed by admin only.
+
+
+===============================================================================================================================================
+

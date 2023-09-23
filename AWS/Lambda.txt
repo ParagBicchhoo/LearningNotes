@@ -1,0 +1,49 @@
+Lambda is also called as serverless computing. It let you run code without managing or provisioning servers.
+Lambda can run your code without even a need to server.
+In case of servers like EC2 even if your application is idle you still need to pay for server because
+it is still running.
+Lambda provides a flexibility where in you only need to pay when your code will run on lambda.
+
+=============================================================================================================================
+
+AWS lambda excutes your code only when needed and scales automatically from a few requests per day to thousands 
+requests per second.
+To run the code triggers are set.
+E.g. as soon as a new object enters in S3 bucket, lambda function should trigger.
+AWS automatically scales lambda.
+You need to provide your code to AWS lambda in the form of AWS lambda functions.
+AWS supports 7 languages as of now.
+You can test the function deployed with the help of test feature provided on AWS console.
+You can also trigger the function based on an even like explained above.
+
+=============================================================================================================================
+
+Versions and Aliases : 
+
+Whenever a new lambda function is created it is created with only one version $LATEST.
+In case you change some code and deploy the latest code will have these changes.
+You can also publish a new version of a function through console.
+First version will be 1 and it will always have the code at the time you published it.
+Unlike latest which always changes the numerical version code will be immutable and will always contain the same code.
+
+You can also create an alias which will point to the single version of your version.
+For example we can create an alias named live which will point to version #8.
+Then even if you create a version 9 the live alias will keep pointing to version #8 until you change and point it to 
+different version.
+An alias can be very useful to work with API getway.
+When we have an API endpoint we can point it to an alias. Then we can adjust the alias to point to any version we want.
+This way we can manage releases of our lambda functions.
+This method can be effectively used in case of roll back to previous version.
+==============================================================================================================================
+
+Lab : 
+
+1) Create a lambda function to generate random numbers with node js code and deploy it. This will always point to $LATEST.
+2) Create an alias named as live. As of now it will have only one option where it can point which is $LATEST. So point to it.
+3) Once this live alias is created we are inside this alias and not inside the function that we created and we can set a trigger for this alias.
+4) Lets create a trigger as API gateway which can call this alias. Alias is pointing to latest as of now. So when API gateway endpoint is hit
+it will execute the $LATEST code.
+5) We can edit the live alias we have created amd point it to version 1 which has an immutable fixed code. Once we edited this alias to point to
+version 1 then if we hit API gateway endpoint, it will execute version 1 code.
+
+==============================================================================================================================

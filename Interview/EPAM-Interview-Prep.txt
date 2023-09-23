@@ -1,0 +1,135 @@
+1) n*n matrix and find out left and right diagonal elements(using single loop) 
+
+-> a[i][i] + a[i][n-i-1];
+
+2) Find each managers from employee table where we have empId, empName, managerId :  Talk with abhilash for this.
+
+3) HashMap working, how hashMap handles collision?
+Until Java 1.8 each and every bucket in hashmap is a LinkedList.
+Whenever a new entry is added in hashmap the entry gets stored in a bucket which is eventually a 
+linkedList. whenever a new entry is added in a same bucket, entry is added in a head of the linked list.
+So in worst case scenario the time complexity of finding an element in hashmap is O(n).
+
+From java 1.8 this Linked List is replaced with balanced tree. So in worst case scenario this time
+complexity get reduced to O(logn).
+
+4) How Linkedhashmap works internally in java?
+
+-> It works same as Hashmap except in LinkedHashMap insertion order is maintained.
+For maintaining insertion order, LinkedHashMap maintain doubly linked list which maintain element before, after, 
+key, value, hashcode which is used to calculate the index of elements and next which points to the next element in
+the same bucket.
+
+5) Design patterns and how you have used it in your code.
+
+6) What is intercepter in Spring boot? 
+
+-> Spring boot interceptors are executed during pre-processing and post-processing the request. It acts as a servlet filters
+where they perfroms some security checks and operations like logging.
+
+7) What is maturity model in REST? -> Will do later
+
+-> 
+
+8) What are parallel streams and when to prefer them over sequential streams?
+
+-> ParallelStreams utilizes the multiple cores of a CPU and performs multiple tasks at a time in different threads. Which 
+eventually leads to data inconsistency.
+Where as sequential streams utilizes only one core at a time to perform operations in a sequential manner.
+Standard rule of multithreading. Ideal number of threads = number of cores the system CPU has.
+
+9) Difference between @Component @Service @Controller @Repository?
+
+First the Similarity
+
+First point worth highlighting again is that with respect to scan-auto-detection and dependency injection for BeanDefinition all these annotations 
+(viz., @Component, @Service, @Repository, @Controller) are the same. We can use one in place of another and can still get our way around.
+
+Differences between @Component, @Repository, @Controller and @Service
+@Component
+
+This is a general-purpose stereotype annotation indicating that the class is a spring component.
+
+What’s special about @Component
+<context:component-scan> only scans @Component and does not look for @Controller, @Service and @Repository in general. 
+They are scanned because they themselves are annotated with @Component.
+
+Just take a look at @Controller, @Service and @Repository annotation definitions:
+
+@Component
+public @interface Service {
+    ….
+}
+ 
+
+@Component
+public @interface Repository {
+    ….
+}
+ 
+
+@Component
+public @interface Controller {
+    …
+}
+Thus, it’s not wrong to say that @Controller, @Service and @Repository are special types of @Component annotation. 
+<context:component-scan> picks them up and registers their following classes as beans, just as if they were annotated with @Component.
+
+Special type annotations are also scanned, because they themselves are annotated with @Component annotation, which means they are also @Components. 
+If we define our own custom annotation and annotate it with @Component, it will also get scanned with <context:component-scan>
+
+@Repository
+
+This is to indicate that the class defines a data repository.
+
+What’s special about @Repository?
+
+In addition to pointing out, that this is an Annotation based Configuration, @Repository’s job is to catch platform specific exceptions and 
+re-throw them as one of Spring’s unified unchecked exception. For this, we’re provided with PersistenceExceptionTranslationPostProcessor, 
+that we are required to add in our Spring’s application context like this:
+
+<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+This bean post processor adds an advisor to any bean that’s annotated with @Repository so that any platform-specific exceptions are caught 
+and then re-thrown as one of Spring’s unchecked data access exceptions.
+
+@Controller
+
+The @Controller annotation indicates that a particular class serves the role of a controller. 
+The @Controller annotation acts as a stereotype for the annotated class, indicating its role.
+
+What’s special about @Controller?
+
+We cannot switch this annotation with any other like @Service or @Repository, even though they look same. 
+The dispatcher scans the classes annotated with @Controller and detects methods annotated with @RequestMapping annotations within them. 
+We can use @RequestMapping on/in only those methods whose classes are annotated with @Controller and it will NOT work with @Component, @Service, @Repository etc...
+
+Note: If a class is already registered as a bean through any alternate method, like through @Bean or through @Component, @Service etc... annotations, then @RequestMapping can be picked if the class is also annotated with @RequestMapping annotation. But that's a different scenario.
+
+@Service
+
+@Service beans hold the business logic and call methods in the repository layer.
+
+What’s special about @Service?
+
+Apart from the fact that it's used to indicate, that it's holding the business logic, 
+there’s nothing else noticeable in this annotation; but who knows, Spring may add some additional exceptional in future.
+
+10) syso('a'+'b'+'c'+'d'+'e') - Sum of ascii values of all
+
+11) String s1 = "abc";
+    String s2 = "abc";
+
+    syso("sum:"+s1==s2) - print false because comparison is between sum+s1 and s2
+
+12) public static int m1() {
+		
+		return (true? null : 0);
+	}
+
+NullPointerException Cannot invoke "java.lang.Integer.intValue()" because "null" is null 
+
+13) What are the cases where deadlock can occur? And how you can avoid deadlocks in java?
+
+14) In case of bucket level locking mechanism -> if one thread is trying to read one bucket then is another thread allowed to read the same bucket.
+
+

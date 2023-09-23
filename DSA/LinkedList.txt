@@ -1,0 +1,37 @@
+If you cant access the previous node : 
+create a dummy node 
+put head in the next of dummy node 
+point current to this dummy node so that current node will actually be previous node.
+
+Now in this case if you want to remove the middle node.
+
+Then current.next = current.next.next will remove the middle node.
+
+Example : Given the head of a linked list and an integer val, 
+remove all the nodes of the linked list that has Node.val == val, and return the new head.
+Input: head = [1,2,6,3,4,5,6], val = 6
+Output: [1,2,3,4,5]
+
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        if (head == null) {
+            return null;
+        }
+
+        ListNode dummy = new ListNode();
+        dummy.next = head;
+        ListNode cur = dummy;
+
+        while (cur.next != null) {
+            if (cur.next.val == val) {
+                cur.next = cur.next.next;
+                // Here cannot move cur to cur.next as we need to validate the next node.
+            } else {
+                cur = cur.next;
+            }
+        }
+
+        return dummy.next;
+    }
+}
+

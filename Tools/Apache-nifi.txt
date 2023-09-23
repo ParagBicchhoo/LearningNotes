@@ -1,0 +1,89 @@
+# Apache nifi is the data logostic platform that is used for automating the movement of data between disparate systems.
+It has different processors file getFile and putFile and we can configure it to copy file from source to destination.
+==================================================================================================================================
+# What is a processor : Atomic element in Nifi which can do some simple task.
+Nifi have a processor for almost anything.
+Nifi supports custom processors as well.
+A processor can : 
+1) Add, update or remove attributes of a flowfile.
+2) Change contents of a flowfile.
+
+Different processors available in Nifi : 
+1) Data ingestion processors : These are the processors used to ingest data.
+examples : GenerateFlowFile, GetJMSTopic, GetKafka, GetFile, GetHttp, Querydatabasetable, GetFtp, ListenFtp, ListenHTTP.
+
+2) Data transformation processors : Transform data to various formats accoring to requirement.
+Examples : ConvertRecord, Replacetext, EncryptContent, UpdateRecord, CompressContent, TransformXML, ConvertJSONToSQL,
+ConvertCharacterSet, JoltTransformJSON.
+
+3) Data Egress or Sending Data Processors : Send processed data to various destinations. 
+Examples : PutEmail, PutSFTP, PutKafka, PutFile, PutJMS, PutMongDB, PutFTP, PutSQL, PutHDFS.
+
+4) Routing and mediation processors : Conditionally change the way how a flowfile is processed.
+Examples : ControlRate, RouteOnAttribute, ScanContent, DetectDuplicate, RounteOnContent, ValidateXML, DistributeLoad, 
+ScanAttribute, ValidateCSV.
+
+5) Database Access Processors : To access the database.
+Examples : ConvertJSONToSQL, PutSql, PutHiveQL, ExecuteSQL, SelectHiveQL, ListDatabaseTables.
+
+6) Attribute Extraction Processors : Help extract and manupulate attributes of a flowfile from its contents or other
+attributes or both.
+Examples : Extract text, EvaluateXPath, UpdateAttribute, LogAttribute.
+
+7) System interaction processors : Support to execute OS specific commands specified by the user and writes
+the output of that command to a flowfile.
+Examples : ExecuteProcess, ExecuteStreamCommand
+
+8) Splitting and aggregation processors : Help to split or agrregate data based on our requirement.
+Examples : SplitText, SplitRecord, SegmentContent, SplitJSON,
+SegmentContent, MergeContent, SplitXML, UnpackContent, QueryRecord.
+
+9) HTTP and UDP processors : Ingest or send data using HTTP and UDP protocols.
+Examples : GetHTTP, PostHTTP, Listen UDP, ListenHTTP, HandleHTTPRequest, PutUDP
+
+10) Amazon Web Service Processors : 
+Examples : fetchS3Object, GetSQS, GetDynamoDB, PutS3Object, PutSQS, PutDynamoDb, PutSNS, DeleteSQS, PutLambda.
+
+==================================================================================================================================
+# FlowFile : Actual data in Nifi propogates in the form of flowfile. Actual data -> CSV, JSON, XML, Plaintext, SQL, Binary etc.
+A processor can generate a new flowfile by processing an existing flow file or ingesting new data from source.
+Flowfile is composed of two components : 
+1) Content : Actual data itself.
+2) Attributes : key value pairs contains metatdata of the flowfile.
+
+Flowfiles are persisted in disk.
+Flowfiles are passed by reference.
+A new flowfile will be created if the content of the existing flowfile is modified or new data is ingested 
+from the source.
+New flowfile is not created if the attributes of the existing flowfile is modified.
+==================================================================================================================================
+# What is a connection.
+
+In Nifi all the processors can be connected with each other to create a data processing flow.
+
+Processors are linked via connections.
+Each connection will act as a queue for a FlowFiles.
+==================================================================================================================================
+# What is a process group ?
+
+In Nifi a set of processors can be connected to form a process group
+Process groups helps to maintain large and complex data flow.
+Input and output ports are used to move data between process groups.
+==================================================================================================================================
+# What is controller service ? 
+
+Controler service is a shared srevice that can be used by a processor.
+Controller service can hold a DB connection details.
+We can create a controller service for a CSV reader, JSON writer and many more.
+==================================================================================================================================
+
+Processor Configurations, Connections and Relationships in NIFI : 
+
+Each processor in NIFI has a standard set of configurations and unique set of configurations.
+
+Common Configurations : 
+1) Name : Define a meaningful name for a processor.
+2) Scheduling : Used to schedule a processor to run at a particular interval using these configurations.
+If run scheduling is 0 seonds then it runs continuously.
+
+================================================================================================================================== 

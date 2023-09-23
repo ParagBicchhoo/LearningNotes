@@ -1,0 +1,19 @@
+GOF design patterns are divided into three groups : 
+
+1) Creational design patterns : These patterns will tell how objects and classes are created
+Examples : 
+Singleton, 
+Prototype, 
+Factory, 
+Builder.
+
+2) Structural design patterns : These patterns define how the structure of your classes should be.
+
+Decorator,
+Facade
+
+3) Behavioural design patterns : These patterns defines how classes communicate with each other
+Examples : 
+Observer, 
+Chain of responsibility, 
+Strategy

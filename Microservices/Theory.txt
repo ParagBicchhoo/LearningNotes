@@ -1,0 +1,353 @@
+1) What are different important achitectures in microservices?
+
+Best practices : 
+
+Model services based on Domain driven design(This is also a part of decomposition) : 
+Domain can be different retail ,eCommerce, banking etc. Inside that there are sub-domains.
+Design that focus on domain is called doamin driven design.
+Ubiquitous language is the language used to express the model. For example for an eCommerce website we
+have different services like Card-domain, Fullfilment domain, Catalog sub-doamain. Now the common thing among them is 
+item.
+Bounded context == A microservice : In each sub-domain , these items have different meanings.Like in catalog these are
+sellable items, Like in cart these are items that customer added in cart. In fulfilment, these are warehouse
+items that will be shipped to customer.
+hence we are expressing the models freely.
+So overall model should be based on domain and not on technology. Even technology can also differ for a microservice while building 
+a product or a domain.
+
+Consider separating data storages : Separate database for each microservice.
+
+Build separate team for separate microservices.
+
+Design cohesive services : Consider grouping functions together that are required to change as a single unit together so that there 
+wont be lot of communication between services.
+
+Consider separating services for cross-cutting concerns(program that affect many part of the system) like authentication and authorization.
+Like API gateway, config server.
+=======================================================================================================================================================
+
+2) What are different important design patterns used in microservice based application?
+
+Saga design pattern
+
+E.g. Uber eats : 
+
+Different microservices in uber in order : UI service, Order service, Payment service, restaurent service, delivery service.
+
+There are two ways to implement SAGA pattern : 
+1. Choreography -Event based : Using this you can have events to interact between mS. You dont need to have synchronous
+transaction between microservices.
+They will communicate by common queue.
+Can enter into deadlock if many services are dependent on each other. Good when less number of services.
+
+2. Orchestration -Command based : There is a central orchestrator which delagates requests to different microservices. 
+Here there is a central service that controls these calls to different microservices.
+The orchestrator handles the commands and events with the help of axon framework.
+
+[***] Implementation video need to watch
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+Circuitbreaker design pattern : 
+It is a part of fault tolerance.
+If one of the services is performing slow or poor then it is not a good choice to
+continuously burden it with more requests, and wait for that service to recover.
+This is how microservices become fault taulerent.
+This can be achieved with the help of hystrix(Spring-cloud-starter-netflix-hystrix). Annotation @Enablecircuitbreaker 
+annotation in application class.
+Add @HystrixCpmmand to methods that need circuit breaker. Lets say there is a method that makes an external call and it
+can become slow.
+Configure Hystrix behaviour. We can also leave everything default to make hystrix beak circuit by its own parametsrs.
+Parameters while configuring hystrix : 
+1) HystrixCommand("fallBackMethod"="getFallBackcatalog")
+2) commandProperties = @HystrixProperty (name = "timeout" -> After what time a timeout should happen
+, requestVolumeThresold -> How many requests that it needs to see , errorThreasoldPercentage : percentage number of requests failed to break 
+the circuit out of seen requests , sleepWindowInMilliSecs : how long circuit breaker gonna last before it picks up again)
+ 
+There are following scenarios  : 
+
+1) Service go down : Solution : Create multiple instances of services. 
+2) Microservice instance is slow : 
+Problem with threads :  Lets say a server has some concurrency. i.e. it has preconfigured value for
+maximum number of threads it can operate on at a time. Let the value be 12.
+There are 3 microservices. One of them is slow. Now request come to slower mS. First thread calls that slower mS.
+Consequently lets say few more requests come for that slower mS. Now all threads are consumed to serve slower mS.
+And as all the threads are consumed even not affected microservices are also affected due to this.
+
+One of the solution is to use timeouts. Adding timeouts to RestTemplate. If requests that are coming are fater than what4
+timeout can do? Hence this is not a good solution.
+
+When a circuit should break?
+Every circuit breaking needs to be triggered by something.
+
+Hystrix dashboard provides information data display about your application on a dashboard.
+Display different circuit breakers, what are the circuit breakers that are open, what are closed.Number of requests coming.
+Timeout happening. 
+You can setup a turbine to setup the dashboard for cluster of microservices.
+Add hystrix dashboard binaries in to pom.xml
+Spring-cloud-starter-netflix-hystrix-dashboard
+Spring boot starter actuator.
+
+@EnableHystrixDashBoard
+ 
+---------------------------------------------------------------------------------------------------------------------------------------
+Strangler design pattern : This is a type of decomposition design pattern
+
+This design pattern is used to migrate a monolithic application to microservice based application.
+
+Modular monoliths are the prerequisites if you are going to follow a strangler pattern.
+Because if your application is not going to withstand if one of the module is taken out, then you cannot apply this design pattern.
+So make sure that you have different modules in your application so that it would be easy.
+
+Each part of module in monolithic application are seggreagated into microservice.
+
+Case study : eCommerce application : 
+
+Mono has following modules : UI, authentication module, products , carts, payment, orders.
+
+Lets seggregate payment module from this as it is less used. We create a separate microservice for payments and separate database as well.
+Same for other as well.
+
+Transform and eliminate technique: Develop the new component independently.
+Let both new and old component exist
+Delete the old component from monolith.
+
+Always proceed step by step in above process. Like replace services one by one and not complete service at a time.
+
+Take the most simple components first while doing transition.
+Component which has more business requirement and need to be deployed frequently that also can be considered first.
+
+---------------------------------------------------------------------------------------------------------------------------------------
+Asynchronous communication : When one service does not have to wait for response from another service and process to next service 
+call, This is called async communication.
+Kafka, RabbitMq, webclient is asycnhronous. 
+
+Synchronous communication : When one service wait for response from another service and cannot process to next service unless
+there is a success or failure from another service. This is called sync communication. It is most widely used service.
+HTTP request response communication.
+
+Examples : There is a VaccinationCenterService and there is a CitizenService. And cleint wants Citizen details of all vaccinationCenter
+. Now communication between VaccinationCenterService and CitizenService need to be synchronous because both calls are dependenct and 
+we cannot only return vaccination details to the customer and we wll need to return both details at the same time.
+
+Now consider a scenario where in you need to log the details of VaccinationCenterService and CitizenService. Now we don't need to wait
+until the logs are printed. Thats why this can be handled with asynchronous calls. Which can be handled with aynchronous clients
+like Apache Active Mq  , RabbitMq and Kafka. 
+
+Examples of asynchronous calls : Logging, SMS Service, Messaging service.
+
+---------------------------------------------------------------------------------------------------------------------------------------
+Aggregator design pattern : Aggregator microservice collects a piece of data from each of the microservice and 
+return the aggregated output for processing.
+It actually invokes multiple functinalities required by the aggregator function(which performs a combined task) 
+Example : Service O is an aggregator then service O will collect data from service A and B and aggregate it in its code.
+---------------------------------------------------------------------------------------------------------------------------------------
+API gateway design pattern :It addresses a single entry point concern. And does a request routing.
+---------------------------------------------------------------------------------------------------------------------------------------
+Chained or chain of responsibilities : Produces a single output which is a combination of multiple chained outputs.
+Use synchronous HTTP request or response for communication.
+Example : Service A calls service B for output, Service B calls servive C , Service C return o/p to service B and B to A.
+Not recommended to make a long chain.
+---------------------------------------------------------------------------------------------------------------------------------------
+Databases can be shared across multiple microservices or each service can have its own database.
+---------------------------------------------------------------------------------------------------------------------------------------
+Event sourceing : Create events regarding changes in application state. Events help to track these changes.
+---------------------------------------------------------------------------------------------------------------------------------------
+Branch pattern : Simultanous processing requests from multiple microservices.
+---------------------------------------------------------------------------------------------------------------------------------------
+CQRS design pattern, Event sourcing.
+---------------------------------------------------------------------------------------------------------------------------------------
+Event driven architecture
+=======================================================================================================================================
+
+3) Go through java brains videos to design microservices.
+
+=======================================================================================================================================
+
+4) Go through zuul video of how to configure API gateway.
+
+API gateways(zuul proxy) are used to route the traffic in microservices and also used for filtering the requests like providing
+security.
+It also act as server side load balancer.
+There are 4 filters in zuul : 
+1) Pre-filter -> Executed before the request is routed to microservice.
+2) Route-filter -> During routing route filter will be called
+3) Post-filter -> Once the response from microservice comes, Post-filter will be called.
+4) Error-Filter -> If there comes an error from microservice then error filter gets called.
+
+Create a API gateway as a spring boot project : Hospital Gateway.
+Add zuul dependency
+In SpringBootApplication java file add annotation @EnableZuulProxy -> Now this will behave as a API gateway.
+In each microservice we need to specify the spring.application.name attribute like
+spring.application.name = doctor-service
+spring.application.name = diagnosis-service
+For that we need to configure the URL pattern. Got application.properties file of gatway and specify following configs : 
+zuul.routes.doctor-service-url=http://localhost:8081/doctor-api
+zuul.routes.diagnosis-service-url=http://localhost:8082/getDiagnosis
+Lets say it is running on default port 8080
+
+Create a package filter
+Create above 4 filters and extends each by zuulFilter
+override all these methods from zuulFilter class to above mentioned 4 filters : 
+1) filterType return String
+2) filterOrder return int value of order of filter
+3) shouldFilter return boolean
+4) public Object run() -> What need to be executed in filter.
+
+Just call localhost:8080/diagnosis-service -> diagnosis service will be called becasue we have defined routing in API gateway which is
+running on port 8080.
+
+How server side load balancing done in Zuul.
+
+=======================================================================================================================================
+
+Dependencies for eureka server : Eureka server, eureka discovery
+@EnableEurekaServer in SpringBootApplication java file. SpringEureka provides the UI which show instances that are registered with eureka.
+eureka-client-register-with-eureka=false --> So that it does not register with itself.
+Other microservices are eurekaclient so other microservices use annotation @EnableEurekaClient.-> 
+Dependency in pom.xml : Spring cloud starter netflix eureka client.
+This is how services are dicovered in microservices. When you hit eureka server URL,you can see all the clients those are registered with server.
+API gateway represents the single entry point into the system. It provides request routing, security.
+API gateway is also a Eureka client. We define routes in application.properties file.
+
+=======================================================================================================================================
+5) Go through the video of how microservices are deployed on kubernetes cluster.
+
+
+=======================================================================================================================================
+6) Go through video of java brains on important microservices interview questions.
+
+Advantages of microservices : 
+
+1) Make a small change and affected change area is very less. Just redeploy the microservice you changed.
+2) Faster to deploy, test changes.
+3) Build microservices with different technologies.
+4) One fault dont bring the whole system down.
+
+What is spring cloud?
+Spring cloud has bunch of liabraris which allow to tackle some cross cutting concerns like 
+config server, fault tolerence, service discovery.
+So spring cloud provides all these libraries which aloow you to implement these patterns.
+
+Disadvantages of microservices : 
+
+1) Deployment, management, monitoring is more complex
+2) operations overhead
+
+Microservices are best suited when you have large application to work on.
+
+
+=======================================================================================================================================
+9) Spring boot modules revision (Spring AOP, Spring Boot Actuators, OAuth2)
+
+14) ComputationalFuture?
+
+=======================================================================================================================================
+17) config server : Spring cloud config server.
+
+go to start.spring.io
+maven dependency : config server (artifact id : spring cloud config server)(Central management of configurations via GIT)
+Go to springBootApplication class and add annotation : @EnableConfigServer
+This config server now need to know where to pull up the values from. So we will pull up the values from GIT.
+Go to application.properties and property spring.cloud.config.server.git.uri = git-uri
+Lets say this configServer is hosted on port 8888.
+To get application.yml file from git use following URL : 
+localhost:8888/<file-name>/<profile>  --> localhost:8888/<application/default
+
+Now each and every microservice can access this application.yml file.
+
+How credentials are secured : 
+
+Apply authentication on configuration server.
+Always use secured channels like HTTPS when configurations are in transit.
+A sensitive configuration data should never traverse the network through an unencrypted channel.
+To enable ssl apply some configurations in application.properties file.
+Use secured ,private repositories as a configuration source.
+Store password in encrypted format.
+Disable the decrypting at cloud config server.
+Dycrypt them directly at client side. It has an encrypt key associated with it.
+
+Goals
+externalized
+environment specific
+Consistent
+version history
+
+=======================================================================================================================================
+
+Load balancing in microservices : 
+
+*** Learn server side load balancing using zuul implementation .
+
+Server side load balancing : 
+
+Only one load balancer for entire application.
+Unless and until server side load balancer has an information about the new instance added to one of the microservices, 
+it will not send request to this new instance.
+
+Client side load balancing : 
+One load balancer per microservice.
+@EnableRibbon(name="nameOfAppWhichNeedToBeLoadBalaned", configuration= "Configuration.class")
+in application.yml, define what are different list of servers where this application is running.
+Disable ribbon eureka in applicaion.yml becasue eureka is also capable of load balancing.
+restTemplate need to be @LoadBalanced. 
+each load balancer details need to register to Eureka.
+
+Netflix ribbon is the library or maven dependency that is used to do load balancing and 
+@LoadBalanced annotation is used along with RestTemaplate bean to divide the load
+To make my springboot application work like a load balancer we need to add annotation @RibbonClient in Springbootapplication class.
+Ribbon uses round robbin pattern.
+
+Eureka client is also capable of client side load balancing.
+Just register the instance of same microservice on another port
+Eureka UI will show the different instances of this service runing on different ports.
+Now eureka will do automatic load balancing.
+But this is not effective load balancing.
+@LoadBalanced annotation is still needed while creating RestTemplate bean.
+@LoadBalanced also helps restTemplate to identify services names registered on Eureka Server.
+One service name can have multiple instances associated with it. Thats how load balancing is done.
+Whatever service this @LoadBalanced annotated restTemplate will call that service will be load balanced.
+
+=======================================================================================================================================
+
+Spring Cloud Sleuth with Zipkin : 
+
+Distributed log tracing and it's need : 
+
+In real world projects there are 100s of microservices involved. Lets say there occurs an issue in one of the microservices.
+Or there occurs latency issue in one of it. hence one microservice is taking more time than others.
+Then how would we know that which microservice is causing the issue.
+Without any tracing mechanism it is difficult.
+
+To resolve such issue we use spring cloud sleuth and zipkin.
+Spring cloud sleuth is used to generate and attach traceId, spanId to the logs so that these then used by tools like zipkin 
+and ELK for storage and analysis.
+
+Zipkin is a distributed tracing system. It helps to gather timming data needed to troubleshoot latency problems 
+in service architecture.Features include both collection and lookup of this data.
+
+Spring cloud sleuth has following components : 
+
+1) Application name : [Microservice1][Microservice2] etc.
+2) TraceId : This id is same in every microservice for a given request.
+3) SpanId : Same in same method.
+4) Zipkin export flag : This boolean indicates whether flag should be exported to zipkin or not
+
+And finally we will be sending logs of all the microservice to zipkin server.
+
+implementation : 
+
+Dependencies : 
+
+Spring-cloud-starter-sleuth in each microservice pom.xml.
+Download the zipkin jar file from maven and run it in cmd.
+java -jar zipkin-server-file-name.jar
+Zipkin will start in 9411 port.
+Add spring-cloud-starter-zipkin dependency to all microservices.
+open zipkin dashboard on localhost:9411 and click find traces.
+here you can find detailed logs per microservice. and time took to execute.
+
+=======================================================================================================================================
+
+Microservices project story : 
+

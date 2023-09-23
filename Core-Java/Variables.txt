@@ -1,0 +1,21 @@
+Atomic : These are thread safe versions of variables.
+
+Volatile : For normal variables, For each thread a copy of original variable is created and changes are performed in that variable.
+Hence a higher chances of data inconsistency.
+When we declare a variable as volatile each thread perform operation on the main memory and not cached memory.
+
+Synchronized : A method or a block can be synchronized, this keyword make sure that, only one thread can access the method 
+or a block on a given object.
+
+Transient variable are used in serialization context. If we do not want any variable to be used while serialization 
+and deserialization then transient variables are used.
+
+
+strictfp is a modifier that stands for strict floating-point which was not introduced in the base version of java as it was introduced in Java version 1.2. 
+It is used in java for restricting floating-point calculations and ensuring the same result on every platform while performing operations in the 
+floating-point variable. Floating-point calculations are platform-dependent i.e. different output(floating-point values) is achieved when a
+class file is run on different platforms(16/32/64 bit processors). To solve this type of issue, strictfp keyword was introduced in JDK 1.2
+version by following IEEE 754 standards for floating-point calculations. 
+
+From Java 17 version, strictfp keyword is NOT required explicitly as all floating point expressions are strictly evaluated.
+

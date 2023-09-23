@@ -1,0 +1,28 @@
+1) What are different important achitectures in microservices?
+
+Best practices : 
+
+Model services based on Domain driven design(This is also a part of decomposition) : 
+Domain can be different retail ,eCommerce, banking etc. Inside that there are sub-domains.
+Design that focus on domain is called doamin driven design.
+Ubiquitous language is the language used to express the model. For example for an eCommerce website we
+have different services like Card-domain, Fullfilment domain, Catalog sub-doamain. Now the common thing among them is 
+item.
+Bounded context == A microservice : In each sub-domain , these items have different meanings.Like in catalog these are
+sellable items, Like in cart these are items that customer added in cart. In fulfilment, these are warehouse
+items that will be shipped to customer.
+hence we are expressing the models freely.
+So overall model should be based on domain and not on technology. Even technology can also differ for a microservice while building 
+a product or a domain.
+
+Consider separating data storages : Separate database for each microservice.
+
+Build separate team for separate microservices.
+
+Design cohesive services : Consider grouping functions together that are required to change as a single unit together so that there 
+wont be lot of communication between services.
+
+Consider separating services for cross-cutting concerns(program that affect many part of the system) like authentication and authorization.
+Like API gateway, config server.
+=======================================================================================================================================================
+

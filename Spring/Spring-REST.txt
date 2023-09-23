@@ -1,0 +1,37 @@
+REST : (REpresentational State Transfer)
+
+What are idempotent methods : 
+
+Methods which give same response for every request are called idempotent methods.
+Following are idempotent methods : 
+GET , HEAD , PUT , and DELETE methods are idempotent.
+
+What is PATCH method : 
+
+PATH method is mostly similar to POST and PUT the ony difference being, PATCH method do
+partial modification.
+To understand partial modification lets say you have an endpoint /users/{userId}
+PATCH will only take username to update while 
+PUT and POST will take whole user entity.
+
+
+HEAD : 
+
+The HEAD method is almost identical to GET,except without the response body. In other words, 
+if GET /users returns a list of users, then HEAD /users will make the same request but won't get back the list of users.
+
+HEAD requests are useful for checking what a GET request will return before actually making a GET request -- 
+like before downloading a large file or response body.
+
+OPTIONS : 
+
+return data describing what other methods and operations the server supports.
+
+7) Architectural constrains for REST?
+1) Client server architecture
+2) Statelessness
+3) Uniform interface : There should be a uniform way of interacting with given server irrespective of the device and type
+of application
+4) Layered system : Application architecture need to be in multiple layers.
+5) Cached : A well managed cached system eliminates the some client server interaction.
+6) Code on demand

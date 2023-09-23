@@ -1,0 +1,175 @@
+Points to focus ,prepare or need action are starred (***)
+stars surrounded by [] are done.
+
+1) Java 8 features. What is functional programming. Benifits. Use of lambda functions.
+
+Java 8 features : 
+
+Lambda expressions : were introduced to bring functional programming benifits to java.
+Method references, : You can replace your functional interface method or lambda expression with method reference.
+Compact and easy way of writing lambda expressions.
+Functional interfaces : Interfaces with single abstract method in it.
+Stream API : streams and parallel streams. parallel stream execute in multiple threads. Streams are by default lazy.
+Default methods : Allow to write implemented methods without breaking the current implemementation of an interface.
+Base64 Encode Decode. 
+Static methods in interface : Interfaces are light weight and will be suitable for utility classes.  
+Optional class : Use to handle null references more effectively.
+Collectors class : Collectors.toList, toMap and all.
+ForEach() method : Java provides a new method forEach() to iterate the elements
+DateAndTime api : Improved. With new methods in Date API and Time API.
+Nashorn JavaScript Engine : Nashorn is a JavaScript engine. It is used to execute JavaScript code dynamically at JVM
+Parallel Array Sorting : Arrays.parallelSort();
+Enhancement in bucket of hashmap
+
+a) [***] : Read notes of java 8  
+
+2) b) [***] : Revise java 8 stream programs from that website. (https://blog.devgenius.io/15-practical-exercises-help-you-master-java-stream-api-3f9c86b1cf82)
+
+Notes : If we need to perform stream operation in filter method as well then no need to use Collectors as we are not collecting elements.
+So use anyMatch method.
+FlatMap is used to simplify the collections like it converts List<<List<Object> to List<Object>
+distinct method is used to find distinct objects.
+min, max , sorted method takes Comparator as an input. method used : Comparator.comparing(Product::getPrice))
+limit is used to limit initial specific number of records.
+if you want to print something on cosole the use peek method and do syso.
+Convert map of objects to map of int based on specific parameter of object -> mapToDouble, mapToInt
+summarytastics method is used to get statistics like average sum, max, min.
+Collectors.toMap method is used to generate dataMap. e.g map of orderId, and number of products. 
+
+3) Design patterns used : 
+
+1) Singleton in logger : c) [***] : Learn the code for that : 
+
+public class LazySingleton {
+
+    private static LazySingleton instance;
+
+    /** Don't let anyone else instantiate this class */
+    private LazySingleton() {}
+
+    /** Lazily create the instance when it is accessed for the first time */
+    public static synchronized LazySingleton getInstance() {
+        if(instance == null) {
+            instance = new LazySingleton();
+        }
+        return instance;
+    }
+}
+
+2) factory design pattern : when processing the different prerequisites.
+-> We transfer some prerequisites from on-premise to cloud these prerequisites are Frameworks, Media, Tools, Extra files and folders.
+Now to get the Processors of these prerequisites, which preprocess and transfers them, I had used factory design pattern. 
+One iinterface called as prerequisites which is implemented by all PrerequisitesProcessor classes like frameworkProcessor, MediaProcessor.
+Prerequisitesfactory class to return object of these preProcessor classes.
+
+3) d) *** : Ask design pattern to Abhilash and create an example based on that.
+
+4) Springboot based microservice implementation : e) [***] : watch videos on how it is implemented and basics.
+
+Microservice architechture consists of small microservices with spring boot and embedded tomcat, service registry tools 
+like Eureka, API gateway like zuul and Messaging bus like Kafka for communication between different services.
+Service registry like Eureka and API gateay like zuul are nothing but Spring boot applications.
+Dependencies for eureka : Eureka server(), eureka discovery
+@EnableUrekaServer in SpringBootApplication. SpringEureka provides the UI which show instances that are registered with eureka.
+eureka-client-register-with-eureka=false --> So that it does not register with itself.
+Other microservices are eurekaclient so other microservices are @EnableEurekaClient.-> Spring cloud starter netflix eureka client.
+This is how services are dicovered in microservices. When you hit eureka server URL, all the clients those are registered with server.
+API gateway represents the single entry point into the system. It provides request routing, security.
+API gateway is also a Eureka client. We define routes in application.properties.
+
+5) f) [***] : What is service registry video basics videos, Springboot microservices configuration management.
+parameters that changes with environment are called configurations. like db credentials, external URls , constant values.
+These are maintained either in application.properties file or yaml file.
+Configuration file will be picked up from GIT URL dependning upon environment. This is centralized config management is microservices.
+
+6) Configuration management is done using puppet but we had something called as pod-def in our project whcih was internal.
+g) *** : Write theory on your tool and h) *** : watch video on how it is done in puppet and i) *** : theory of puppet video.
+
+7) j) *** : Watch video on deployment process or CI/CD for microservices.
+Deploying microservices on kubernetes cluster.
+We have to run all these microservices components into a container(docker).
+Docker file maven plugin from netflix will allow us to create the docker images from docker file.
+We have to create docker file for all these components and from that docker image will be created using maven plugin.
+We will push all those images that we have created on  dockerhub.
+Now we have to use those all images in our kubernetes configuration file.
+
+Suppose you are using azure devops, 
+There three branches will be created dev, UAT, and production
+Whenever a new developement come the developer will create a feature branch from dev. There he do all the coding.
+Then he merge it in dev. deployment and test in dev environment.
+How CI/CD works? as soon as he commits to dev build pipeline starts like mvn clean install which creates a jar.
+If we have a docker file then it creates a docker image. Docker image will be pushed to container registry(dockerhub).
+It has imagename and tagname. One more step in build pipeline like test execution or test result using mvn clean install test.
+Then it goes to release means deployment. First part was CI which means continous integration.
+Now the deployment will be done for the environment you are pointing to.
+Then PR is raised, code is reviewed. The code is merged in UAT. Now UAT pipeline will run same as dev.
+Suppose you use azure devops and want to copy jar or war file on particular VM then azure devops agents will be installed on those VMs.
+And script is used to start the server.
+Suppose there is kubernetes cluster instead of VMs.Deployment yaml file of kubernetes which contains images dns and tagnames is applied on that cluster.
+So it will pull all the iamges and deploy them on kubernetes cluster.
+Each node of kubernetes cluster is a machine. Each node has multiple pods based on your configuration.
+When new deployment comes it creates new node and spwan the pods.
+Entry point is there in docker file whcih is used to run your spring boot application. which runs java -jar springBottApplication command.
+dockerbuild -t docker-file-path --> Docker iamge is created using this command.
+Two types of tetsing are done : unit testing which runs unit test case and functional testing which does black box testing ,Functional testing does not
+actually test the functionality but does an endpoint testing is done using ngtest framework.
+
+
+8) k) *** : Docker based microservices implementation in AWS (Using ECS)
+
+ECS stands for elastic container service.
+Steps : 
+We have a docker file.
+we will build that docker file.
+We will create a repository in ECR.
+Then we will upload or push using docker push command that docker image to ECR.(Elastic container registry)
+Then we will go ahead and setup ECS.(Elastic container service)
+Then we will create a cluster.
+Cluster is logical grouping of hardware resources.
+Then we will create a new task defination for this.
+Task contain metadata of how you should deploy your docker conatiner onto a machine. This is where you setup memory, CPU,port mapping.
+We can add containers to this task defination.
+Then we need to run a new task and select task defination in it.
+
+Service is more for advance use cases like instance autoscaling, load balancing, deployment.
+
+9) l) *** : How was CI/CD model for docker based implementation
+
+10) m) *** : revise junit and mockito. n) *** :What is integration testing and Integration testing for microservices
+
+11) o) *** : revise SOLID.
+
+12) p) *** : Revise authentication and authorization using JWT. q) *** : OAuth2 basic and how in is implemented in java.
+
+13) r) *** : AWS cloud basics revise what you learned.
+
+14) s) *** : video on Load balancer basics. t) *** : video on How load balancing is done for microservices
+
+There are two types : 
+client side load balancer,
+Server side load balancer
+Netflix ribbon is the library that is used to do load balancing and @LoadBalanced annotation
+is used along with RestTemaplate bean to divide the load
+To make my springboot application work like a load balancer we need to add annotation @RibbonClient in Springbootapplication class.
+
+there are many algorithms for load balancing : 
+Round Robin
+Least connection
+ 
+
+15) t) *** : Knowledge on ECS container orchestration basics.
+
+16) u) *** : Performance tuning and usage of redis.
+
+17) v) *** revise sql basics imp : types pof indexes, normalization forms, views
+
+18) w) *** NoSQL basics. 
+
+Saga design pattern
+Circuitbreaker design pattern
+Microservices different architectures
+Synchronous asynchronous API calls
+types of web client
+Spring boot knowledge
+Mockito practice and test cases knowledge.
+design pattern to convert monitithic application to microservice application.

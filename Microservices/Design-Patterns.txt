@@ -1,0 +1,139 @@
+2) What are different important design patterns used in microservice based application?
+
+Saga design pattern
+
+E.g. Uber eats : 
+
+Different microservices in uber in order : UI service, Order service, Payment service, restaurent service, delivery service.
+
+There are two ways to implement SAGA pattern : 
+1. Choreography -Event based : Using this you can have events to interact between mS. You dont need to have synchronous
+transaction between microservices.
+They will communicate by common queue.
+Can enter into deadlock if many services are dependent on each other. Good when less number of services.
+
+2. Orchestration -Command based : There is a central orchestrator which delagates requests to different microservices. 
+Here there is a central service that controls these calls to different microservices.
+The orchestrator handles the commands and events with the help of axon framework.
+
+[***] Implementation video need to watch
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+Circuitbreaker design pattern : 
+It is a part of fault tolerance.
+If one of the services is performing slow or poor then it is not a good choice to
+continuously burden it with more requests, and wait for that service to recover.
+This is how microservices become fault taulerent.
+This can be achieved with the help of hystrix(Spring-cloud-starter-netflix-hystrix). Annotation @Enablecircuitbreaker 
+annotation in application class.
+Add @HystrixCommand to methods that need circuit breaker. Lets say there is a method that makes an external call and it
+can become slow.
+Configure Hystrix behaviour. We can also leave everything default to make hystrix break circuit by its own parameters.
+Parameters while configuring hystrix : 
+1) HystrixCommand("fallBackMethod"="getFallBackcatalog")
+2) commandProperties = @HystrixProperty (name = "timeout" -> After what time a timeout should happen
+, requestVolumeThresold -> How many requests that it needs to see , errorThreasoldPercentage : percentage number of requests failed to break 
+the circuit out of seen requests , sleepWindowInMilliSecs : how long circuit breaker gonna last before it picks up again)
+ 
+There are following scenarios  : 
+
+1) Service go down : Solution : Create multiple instances of services. 
+2) Microservice instance is slow : 
+Problem with threads :  Lets say a server has some concurrency. i.e. it has preconfigured value for
+maximum number of threads it can operate on at a time. Let the value be 12.
+There are 3 microservices. One of them is slow. Now request come to slower mS. First thread calls that slower mS.
+Consequently lets say few more requests come for that slower mS. Now all threads are consumed to serve slower mS.
+And as all the threads are consumed even not affected microservices are also affected due to this.
+
+One of the solution is to use timeouts. Adding timeouts to RestTemplate. If requests that are coming are fater than what4
+timeout can do? Hence this is not a good solution.
+
+When a circuit should break? 
+Every circuit breaking needs to be triggered by something.
+
+Hystrix dashboard provides information data display about your application on a dashboard.
+Display different circuit breakers, what are the circuit breakers that are open, what are closed.Number of requests coming.
+Timeout happening. 
+You can setup a turbine to setup the dashboard for cluster of microservices.
+Add hystrix dashboard binaries in to pom.xml
+Spring-cloud-starter-netflix-hystrix-dashboard
+Spring boot starter actuator.
+
+@EnableHystrixDashBoard
+ 
+---------------------------------------------------------------------------------------------------------------------------------------
+Strangler design pattern : This is a type of decomposition design pattern
+
+This design pattern is used to migrate a monolithic application to microservice based application.
+
+Modular monoliths are the prerequisites if you are going to follow a strangler pattern.
+Because if your application is not going to withstand if one of the module is taken out, then you cannot apply this design pattern.
+So make sure that you have different modules in your application so that it would be easy.
+
+Each part of module in monolithic application are seggreagated into microservice.
+
+Case study : eCommerce application : 
+
+Mono has following modules : UI, authentication module, products , carts, payment, orders.
+
+Lets seggregate payment module from this as it is less used. We create a separate microservice for payments and separate database as well.
+Same for other as well.
+
+Transform and eliminate technique: Develop the new component independently.
+Let both new and old component exist
+Delete the old component from monolith.
+
+Always proceed step by step in above process. Like replace services one by one and not complete service at a time.
+
+Take the most simple components first while doing transition.
+Component which has more business requirement and need to be deployed frequently that also can be considered first.
+
+---------------------------------------------------------------------------------------------------------------------------------------
+Asynchronous communication : When one service does not have to wait for response from another service and process to next service 
+call, This is called async communication.
+Kafka, RabbitMq, webclient is asycnhronous. 
+
+Synchronous communication : When one service wait for response from another service and cannot process to next service unless
+there is a success or failure from another service. This is called sync communication. It is most widely used service.
+HTTP request response communication.
+
+Examples : There is a VaccinationCenterService and there is a CitizenService. And cleint wants Citizen details of all vaccinationCenter
+. Now communication between VaccinationCenterService and CitizenService need to be synchronous because both calls are dependenct and 
+we cannot only return vaccination details to the customer and we wll need to return both details at the same time.
+
+Now consider a scenario where in you need to log the details of VaccinationCenterService and CitizenService. Now we don't need to wait
+until the logs are printed. Thats why this can be handled with asynchronous calls. Which can be handled with aynchronous clients
+like Apache Active Mq  , RabbitMq and Kafka. 
+
+Examples of asynchronous calls : Logging, SMS Service, email service.
+
+---------------------------------------------------------------------------------------------------------------------------------------
+Aggregator design pattern : Aggregator microservice collects a piece of data from each of the microservice and 
+return the aggregated output for processing.
+It actually invokes multiple functinalities required by the aggregator function(which performs a combined task) 
+Example : Service O is an aggregator then service O will collect data from service A and B and aggregate it in its code.
+---------------------------------------------------------------------------------------------------------------------------------------
+API gateway design pattern :It addresses a single entry point concern. And does a request routing.
+---------------------------------------------------------------------------------------------------------------------------------------
+Chained or chain of responsibilities : Produces a single output which is a combination of multiple chained outputs.
+Use synchronous HTTP request or response for communication.
+Example : Service A calls service B for output, Service B calls servive C , Service C return o/p to service B and B to A.
+Not recommended to make a long chain.
+---------------------------------------------------------------------------------------------------------------------------------------
+Databases can be shared across multiple microservices or each service can have its own database.
+---------------------------------------------------------------------------------------------------------------------------------------
+Event sourceing : Create events regarding changes in application state. Events help to track these changes.
+---------------------------------------------------------------------------------------------------------------------------------------
+Branch pattern : Simultanous processing requests from multiple microservices.
+---------------------------------------------------------------------------------------------------------------------------------------
+CQRS(Command Query Responsibility Seggregation) design pattern, Event sourcing. (Database pattern)
+Separate database for commands i.e. create, update and delete requests and separate database query i.e. for view which is a select 
+query. Now to replicate the data from one db to another either even sourcing is used or database replication methods are used.
+
+Benifits : Responsibility seggregation which is the core principle of microservices.
+Flexibility to choose database for views. We can choose other databases for views as well.
+Easy to scale.
+---------------------------------------------------------------------------------------------------------------------------------------
+Event driven architecture
+=======================================================================================================================================

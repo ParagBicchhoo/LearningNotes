@@ -1,0 +1,34 @@
+Self join : 
+
+Employees who are also managers : 
+
+CREATE TABLE employees(
+    EMPLOYEE_ID int,
+    NAME Varchar(20),
+    PHONE_NUMBER int,
+    HIRE_DATE date,
+    MANAGER_ID int);
+
+INSERT INTO EMPLOYEES VALUES (100, "ANURAG", 9889269997, "1987-06-17", 100);
+INSERT INTO EMPLOYEES VALUES (101, "harsh", 8789269986, "1987-06-20", 100);
+INSERT INTO EMPLOYEES VALUES (102, "SUMIT", 7689269975, "1987-07-07", 103);
+INSERT INTO EMPLOYEES VALUES (103, "RUHI", 9589269964, "1987-07-12", 102);
+INSERT INTO EMPLOYEES VALUES (104, "KAE", 8489269953, "1987-07-23", 103);
+
+select distinct(NAME) from employees where EMPLOYEE_ID in (select MANAGER_ID from employees);
+select distinct(e1.NAME) from employees e1 inner join employees e2 on e1.EMPLOYEE_ID=e2.MANAGER_ID;
+
+=======================================================================================================================
+
+{
+   "firstName" : "Atul",
+   "middleName" : "Madhukarrao",
+   "lastName" : "Tekade",
+   "gender" : "Male",
+   "dateOfBirth" : "2012-04-23T18:25:43.511Z",
+   "mobileNumber" : "7384745317",
+   "addrLine1" : "chbz",
+   "addrLine2" : "amt",
+   "emailId" : "pv@gmail.com",
+   "subjectId" : 1
+}

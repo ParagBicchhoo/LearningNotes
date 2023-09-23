@@ -1,0 +1,72 @@
+Total security is unachievable. 
+Use your threat model to prioratize securities.
+Find the weakest link and protect it. Make them as difficult to exploit as possible.
+
+General Security Principles : 
+
+1) Least Privilage : Allow access to only those users and operation which are necessary for then and only specific to that operation.
+
+Person in account section should not have access to human resource information and vice versa.
+And any person who has limited previlages should not be able to change their previlages.
+
+Code access : You should apply principle of least privilage to your code and limit what is available to other code.
+public functions can be called outside the code.
+Make them private and only code which is necessary to call outside class should be public.
+
+2) Simple is more secure : 
+
+The larger and more complex the system becomes , more difficult for securing the system.
+
+Some tips : 
+
+a) Use clear names for variable and functions so that they can be understandable.
+b) Write code comments.
+c) Prefer built in functions : They are made more secure
+d) Remove cruft : redandancy
+e) Disable unused features.
+f) Breaking long section of code in to short caan greatly reduce security.
+g) If we duplicate code and fix it in one version it might not get fixed in other.
+
+3) Never trust users : 
+
+Its similar to least privilage but way beyond that.
+You never know who is the possible hacker.
+
+4) Expect the unexpected : 
+
+You have to be proactive not reactive
+
+5) Defence in deapth : 
+
+Adding an extra layer of protection.
+
+There are three main categories of defences when planning securing a website : 
+a) Physical : Access control doors, security cameras, security guards.
+b) Technical : Hardwares ,softwares, network protections 
+c) Administrative : Training, security measures
+
+6) Security through obscurity : 
+
+The less information you give out the better.
+Information should be kept on a need to know basis.
+
+For example in below URL an attacker can tell what server side language is being used : 
+
+https://www.index.com/index.php
+
+HTTP response headers should not include the software version.
+
+7) Deny list and allow list : 
+
+Allow list is a better option with respect to security.
+Only certain users are allowed and all other users are denied.
+
+Lets say a new user is added so by default he will not have an access as we will need to provide him an access through allow list.
+
+
+
+
+
+
+
+

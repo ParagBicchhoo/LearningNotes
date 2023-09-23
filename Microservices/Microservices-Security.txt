@@ -1,0 +1,96 @@
+What is OAuth2 :
+
+Oauth which stands for Open authorization is a standard designed to allow a website or a application to access resources 
+hosted by other web apps on behalf of a user.
+
+Examples : 1) When you login using facebook to a third party application, facebook grant access to users information to third 
+party websites without sharing the users password and other private sensitive data.
+
+
+Best practices for microservices security : 
+
+1) Carry the login information everywhere via a stateless protocol like OAuth. Every service talking to other services carry
+oAuth token with them. And it get propogated throughout the system.
+
+2) Traffic between microservice consumer and endpoint need to be encrypted. But there found a lot of security vulnerabilities 
+with SSL 3.0, TLS 1.0.
+Recommendation use TLS 1.2
+
+OAuth2 for securing microservices : 
+
+OAuth is meant for authorization and not authentication.
+It was originally created for a service to authorize a service.
+Your service wants to authorize with google drive to read certain photos.
+You cannot ask the user for his credentials.
+This is where OAuth comes in.
+
+OAuth2 flow : 
+
+1) Authorization code flow : 
+
+User has logged in to photo printing server but my photo is on google drive. fetch my photos from google drive.
+Printing server go to Google drive and says my user wants to access resource from your drive.
+Authorization server(of google drive) goes to user (resource owner) and say this client(printing service wensite) wants to access you files.
+Are you okay with that? If yes, you as a resource owner enter your your google username and password and authorization server sends a code to photo printing
+service to access the token.
+Client uses this codeto get token which is access token.
+This access token can be used to get the resources.
+
+Implementation for social authentication: 
+
+Social authentication cannot be leveraged for enterprise level application.
+
+If your application wants to access the resources of Github then you need to register your application with github.
+While registering callback url is the URL where application should be redirected after successful authentication.
+
+Create a bean of security filter chain
+http.authorizeRequest().anyRequest().authenticated().and().oauth2Login();
+
+Create an object of ClientRegistrationRepository:
+CommonOauth2Provider.GITHUB.getbuilder("github").clientId().clientSecret().build();
+CommonOauth2Provider contains some common provider such as GITHUB, GOOGLE< FACEBOOK, OCTA and their details.
+
+Create a controller that takes OAuth2AuthenticationToken Object as an input which will contain all information related to user.
+Once to hit this controller, you will be automatically redirected to github login page. Once you login you will be shown one window
+where it will ask your permission if you want to athorize to access the resources.
+
+2) Flow in microservices : 
+
+Client credentials flow is generally used here.
+
+Client -> is a website or a service [Client is my website]
+Client makes a request to resource owner[me] whether I can access this resource.
+Resource owner[me] talks to authorization server[google auth server] and auth server grant the client a token for access.
+Client gives token to resource server[google drive]
+Resource server checks the validity of token with auth server.
+If valid resource server gives access.
+
+=====================================================================================================================================================
+
+Implementation : 
+
+Go to OAuth2 playground website and register a client.
+Click on register a client.
+You will receive client_id and client_secret
+
+Password flow : Client take your username and password and send that to authorization server.
+In that case user won't see authorization server login dialog. in this case you will see printing website page to enter your username and password.
+
+=====================================================================================================================================================
+
+Client credentials flow : This flow is best when there is machine to machine communication
+
+1) Client which is a website itself send client_id and client_secret to the authorization server.
+2) Authorization server send back a bearer toekn which is again used by client to access the resource from resource server.
+3) Resource server validate this token from authorization server and return the response to client in case the token is valid.
+
+=====================================================================================================================================================
+
+Implementation : 
+
+1) include dependency spring-security-oauth2 in pom.xml
+2) Create one spring boot application called as authorization server (@EnableAuthorizationServer)
+3) Create one spring boot application called as resource server (@EnableResourceServer)
+
+=====================================================================================================================================================
+

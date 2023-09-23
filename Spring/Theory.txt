@@ -1,0 +1,6 @@
+What's new in Spring 5? 
+
+1) Updated minimum required java version to be 1.8
+2) Depricated legacy integration with some old old projects : Tiles, Velocity, Guava, Portlet.
+3) Upgraded Spring MVC to new version of Servlet API 4.0. Just to take advantage of some newer feaures of servlet API.
+4) Added new raective programming framework called as Spring Webflux.

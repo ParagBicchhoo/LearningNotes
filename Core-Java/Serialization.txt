@@ -1,0 +1,67 @@
+=====================================================================================================================================
+
+Saving a state of an object to a file is called as serialization.
+Whenever we want to send an object over a network , we cannot send object directly as it may be insecured and objects are 
+bulky in size that is the reason why we send state of those objects and hence we serialize that object.
+Serialization can be achieved with two classes.
+
+If we want to write something in a file ,we need FileOutputStream and
+if we want to write an object somewhere we need ObjectOutputStream.
+  
+This is how we achieve serailization : 
+
+Dog d1 = new Dog();
+
+FileOutputStream fos = new FileOutputStream("abc.txt");
+ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+oos.writeObject(d1);
+
+In the same way we need FileInputStream and ObjectInputStream for deserailization;
+
+FileInputStream fis = new FileInputStream("abc.txt");
+ObjectInputStream ois = new ObjectInputStream(fis);
+
+Dog d2 = (Dog)ois.readObject(); -- Typecasted to Dog
+
+If we want to ignore some field from object ,we declare that field as transient. Once the field is declared as transient , on 
+receiver side that field's default value will be deserialized.
+
+E.g. in Dog class we have two fields int age=10, String breed = "Lab", and if we declare both fields as transient then 
+their values after deserialization will be 0 and null respectively after typecasting.
+
+=====================================================================================================================================
+
+Serial Version UID (SVUID): 
+
+At the time of serialization, JVM saves an unique identifier for every serializable object based on ".class" file of the
+serializable object that unique identifier is called as serial version UID.(Note : .class file at sender and receiver are different)
+
+At the time of deserialization JVM will use this SVUID.
+
+Receiver JVM will generate a SVUID for this class and both should be equal.
+
+Otherwise JVM will throw "InvalidClassException".
+
+=====================================================================================================================================
+
+One of the in project examples of serialization is in cache implementation. The objects which we want to implement cache on using tool
+like redis need to be serialized.
+
+8) Why beans are made serializable in java?
+
+First we need to understand the different scopes of beans in Spring IOC container : 
+1) Singleton : Only one object of a single bean defination is created in IOC container.
+2) Prototype : Any number of object instances of a single bean defination are created.
+3) Request : Each HTTP request will have its own instance of a bean created for a single bean defination.
+4) Session : Scopes single bean defination to the lifecycle of a single HTTP session.
+5) Global session : Scopes single bean defination to the lifecycle of a global HTTP session.
+
+Difference between session and global session : Global session is used when your application has portlet container. portlet container is made up of
+some portlets. Each portlet has diferent session. But if you want to store variables global for all portlets in your applucation then you should
+store them in global session.
+
+In practice it is not explicity necessary for a java bean to be serializable. Without serailizable also it works fine.
+It's however useful when you want to store them as a 'plain' on harddrive or send them 'plain' over a network.
+For example when you are using a session scoped bean and server is configured to persist a session then you might face an exception
+"NotSerializableException".

@@ -1,0 +1,17 @@
+Gitlab Architecture : 
+
+Gitlab Instance or Gitlab server is used to host your application code and pipeline configurations.
+Gitlab instance has multiple Gitlab runners connected which are separate machines which actaully are the agents that
+run the CI/CD jobs.
+So Gitlab servers know what needs to be done and gitlab runners does that job.
+
+So www.gitlab.com is a managed gitlab instance(SaaS) that offers multiple managed runners already out of the box.
+And these are all managed by gitlab and hence you can start running your pipelines without any setup and configurations.
+
+But for your own organization you wanna manage your own setup (www.gitlab.mycompany.com) where you will manage you own runners.
+
+How to build your own pipeline : 
+
+Pipeline is written in code and hosted in application git repository as a yaml format.
+And the name of file should be .gitlab-ci.yml. So that gitlab can automatically detect that pipeline code and execute it without 
+any extra configuration effort from our side. 

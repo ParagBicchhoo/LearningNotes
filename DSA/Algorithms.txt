@@ -1,0 +1,316 @@
+https://dev.to/iuliagroza/complete-introduction-to-the-30-most-essential-data-structures-algorithms-43kd
+
+
+I. Data Structures
+
+Arrays
+Linked Lists
+Stacks
+Queues
+Maps & Hash Tables
+Graphs
+Trees
+Binary Trees & Binary Search Trees
+Self-balancing Trees (AVL Trees, Red-Black Trees, Splay Trees)
+Heaps
+Tries
+Segment Trees
+Fenwick Trees
+Disjoint Set Union
+Minimum Spanning Trees
+
+==================================================================================
+
+II. Algorithms
+
+Recursion and backtracking
+Divide and Conquer
+Sorting Algorithms (Bubble Sort, Counting Sort, Quick Sort, Merge Sort, Radix Sort)
+Searching Algorithms (Linear Search, Binary Search)
+Sieve of Eratosthenes
+Knuth-Morris-Pratt Algorithm
+Greedy I (Maximum number of non-overlapping intervals on an axis)
+Greedy II (Fractional Knapsack Problem)
+Dynamic Programming I (0–1 Knapsack Problem)
+Dynamic Programming II (Longest Common Subsequence)
+Dynamic Programming III (Longest Increasing Subsequence)
+Convex Hull
+Graph Traversals (Breadth-First Search, Depth-First Search)
+Floyd-Warshall / Roy-Floyd Algorithm
+Dijkstra's Algorithm & Bellman-Ford Algorithm
+Topological Sorting
+
+==================================================================================
+
+Most used algorithms : 
+
+Binary Search Algorithm
+Breadth First Search (BFS) Algorithm
+Depth First Search (DFS) Algorithm
+Merge Sort Algorithm
+Quicksort Algorithm
+Kruskal’s Algorithm
+Floyd Warshall Algorithm
+Dijkstra’s Algorithm
+Bellman Ford Algorithm
+Kadane’s Algorithm
+Lee Algorithm
+Flood Fill Algorithm
+Floyd’s Cycle Detection Algorithm
+Union Find Algorithm
+Topological Sort Algorithm
+KMP Algorithm
+Insertion Sort Algorithm
+Selection Sort Algorithm
+Counting Sort Algorithm
+Heap Sort Algorithm
+Kahn’s Topological Sort Algorithm
+Huffman Coding Compression Algorithm
+Quickselect Algorithm
+Boyer–Moore Majority Vote Algorithm
+Euclid’s Algorithm
+
+==================================================================================
+
+
+1) Binary Search Algorithm : 
+
+public static int binarySearch(int[] list, int target) {
+		
+		int start =0;
+		int end = list.length -1;
+		
+		while(start<=end) {
+			
+			int middle = (start + end)/2;
+			
+			if(target < list[middle]) {
+				
+				end = middle -1;
+				
+			} else if(target > list[middle]) {
+				
+				start = middle + 1;
+				
+			} else  {
+				
+				return middle;
+				
+			}
+			
+			
+		}
+		
+		return -1;
+		
+}
+
+==================================================================================
+
+2) BFS (Breadth first search) : 
+
+package DataStructuresAndAlgorithms;
+
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class Graph {
+	
+	private LinkedList<Integer>[] adj;
+	
+	public Graph(int v) {
+		
+		adj = new LinkedList[v];
+		
+		for(int i=0; i<v; i++) {
+			
+			adj[i] = new LinkedList();
+		}
+		
+	}
+	
+	public void addEdge(int source, int destination) {
+		
+		adj[source].add(destination);
+		adj[destination].add(source);
+		
+	}
+	
+	public int bfs(int source, int destination) {
+		
+			boolean[] visited = new boolean[adj.length];
+			int[] parent = new int[adj.length];
+			
+			Queue<Integer> q = new LinkedList<Integer>();
+			
+			visited[source] = true;
+			parent[source] = -1;
+			q.add(source);
+			
+			while(!q.isEmpty()) {
+				
+				int cur = q.poll();
+				if(cur == destination) break;
+				
+				for(int neighbour : adj[cur]) {
+					
+					if(!visited[neighbour]) {
+						
+						visited[neighbour] = true;
+						q.add(neighbour);
+						parent[neighbour] = cur;
+					}
+						
+				}	
+			}
+			
+			int cur = destination;
+			int distance = 0;
+			
+			while(parent[cur]!=-1) {
+				
+				System.out.print(cur + " -> ");
+				cur = parent[cur];
+				distance ++;	
+				
+			}
+			
+			return distance;
+		
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("Enter number of vertices and edges");
+		
+		int v = sc.nextInt();
+		int e = sc.nextInt();
+		
+		Graph graph = new Graph(v);
+		
+		System.out.println("Enter " + e + " edges");
+		
+		for(int i=0; i<e; i++) {
+			
+			int source = sc.nextInt();
+			int destination = sc.nextInt();
+			
+			graph.addEdge(source, destination);
+			
+		}
+		
+		System.out.println("Enter source and destination"); 
+		int source = sc.nextInt();
+		int destination = sc.nextInt();
+		
+	    System.out.println("Min distance is  : " + graph.bfs(source, destination));
+
+	}
+
+}
+
+====================================================================================
+                                                                                   
+Bubble sort :                                                                      
+                                                                                   
+Technique : compare adjecent elements and take larger number to the right side     
+and smaller one to left side. By this technique take largest number to right most  
+in every iteration                                                                 
+
+Number of iterations = length of array -1.
+
+public static int[] bubbleSort(int[] array) {
+
+		for (int i = 0; i < array.length; i++) {
+
+			int flag = 0;
+
+			for (int j = 0; j < array.length - 1 - i; j++) {
+
+				if (array[j] > array[j + 1]) {
+
+					int temp = array[j];
+					array[j] = array[j + 1];
+					array[j + 1] = temp;
+
+					flag = 1;
+
+				}
+
+			}
+
+			if (flag == 0)
+				return array;
+
+		}
+
+		return array;
+	}
+	
+==================================================================================
+	
+Selection Sort : 
+
+Technique : Select elements one by one. Find the smallest elemnt lesser than 
+selected element and swap the positions of selected element and the smallest element.
+
+public static int[] selectionSort(int[] array) {
+
+		for (int i = 0; i < array.length; i++) {
+
+			int min = i;
+
+			for (int j = i + 1; j < array.length; j++) {
+
+				if (array[j] < array[min]) {
+
+					min = j;
+				}
+
+			}
+
+			int temp = array[i];
+			array[i] = array[min];
+			array[min] = temp;
+		}
+
+		return array;
+	}
+	
+==================================================================================
+
+Insertion Sort : 
+
+Technique : Iterate over elements, apply reverse loop till 0th position,
+insert element at correct position. 
+
+
+public static int[] insertionSort(int[] array) {
+
+		for (int i = 0; i < array.length; i++) {
+
+			int temp = array[i];
+			int j = i;
+
+			while (j > 0 && array[j - 1] > temp) {
+
+				array[j] = array[j - 1];
+				j = j - 1;
+			}
+
+			array[j] = temp;
+
+		}
+
+		return array;
+	}
+	
+==================================================================================
+
+Mearge Sort : 
+
+

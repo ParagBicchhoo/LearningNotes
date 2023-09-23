@@ -1,0 +1,120 @@
+Spring profiles helps seggregating your application configurations and make them available to specific 
+environments only.
+
+We have different environments in our application like dev, QA, production.
+Now configuration files are environment specific.
+You can also use @Profile on beans.
+Example : OracleDataSource or MysqlDataSource.
+
+Create separate config file application-dev.properties, application-prod.properties files for each environment.
+Only include environment specific properties to that file.
+
+Finally create one parent application.properties file like : 
+
+spring.application.name = Spring profiles
+spring.profiles.active = test
+
+
+application.properties of each environment will have a property named as :
+spring.config.activate.on-profile=prod/uat/sit
+Also in these environment specific files, you can set parameters based on environment.
+
+based on the above value spring.profiles.active value will be considered.
+
+This approach is a very basic one because, it requires to change the application.properties file
+and as a result we changed the code, we need to rebuild the application and deploy again.
+
+But if we take these values inside environment variables, it won't require to rebuild the code.
+
+export ACTIVE_SPRING_PROFILE=prod
+java -jar pojectName.jar
+
+In this way we are directly running the application with required environment.
+
+## Conditional bean creation using spring profiles
+
+@Component
+@Profile("!prod")
+public class easySchoolNonProdAuthenticationProvider implements AuthenticationProvider {
+
+}
+
+@Component
+@Profile("prod")
+public class easySchoolAuthenticationProvider implements AuthenticationProvider {
+
+}
+
+
+
+================================================================================================================================= 
+
+Externalized Configurations : 
+
+Configurations can be Extenalized and there are various places from where properties can be read 
+
+Here is the properties preferences from where configs will be read :
+ 
+1) application.properties file  (lowest priority)
+2) OS environmental variables
+3) Java system properties (System.getProperties())
+4) JNDI attribute from java comp/env
+5) Servlet context init parameters
+6) ServletConfig init parameters
+7) Command line arguments.  (Highest priority)
+
+=================================================================================================================================
+
+Method 1 : 
+
+Define custom properties in a
+application.properties file and read then using @Value annotation
+${} :: Spring expression language
+
+method 2 : 
+
+Reading properties using Environment 
+
+@Autowired
+Environment env;
+
+env.getProperty("JAVA_HOME");
+env.getProperty("eazyschool.pagesize");
+
+Using this approach you can also access variable that are present in environment or server.
+
+=================================================================================================================================
+
+Method 3 : Reading properties with @ConfigurationProperties : Reading properties in java object.
+
+Every property defined in application.properties should have a common prefix.
+
+easyschool.pagesize=10
+easyschool.contact.pagesize=5
+easyschool.contact.successMessage=Your message is submitted successfully
+easyschool.branches[0]=Newyork
+easyschool.branches[1]=delhi
+easyschool.branches[2]=paris
+easyschool.branches[3]=singapore
+
+@Component
+@Data
+@PropertySource(classpath:application.properties)
+@ConfigurationProperties(prefix="eazyschool0")
+@Validated
+public class EazySchoolProps {
+	
+	private int pageSize;
+	private Map<String, String> contact;
+	private List<String> branches;
+
+}
+
+Autowire this EazySchoolProps in any of the class and use it.
+
+=================================================================================================================================
+
+Learn how to read configs using #{${}} spring expression language.
+
+=================================================================================================================================
+

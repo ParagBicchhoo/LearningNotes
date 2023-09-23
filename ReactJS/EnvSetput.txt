@@ -1,0 +1,33 @@
+1) Download and install Visual studio code (IDE)
+2) Add following extensions : 
+	a) Babel javascript : To highlight ES6 code 
+	b) Javascript (ES6) code snippet
+	c) vscode-icons :  Show icons for files in explorer
+	
+3) Download and install node.js ( it will also install npm(node package manager) by default.
+To check whether they are installed properly (check versions) : 
+node -v
+nmp -v
+
+4) Install react from terminal : 
+
+a) nmp install -g create-react-app
+b) create-react-app --version
+c) create-react-app <project-name>
+
+Start working : 
+
+Go to working directory -> cd <project-name>
+npm start
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+JSX -> Javascript xml 
+
+HTML code that we write in React is called JSX
+
+{} -> used to render variables in html.
+
+Template literals : 
+
+

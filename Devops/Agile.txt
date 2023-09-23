@@ -1,0 +1,60 @@
+There are some challenges associated with waterfall model like, 
+time of developement is more and in this time competitor will be way ahead of you in terms of new features.
+Once the requirement gathering and define is done, there is very little scope for new features as
+software might be in a testing phase at that time.
+Hence you cannot change a plan in waterfall model.
+So to overcome these flaws agile came in to picture where you start your application from smallest part 
+and design it accordingly.
+So requirement changes are possible even in the middle of developement.
+
+There are lots of implementations agile.
+One of them is scrum.
+
+There are 4 values and 12 principles you need to follow to be agile.
+
+Scrum : 
+
+Sprint is a time frame in product development in which you can deliver a potentially deployable 
+feature for an application. Now the sprint can be 1 week or 2 week or 4 week depending on the 
+project and client's requirement.
+
+You can take some requiremnts from previous sprint which is also called as sprint backlog.
+This task is done by scrum team which consist of around 7-8 people.
+Then after 1-2 weeks you will give first increament. This increament is potentially shippable product.
+
+There are some meetings that are managed by scrum master.
+Scrum daily : short standup meeting used to planning.
+scrum review
+scrum retrospective
+
+Besides there is a product owner other than scrum master.
+
+===================================================================================================================================
+
+Jira for Agile : 
+
+Jira is a project management , Issue tracking and a bug tracking tool for agile software and business teams.
+
+Create a new project in Jira.
+We can see two main tabs -> 1) Backlog 2) Active sprints
+
+
+Our journey in Jira start with Backlog. Our project management workflow for our software developement project.
+So go to backlog.
+Click on create issue.
+Issue is basically an element in your project workflow.
+If you come down to dropdown issue type you can select following element from it : 
+
+1) Epic : Software development journey starts with epic : Abstract view of what we are creating.
+2) Story : What is required to achive your epic. Story can also be called as a feature.
+3) Task : We need to setup tasks to satisfy all stories and ultimatly the epic and the project.
+4) Bug
+
+Issues(Story, task or bug) can be added to a sprint by creating a new one. Start sprint button can be used to schedule a sprint.
+Now once the sprint is started ,it can be seen under Active sprint section.
+You can also create a subtask within a story.
+
+Scrum Role : Hierarchy of employees working on software development project and how they function to achieve agile development.
+
+=====================================================================================================================================
+

@@ -1,0 +1,155 @@
+Main feature of IOC container : Dependency injection which is used to pass dynamic input to your pojo classes.
+
+Scopes of beans in spring framework: 
+
+1) Singleton : Only one object of a single bean defination is created in IOC container.
+2) Prototype : Any number of object instances of a single bean defination are created.
+3) Request : Each HTTP request will have it's own instance of a bean created for a single bean defination.
+4) Session : Scopes single bean defination to the lifecycle of a single HTTP session.
+5) Global session : Scopes single bean defination to the lifecycle of a global HTTP session.
+
+
+There are following IOC containers  : 
+
+1) Core : BeanFactory(Interface) ---> XmlBeanFactory(Class) 
+2) J2EE : ApplicationContext and ConfigurableApplicationContext (Interfaces) ---> ClassPathXmlApplicationContext (Class)
+3) Web  : WebApplicationContext(Interface) ---> WebApplicationContextUtils (Factory class)
+
+Now to start these containers we need to have a driver. Just like to start a tomcat container a driver is maintained by tomcat.
+In case of IOC containers this driver is nothing but a main class.
+
+How to start IOC container : 
+
+public static void main(String [] args) { 
+
+	ApplicationContext context = new ClassPathXmlApplicationContext();
+	
+}
+
+For servlet based applications servlet container itself is a driver(e.g. tomcat container) and this can be achieved with two different methods : 
+
+1) init() --> As we need to start container only once this method is recommended.
+2) service() --> Not recommended as this method will be executed with every user request.
+
+Now to start a spring application we must have following : 
+
+1) Pojo class
+2) xml file : spring.xml file and web.xml file
+3) Driver class
+
+spring.xml file need DTD(document type defination) or XSD(xml schema defination)
+web.xml : don't need DTD or XSD
+
+DTD and XSDs are used to validate xml file. Inside IOC container there is a parser called as SAX parser with the help of it reads the xml file.
+
+So these parsers will check well formedness and validness of xml file (close and opening tags and all)
+
+whereas DTD and XSD will check whether the required tag definations are there or not.
+
+Resource r = new ClassPathResource('spring.xml'); This class can be used to find classpath resource (file)
+BeanFactory factory = new XmlBeanFactory(r);
+
+This xml file is loaded in application only once.
+Whatever it finds in xml file ,it creates beans of it.
+
+By default scope of our object is singleton. So it will instantiate our bean only once and constructors will be executed.
+Now if I try to get this bean constructors will not be executed again as the scope is singleton.
+
+If I configure scope of this object(bean) as prototype, for every new request(factory.getBean()) it will create new object .
+
+XmlBeanFactory : Object will be created when bean is requested (Lazy container)
+ApplicationContext(Object will be created when xml file is loaded( Eager container) --> This happens only if scope of object is singleton.
+If object scope is prototype, bean will not be created at the time of container loading.
+
+Which is better :  Eager is better as all the beans will be created only when xml file is loaded. which happens when the container is started.
+But in case of lazy approach, beans will be created when first bean is requested. which means user will have to wait.
+
+Also Application context has many more features than beanfactory.
+
+Containers use class.forName() method to create instance of a bean.
+
+Spring will also be able to access private constructors.This can be achieved using setAccessible method of class Constuctor(Reflection API)
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+There are two types of dependency injections : 
+
+1) Setter method
+2) Constructor(Parametarized)
+
+In spring doc they have given interface dependency injection but internally it will use setter injection only.
+
+Setter method of a bean class can be called using property tag[Property tag values are simply passed to setter methods]
+
+Constructor of a bean class can be called using constructor-arg tag[These values are passed to constructor]
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Spring configurations Types : 
+
+1) Pure XML based : 
+
+a) ApplicationContext context = new ClassPathXmlApplicationContext("spring-app.xml");
+b) spring-app.xml --> With DTDs or XSDs .
+tags : beans, bean, property[value given to property tag is passed to setter methods]
+
+2) XML based (with @Component-scan)
+
+a) Pojo class is a @Component("firstProduct") [firstProduct is the name of the component]
+b) try{ ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-app.xml");};{
+
+}
+
+c) spring-app.xml with DTDs or XSDs and component-scan with basepackages names.
+
+3) 
+a) Pojo class with @Component
+b) AppConfiguration class to replace xml file.
+annotations used : @Configuration
+                   @Component-scan
+				   
+
+c) AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfiguration.class);
+
+4) Everything same as above except there is no @Component-scan . As we don't need to scan the components we need to define prequalified 
+beans for every component in AppConfig.class.
+
+Note : spring-app.xml file is kept inside src folder parallel to all packages which is nothing but a classpath.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Notes
+1) If we autowire an interface in our class and an interface has more than one implementation classes, it will be confused which class object to prepare.
+So in this case whatever object or component you give @primary annotation will be used.
+
+
+Cohesion in Java : 
+
+In object oriented design, cohesion refers all about how a single class is designed. 
+Cohesion is the Object Oriented principle most closely associated with making sure that a class is designed with a single, well-focused purpose.
+The more focused a class is, the cohesiveness of that class is more. 
+The advantages of high cohesion is that such classes are much easier to maintain (and less frequently changed) than classes with low cohesion. 
+Another benefit of high cohesion is that classes with a well-focused purpose tend to be more reusable than other classes.
+
+Example : Suppose we have a class that multiply two numbers, but the same class creates a pop up window displaying the result. 
+This is the example of low cohesive class because the window and the multiplication operation don’t have much in common.
+To make it high cohesive, we would have to create a class Display and a class Multiply. 
+The Display will call Multiply’s method to get the result and display it. This way to develop a high cohesive solution.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+If we autowire an interface which has multiple implementation classes then there occurs NoUniqueBeanDefinationException if interface is Autowired.
+Then to resolve this @Primary annotation is used.
+The bean which you have annotated as @primary will be considered.
+Either class can be annotated with @Primary or the bean inside the class can be annotated with @Primary.
+
+The problem with @Primary annotation is it doesn't really narrow down the ambiguity but just mark the prefered ones.
+
+Second way to resolve this is to use @Qualifier annotation. Bean ambiguity will be resolved acording to name.
+Just use @Qualifier annotation at the place where interface is autowired.
+
+===========================================================================================================================================================================================
+
+
+
+
+

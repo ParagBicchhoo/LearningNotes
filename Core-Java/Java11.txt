@@ -1,0 +1,10 @@
+Java 9 :
+
+Modularization : 
+
+Goals :  Modularize the JDK.
+rt.jar(runtime.jar) grew to 60+MB by java 8.
+
+java --list-modules  will list number of modules.
+
+It has two types of modules

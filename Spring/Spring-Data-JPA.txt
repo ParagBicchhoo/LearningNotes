@@ -1,0 +1,182 @@
+Spring data is a umbrella project which has persistant layer implementation of many persistant technologies like
+Spring data JDBC .... mini version of JPA. It is conceptually light
+Spring data JPA ...it has many features like pagination, caching.
+Spring Data LDAP
+Spring Data MongoDb
+Spring data Redis
+
+and many......
+
+## The central interface in the spring data repository abstraction is Repository. It is simple marker interface.
+
+# CrudRepository -- provides basic persistant capabilities like create, read, update and delete.
+# PagingAndSortingRepository : Sometimes I wan't to sort the data or I want to apply the paginantion means I 
+don't want want all 10000 records I want them to be in a batch of 100 at a time.
+# Why they did not provide all these features in a single interface -- because of concept in SOLID called as interface seggregation.
+
+Every subproject in spring-data will have its own implementation interface like spring-data-jpa has JpaRepository.
+spring data mongo will have MongoRepository.
+JpaRepository extends PagingAndSortingRepository.
+
+Annotations : 
+@Repository
+@Table
+@Column
+@Id
+@Entity
+@Enumerated - java variable type is enum of string and database column is varchar
+@EnableJpaRepositories("package name where my repositories are available") - in main class 
+@EntityScan("package where my entity objects are available")
+
+Properties : 
+spring.datasource.url=jdbc:mysql://spring.cfgh.useast.rds.amazonaws.com/eazyschool
+spring.datasource.username=parag
+spring.datasource.password=vfghnvbfj
+spring.jpa.show-sql=true  --> Show sql queries on console in case of derived query methods
+spring.jpa.properties.hibernate.format_sql=true -- show them in good format
+
+===========================================================================================================================================
+
+CrudRepository<PojoClass, primaryKeyType>
+CrudRepository<Contact, Integer>
+
+Derived query methods in Spring data JPA : 
+
+List<Person> findByLastName(String lastName);
+Person findByEmail(String email);
+Person findByEmailAndLastName(String email, String lastName);
+
+Introducer : tell jpa that what to do : (find, read, query, get are same), count, Distinct
+Criteria : tell jpa criteria : And , OR.
+
+@Query annotation allow to write queries in JPQL where className and fieldNames are used for table names and field names of table.
+In @Query if nativeQuery true is passed then query can be written in native sql language.
+
+@NamedQuery is used in case of big application where 1000's of queries are scattered across the application. So all queries are placed 
+in one place
+
+@NamedQuery - Define JPQL query
+@NamedNativeQuery - define native query.
+
+We write NamedQuery inside entity class.
+
+===========================================================================================================================================
+
+Auditing support in Spring Data JPA.
+Spring data JPA has in built support for auditing.
+
+You can annotate the fields of pojo classes with annotations like 
+@CreatedBy - updatable as false 
+@CreatedDate - updatable as false
+@LastModifiedDate - insertable as false
+@LastModifiedBy - insertable as false
+
+@EntityListener for pojo class - 
+This listener will keep listening for any changes that will be happening. Like RabbitMQ Listener keep listening the message.
+
+@EnableJpaAuditing for Spring boot application.
+
+===========================================================================================================================================
+
+Sorting:
+
+Support sorting with easy configurations.
+Static sorting : Example : List<Person> findByOrderByNameDesc();
+Dynamic Sorting : Example : Sort sort = Sort.by("name").descending().and(Sort.by("age"));
+Sort.by() is an argument to findAll method.
+
+===========================================================================================================================================
+
+Pagination : 
+
+Pageable pageable = PageRequest.of(0, 5, SortBy("name").descending());
+Page<Person> findByName(String name, pageable);
+
+===========================================================================================================================================
+
+Transaction Propagation : 
+Scenarios are considered when @Transactional method is called from another @Transactional or non Transactional method.
+If calling method is transactional and called method is also transactional then will it create a new transaction or use existing one.
+This behavior is different for different propagation levels.
+
+1) Required : 
+
+If both calling and called methods are transactinal, and called method is called directly, it will create it's own transaction.
+If it is called from another method which is transactional it will not create a separate transaction but will use existing one.
+If this transactional method is called from  non- transactional method, it will create a new transaction.
+This is the default type. If not provided any propagation, it will be considered by default.
+
+2) Support : 
+
+Lets say m1 method which is transactional(Propagation supports) called from m2 method(Transactional propagation Required)
+
+If the calling method has an existing transaction(m2), then called method(m1) will use that existing transaction and if called method is 
+called directly then it will not create it's own transaction.
+
+3) Not supported : 
+
+It will not create a transaction under any circumstances.
+
+4) Requires_New : 
+
+Creates new transaction under all circumstances
+
+5) Never : 
+
+If the method is directly called, it does not create a transaction.
+If the method with never propagtion called from transactional it throws an exception.(IllegalTransactionStateException)
+If the calling method does not have a transaction, it will not create it's own transaction.
+
+6) Mandatory : 
+
+If the method is called directly, it will throw an exception.
+If Calling method has an existing transaction, it will make use of existing transaction.
+If called from another non transaction method then again it will throw an exception.
+
+===========================================================================================================================================
+
+Isolations : 
+
+Read Uncommited : 
+
+This will read uncommitted change by another concurrent transaction.
+
+Read Committed : 
+
+This will only read committed change by another transaction.
+
+Repeatable read : 
+
+transaction A read data
+transaction B commit data
+transaction A again read data - Here transaction A will get little different data as Transaction B has committed some data.
+This is the most used 
+
+Serializable isolation:
+
+SERIALIZABLE is the highest level of isolation. 
+It prevents all mentioned concurrency side effects, but can lead to the lowest concurrent access rate because it executes concurrent calls sequentially.
+In other words, concurrent execution of a group of serializable transactions has the same result as executing them in serial.
+ 
+===========================================================================================================================================
+
+Inheritance mapping strategies : 
+
+Lets say we have to perform payment and payment can be performed through credit card ad cheque
+
+Java supports inheritance but JPA does not so JPA defines some inheritance mapping strategies.
+
+1) SINGLE_TABLE : Everthing will be maintained in a single column along with 
+@Discriminator_coulmn(name = paymode, type = String)
+payment;
+
+2) TABLE_PER_CLASS Not recommended.
+
+This trategy maintains table for each entity and class.
+
+3) JOINED Mostly used
+
+JPA will join tables in real time application.
+Two different classes for CreditCard and Cheque and joined with id.
+
+===========================================================================================================================================

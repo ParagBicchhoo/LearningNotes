@@ -1,0 +1,139 @@
+1) Introduction
+
+Purpose : To provide type safety and to resolve type casting problem.
+
+Type safety : 
+
+Arrays are type safe . i.e. we can give the garanty for the type of elements present inside array.
+For e.g. if our programming requirement is to hold only String type of objects we can chose string array . By mistake if we are trying to add any other type of objects we will
+get compile time error.
+
+String [] s = new String[10000];
+s[0] = "parag";
+s[1] = "ravi";
+
+s[2] = new Integer[]; compiletime error...incompatible types.
+
+Hence String array can contain only string type of objects.
+
+Due to this we can give the garanty for the type of elements present inside array.
+
+Hence arrays are safe to use wrt type.
+
+ArrayList l = new ArrayList();
+l.add("string");
+l.add(new Integer()) - compilation successful
+
+String name1 = (String) l.get(0)
+
+String name2 = (String) l.get(1) Runtime exception class cast exception
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Then why generics? -> cause arrays are fixed in size.
+
+Type casting : 
+
+In arraylist without generics when you get element it will be of type Object so typecasting will be must
+Whereas in String[] typecasting is not needed.
+
+Now to overcome this problem generics concept is introduced.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+This is how we get type safety : 
+
+ArrayList<String> al = new ArrayList<String>();
+
+al.add("String");
+al.add(new Integer(10)); Compile time error.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Case 1 ->
+
+ArrayList is base type
+String is parameter type 
+
+Al<String> a = new Al<String>() --> valid
+List<String> a = new Al<String>() --> valid --> Parent reference used to hold child class object --> Polymorphism
+Collection<String> a =  new Al<String>() --> valid --> Parent reference used to hold child class object --> Polymorphism
+Al<Object> a =  new Al<String>() --> Invalid --> Polymorphism is not applicable for  parameter type or generics
+
+Case 2 -> 
+
+Generics cannot hold primitive data types 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2) Generic classes : 
+
+Until 1.4 version a non generic version of ArrayList class is declared as follows : 
+
+class ArrayList { 
+
+add(Object o){
+}
+
+Object get(index i){
+}
+
+}
+
+The argument to add method is object and hence we can add any type of object to arraylist. Due to this we are missing type safety.
+
+The return type of get method is object hence at the time of retrieval we have to perform type casting.
+
+In 1.5 version : 
+
+class ArrayList { 
+
+add(<T> o){
+}
+
+<T> get(index i){
+}
+
+}
+
+A class with T parameter is called generic class.
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Parameterizable classes : 
+
+You can dynamically change the type of parameters used in class.
+For example there is a parameter called as age and you are not confirmed whether user will pass Integer value or String value or Double value.
+In this case you can create a variable named as age as type T and while creating and object of class, user will pass Integer or string as 
+input in type parameter and value.
+
+Example : Black box.
+
+public class GenericsTester {
+   public static void main(String[] args) {
+      Box<Integer> integerBox = new Box<Integer>();
+      Box<String> stringBox = new Box<String>();
+
+      integerBox.add(new Integer(10));
+      stringBox.add(new String("Hello World"));
+
+      System.out.printf("Integer Value :%d\n", integerBox.get());
+      System.out.printf("String Value :%s\n", stringBox.get());
+   }
+}
+
+class Box<T> {
+   private T t;
+
+   public void add(T t) {
+      this.t = t;
+   }
+
+   public T get() {
+      return t;
+   }   
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+

@@ -1,0 +1,7 @@
+1) In binary search when we try to find middle element : 
+
+middle = (start + end) / 2; --> chances of int value overflow.
+
+Hence for this issue to overcome
+
+middle =  start + (end - start)/2;   which is eventually the same thing. 

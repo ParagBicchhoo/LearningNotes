@@ -1,0 +1,7 @@
+Traditional way of assigning values to object parameters is using constructor.
+But there are some problems with this.
+1) It becomes complex to assign variables.
+2) It is mandatory to specify the parameter value otherwise it will give an error.
+
+So we do it using setters. This is nothing but a builder design pattern(Creational design pattern).
+

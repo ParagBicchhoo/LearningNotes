@@ -1,0 +1,31 @@
+1) How are interceptors implemented where we can do authentication and authorization.
+2) How deployment will happen on insuremo when we build a repository full of microservices lets say 200 microservices.
+Will the deployment happen like deploy each microservice manually?
+3) Build a microservices one by one and build all components around it and deploy it on AWS ECS.
+4) Learn about docker and kubernetes. and how microservices and built in containerized app and deployed on kubernetes cluster. 
+Try to deploy your microservice on kubernetes as well.
+5) How to detect a deadlock in a running program?
+
+There are tools available with JDKs itself those can be used to detect the deadlock situation.
+
+3) Learn Liquibase.
+4) Learn Spring DataJPA
+
+5) Fail-fast vs Fail-Safe.
+Fail-Fast iterators immediately throw ConcurrentModificationException if there is structural modification of the collection.
+Collections return two types of iterators. Fail-fast or Fail-safe. Fail-fast iterators are retured by normal collections and fail-safe iterators
+are returned by concurrent-collections.
+Iterator it = hm.keyset().iterator();
+In concurrent collection modifications are done on copy of collection.
+
+6) Native and strictfp
+strictfp is used for strict floating point calculations so that calculations can be independent of platform.
+From java 17 onwards, all methods are strictfp by default.
+
+Native method means the method is written in either c/c++ to improve performance and effective memory management as we 
+can play with pointers in c and c++.
+
+7) Add some more design patterns in list and practice them.
+
+8) Oauth2.0 implementation of authorization code and client credentials in spring boot. 
+Key cloak and openID connect.

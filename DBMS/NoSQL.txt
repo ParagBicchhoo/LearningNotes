@@ -1,0 +1,103 @@
+NoSQL : Not only SQL : Because NoSQL also support SQL.
+
+To meet the huge data demands there is need to scale the databases.
+And that's why they came up with the concept called as NoSQL.
+
+NoSQl databases have flexible structure, they are scalable and fast.
+
+There is no normalization in NoSQl and hence they are fast.
+We store data as it is. Hence the focus is on reading and not writting.
+
+Different types of databases in Mysql.
+1) Key-value : Value can be json data, it can be multiple columns, it can be anything. When you say fast it is because of the concept called as Hash.
+E.g. Redis 
+2) Document databases : The value in this case is a JSON document. You store data in form of JSON. Every programming language know json.
+E.g. mongoDB
+3) Tablular : Cassandra : Key and keyspaces
+4) Graph
+
+==========================================================================================================================================================
+
+## Cassandra Query Launguage(CQL) : 
+
+What is keyspace :  Keyspace is nothing but collection of tables.
+desc keyspaces ; - to show all keyspaces.
+
+use nosqldemo to use a keyspace. Now whatever table you create, it will be created in this keyspace.
+desc nosqldemo -> describe the keyspace.
+
+Difference between these tables and relation databases tables : No Foreign key, no joins, We store denormalized tables.
+
+Create table aliens (
+	id int,
+	aname text,
+	tech test,
+        exp int,
+	primary key (id)
+);
+
+desc aliens -> Show table create script.
+
+select * from aliens;
+
+insert into aliens(id, aname, tech, exp) values (1, "parag", "java", 6);
+
+Update : 
+
+update aliens set tech = 'IOS' where id=2;
+if you select id other than 1 or 2 which is not in this table, you won't get error. In normal SQL you will get an error.
+but it will create one more row with tech as IOS and id as 3 and other columns as null.
+In short it is called upsert
+
+Select * from aliens where id=2 - Works only with primary query
+
+select * from alien where aname = 'parag' - Invalid request.
+
+drop table alien;
+
+==========================================================================================================================================================
+
+## Cassandra database data types : 
+
+int - 32 bits
+bigint 64 bits
+smallint 16 bits
+tinyint - 8 bits
+
+float 32 bits'
+double 64 bits
+decimal 
+timestamp : date and time
+date
+time
+boolean
+Collection : set map list
+
+insert into aliens(id, aname, exp, tech, zip) values(uuid(), 'navin', 3.5, 'java')
+
+uuid will generate a unique id.
+
+alter table aliens add (created timestamp, available boolean);
+
+collection datatype can have multiple values.
+
+alter table aliens add(emails set<text>, frameworks list<text>, previous_jobs map<int, text>)
+
+we can also specify composite key with multiple primary key column.
+Where id can be repeated.
+
+
+{} : To add set values comma separated 
+[] : To add list values comma separated
+{} : map has key which is unique hence behave as set. {'telusko':4}
+
+
+==========================================================================================================================================================
+
+Cassandra is a distributed database.
+
+Replication factor : Number of copies of database.
+
+We can use eventually consistant feature here.
+
+==========================================================================================================================================================

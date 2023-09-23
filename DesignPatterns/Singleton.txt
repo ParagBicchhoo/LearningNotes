@@ -1,0 +1,37 @@
+Singleton means you can create an only one instance of a class.
+
+Why do you need them ? --> Heavy weight objects like connection pool and loggers and expensive to construct. 
+We would not like them to construct every time we want to use. And they are made available to the entire application until the end of application life cycle.
+
+if you define the class with singleton annotation, it will be thread safe. If two threads are accessing it simultanuously , access to it will be serailized.
+
+
+public class Singleton {
+    private static Singleton singleInstance;
+
+    private Singleton() {
+    }
+
+    public static Singleton getSingleInstance() {
+        if (singleInstance == null) {
+            synchronized (Singleton.class) {
+                if (singleInstance == null) {
+                    singleInstance = new Singleton();
+                }
+            }
+        }
+        return singleInstance;
+    }
+}
+
+}
+
+How to break singleton design pattern : 
+
+One way would be if we donot declare synchronize method in getSingleInstance then more than one object can be created.
+
+It can break if the class is Serializable
+It can break if its 'Clonable`
+You can break by Reflection (I believe)
+it can break if multiple classloaders are loaded the class
+

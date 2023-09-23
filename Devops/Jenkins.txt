@@ -1,0 +1,39 @@
+1) Jenkins is a continuous integration tool used to build code and deploy it in production.
+2) Continuous integration is a software development practice where developers regularly merge their code into central repository 
+after which automated builds and tests are run. 
+3) Jenkins provides hundreds of plugins to support building, deploying and automating any project.
+4) It is a server based system that runs in servlet container such as apache tomcat and it supports version control tools 
+like SVN tortoise, GIT to auttomate build.
+
+Now lets understand more about continuous integration.In Continuous integration all the development work is integrated as 
+early as possible. Once I develop my code I move it to the repository. From repository I need to do the build. This build process 
+can be done with ant or maven or gradle. Then it will test my code. This helps to identify errors as early as possible.
+
+Installation : 
+
+Download Jenkins server from jenkins official website.
+Install suggested pluging : 
+Create first admin user with given fields
+Configure jenkins url.
+Start using jenkins
+
+Integrate GIT with Jenkins : 
+
+Create a java project.
+Write some unit test cases using mockito/junit to check whether these test cases gets automated with jenkins or not.
+Create a new job in jenkins and give project and repository URL to this job.
+While creating a job you can also select a maven goal of clean install.
+Click on created job and Build Now.
+It will build the code and run the test cases.
+Change something in the code.
+Commit and push these changes to repository.
+In few seconds a new build will start automatically.
+This is how automatic build happens in jenkins for every commit.
+
+Pipeline is a process of CD automation using jenkins job(items)
+Each job contains some processing inlets and outlets.
+Build-Deploy-test-release are some of the jobs and they are chained in a single pipeline.
+
+There are three types of pipelines :
+1) Build Plugin pipeline : If my application has less job to execute then go for it.
+2) Declarative 

@@ -1,0 +1,52 @@
+1) Practical use case where immutability helps : 
+
+a) Immutable objects are thread safe that is the reason why you will not have any inconsistancy issue
+b) Immutable objects are good map keys and set elements because they typically do not change once created.
+c) Immutability makes it easier to paralellize your program. Since there is not conflict among objects.
+
+But immutability also costs perfrormance since you cannot make changes in an existing object.
+
+2) Difference between Synchronized and Lock interface?
+   With synchronized lock is released in the same order it was acquired.
+   With Lock interface you can acquire or release the lock in any order.
+
+3) How to avoid deadlocks in java ?
+
+1) Deadlocks mainly occur when you give lock of an object to multiple threads. So we can avoid giving locks to 
+multiple threads
+2) Sycnhronized keyword is the main reason why deadlocks occur. Because we can call wait and notify method only 
+through synchronized context, if two threads are waiting for each other forever without notifying each other then deadlock may
+occur.
+3) Another situation where deadlock may occur is when two threads join each other. So we can take some precaution of such
+scenarios while coding.
+
+4) How to avoid deadlock in a situation when you have n threads and n resources.
+--> Impose ordering on locks and force each of those n threads to follow ordering.
+
+5) What design pattern is used in Collections.sort method?
+--> Strategy design pattern.
+
+6) What are the drawbacks associated with lambda expressions in java?
+--> They are difficult to understand.
+
+7) Architectural constrains for REST?
+1) Client server architecture
+2) Statelessness
+3) Uniform interface : There should be a uniform way of interacting with given server irrespective of the device and type
+of application
+4) Layered system : Application architecture need to be in multiple layers.
+5) Cached : A well managed cached system eliminates the some client server interaction.
+6) Code on demand
+
+7) Difference between CrudRepository and JPARepository
+CRUDRepository provides only CRUD operations where as JPA repository provides some operations like deleting the records in batch.
+
+8) Load balancing algorithms.
+
+9) Netflix OSS(Open source software) stacks : 
+
+Eureka
+Spring cloud config server
+NetflixRibbon for load balancer
+Zuul API gateway.
+

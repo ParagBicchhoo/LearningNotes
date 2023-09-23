@@ -1,0 +1,64 @@
+If server takes 2 sec to send a request and 2 second to respond then latancy is 4 seconds.
+
+Amazon cloufront is a webservice that gives businesses and web application developers an easy way
+to distribute content with low latency and high data transfer speed.
+
+To reduce the latency content delivery network is used. Which is also called as CloudFront in AWS.
+
+This is used in case of users are distributed across the globe.
+Keeping servers at every location is costly. There is problem with data sync.
+
+So edge locations are created at many locations across the world. As of now there are
+205 edge locations and 11 edge caches.
+
+These edge locations use AWS cloudfront for resolving latency issue.
+Edge locations use cache memories so as to again resolve latency issues.
+
+You can configure the time for which you can cache data for. Default is 24 hours.
+There is not point in keeping cache time too much because may be data is updated after 
+24 hours and edge location will keep on giving user old data.
+In case of static data u can keep cache time as 365 days as well which is maximum.
+
+Nearest edge location is defined by least latency. The edge location which will give least latency will
+be considered as nearest edge location.
+
+Cloudfront is a global service : As soon as you start using cloudfront, region will be removed and it will
+become global.
+
+Edge locations keep persistance with origin also called as keep-alive.
+
+Edge locations are no way connected to availability zones or regions.
+
+Total 216 point of presence : 205 edge locations and 11 regional caches.
+
+Regional cache or regional edge location : There are 11 in total. It acts as a alternative for origin from
+where the request is coming . Regional cache also keep the data of regional edges so that if something is 
+lost it will not have to go back to origin.
+Regional edge locations/regional caches keep data for more amount of time that edge locations.
+Edge locations transfers less used data to regional caches so that it's own memory can be used effectively.
+
+When user makes a request, DNS routes the request to the cloudfront edge location that can best server
+the users request.
+
+Regional caches have feature parity with edge locations for e.g. cache invalidation request removes
+an object from both edge caches and regional caches before it expires.
+
+Proxy method PUT/POST/PATCH/OPTIONS/DELETE go directly to the origin from the edge locations and do not 
+proxy through the regional edge caches.It will go to edge location although. No role of regional edge cache.
+
+Dynamic content as determined at the request time does not flow through regional edge cache but go directly to the
+origin. It will go to edge location although.regional edge cache.
+
+Lab : 
+
+1) Create s3 bucket which will be accessed through cloudfront.
+2) Upload some content in bucket.
+3) Remember the file name
+4) Go to cloudfront and click create distribution
+5) Two options Web content or RTMP(Real time stream videos) -> Discontinued support now
+Adobe flash media player deleted by adobe.
+6) Click on get started.
+7) Origin domain name should be your newly created s3 bucket.
+8) Use domain name to access your data. append filename in front of domain.
+
+=================================================================================================================================

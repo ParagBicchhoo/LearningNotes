@@ -1,0 +1,110 @@
+1) Dynamo db calculations of RCU and WCU with strongly consistant and eventuallly consistant
+formulas.
+
+WCU : 
+
+Example 1: we write 10 items per second, with item size 2 KB
+• We need 10 ∗ (2KB/1KB) = 20 WCU
+• Example 2: we write 6 items per second, with item size 4.5 KB
+• We need 6 ∗ (5KB/1KB) = 30 ���� (4.5 gets rounded to the upper KB)
+• Example 3: we write 120 items per minute, with item size 2 KB
+• We need (120/60) * (2KB/1KB) = 4 WCU
+
+RCU : 
+
+Example 1: 10 Strongly Consistent Reads per second, with item size 4 KB
+• We need 10 ∗(4KB/4KB) = 10 RCU
+• Example 2: 16 Eventually Consistent Reads per second, with item size 12 KB
+We need (16/2) * (12/4) = 24
+• Example 3: 10 Strongly Consistent Reads per second, with item size 6 KB
+10/1 * 8/4 = 20
+
+
+===============================================================================================================================================
+
+2) Elastic beanstalk upgdrades revision : 
+
+All at once (deploy all in one go) – fastest, but instances aren’t available to serve 
+traffic for a bit (downtime)
+• Rolling: update a few instances at a time (bucket), and then move onto the next 
+bucket once the first bucket is healthy
+• Rolling with additional batches: like rolling, but spins up new instances to move the 
+batch (so that the old application is still available)
+• Immutable: spins up new instances in a new ASG, deploys version to these instances, 
+and then swaps all the instances when everything is healthy
+• Blue Green: create a new environment and switch over when ready
+• Traffic Splitting: canary testing – send a small % of traffic to new deployment
+
+
+===============================================================================================================================================
+
+4) CodeDeploy predefined configurations.
+
+
+===============================================================================================================================================
+5) S3 encryption types.
+
+
+===============================================================================================================================================
+6) S3 glacier, deep archive, intelligent tiering.
+
+===============================================================================================================================================
+
+7) Revise dynamo db partition key and sort key, local secondary index and global secondary index.
+
+===============================================================================================================================================
+
+8) Amazon cognito user pool vs identity pool when to use what.
+Amazon cognito user pools provide sign in functionality for app users.
+Amazon cognito identity pools provide AWS credentials to users who can access AWS resources directly. Integrate with AWS user pools as 
+an identity providers
+
+
+===============================================================================================================================================
+
+9) CodeArtifact
+
+===============================================================================================================================================
+
+10) Gateway VPC endpoint vs Interface VPC endpoint.
+
+
+===============================================================================================================================================
+
+11) Inline policy.
+
+• AWS Managed Policy
+ • Maintained by AWS 
+ • Good for power users and administrators 
+ • Updated in case of new services / new APIs
+• Customer Managed Policy
+ • Best Practice, re-usable, can be applied to many principals
+ • Version Controlled + rollback, central change management 
+• Inline
+ • Strict one-to-one relationship between policy and principal
+ • Policy is deleted if you delete the IAM principal.
+
+===============================================================================================================================================
+
+12) Lambda@Edge are used to change the cloudfront responses. Cloudfront functions and lambda@Edge are kind of similar with few changes like: 
+CloudFront functions : Max memory 2MB, file system access, request body access no
+Lambda@Edge : 128 mb to 512 mb, files systems access, request body access yes.
+
+===============================================================================================================================================
+
+13) Lambda authorizer are used for security of API gateway to provide authentication and lambda function is used for an authorization.
+
+===============================================================================================================================================
+
+14) SSL termination refers to the process of decrypting encrypted traffic before passing it along to a web server
+
+===============================================================================================================================================
+
+15) Learn CodeGuru
+
+===============================================================================================================================================
+
+16) Cloudformation parameters.
+
+===============================================================================================================================================
+

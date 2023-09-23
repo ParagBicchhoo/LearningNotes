@@ -1,0 +1,8 @@
+Dependencies for eureka server : Eureka server, eureka discovery
+@EnableEurekaServer in SpringBootApplication java file. SpringEureka provides the UI which show instances that are registered with eureka.
+eureka-client-register-with-eureka=false --> So that it does not register with itself.
+Other microservices are eurekaclient so other microservices use annotation @EnableEurekaClient.-> 
+Dependency in pom.xml : Spring cloud starter netflix eureka client.
+This is how services are dicovered in microservices. When you hit eureka server URL,you can see all the clients those are registered with server.
+API gateway represents the single entry point into the system. It provides request routing, security.
+API gateway is also a Eureka client. We define routes in application.properties file.

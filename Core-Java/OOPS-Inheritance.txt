@@ -1,0 +1,497 @@
+Inheritance: is-A relationship.
+
+Loop holes : 
+
+Class P {
+
+method m1{}
+}
+
+class c extends P {
+method m2{}
+
+}
+
+Parent class methods are by default available to child class.
+
+P p = new P();
+p.m1 -> correct
+p.m2 -> Compilation error
+
+C c= new C();
+c.m1() -> Correct
+c.m2() -> correct
+
+P p1 = new C();
+p1.m1() -> Correct
+p1.m2() -> Incorrect : compilation error
+
+C c = new P(); -> Compilation error.
+
+Here one important point to note is that, m1 method is not overriden in child class.
+We are just checking what methods can be called using what refernces. 
+
+==========================================================================================================================
+
+Java does not suppport muliple inheritance due to diamond problem.
+
+Class A extends B, C -> Compliation error.
+
+Loop hole -> Every class is a child class of Object. Then if I create a class A which extends B then class A has two parents.
+--> Ans --> If our class doen't extends any other class then only our class is direct child of Object. 
+If our class extends any other class then our class is indirect child class of Object.
+Hierarchy will be like Class A is child of B and B is child of Object.
+Now this becomes multilevel inheritance.
+
+Why java does not support multiple inheritance?
+->> P1 contains m1 method, P2 also contains m1 method. Both has one child C. 
+child class methods are by default available to parent. 
+now I call m1 method on child object . In this case there would be ambiguity which method will be called.
+
+But java provide multiple inheritance support through interfaces.
+
+interface C extends A, B  --> Valid
+
+We can't get inheritance through interfaces. Because we are not getting reusability.
+
+==========================================================================================================================
+
+Loop hole : 
+
+Class A extends A {
+				Cyclic inheritance. Not allowed or required in java (Compilation error cyuclic inheritance involving A)
+}
+
+OR 
+
+Class A extends B {
+
+}
+                                Cyclic inheritance. Not allowed or required in java (Compilation error cyclic inheritance involving A)
+Class B extends A {
+
+}
+
+
+===========================================================================================================================
+
+Inheritance : Has a relationship : 
+
+Class Student {
+
+String name;
+String rollNo;
+
+}
+
+Student has a name
+Student has a rollNo.
+
+Advantage :  If I want to build a car, there are many number of components I will require. Lets say Car requires Engine.
+
+Class Engine{
+// Engine related functionality
+}
+
+Class Car {
+
+Engine engine = new Engine();
+
+}
+
+Now car has a engine. 
+Has a relation is also known as composition or aggregation.
+No specific relation to implement has a relation.
+Write engine once and creating object use it anywhere. Hence it provides reusability.
+
+Difference between composition and association: 
+
+Both are has a relation. 
+Example University is Container class and Different department classes are contained Objects.
+Strong association of contained objects(Univerity) and container objects(departments) is called as composition.
+Aggregation is weak association.
+Department and professors are weakly associated. They can go to another department if department is closed.
+In Composition, container object hold the complete contained object.
+In Assocation , container object hold the reference of contained object.
+
+===========================================================================================================================
+
+When to go for is-a relation and when to go for has a relation : 
+
+When complete functionality of parent class is required for child class then go for Is - a relationship.
+If I do not need complete functionility then go for has a relationship.
+
+===========================================================================================================================
+
+Method signature contains method name, argument types.
+Return type is not a part of method signature and access modifiers are also not part of method signatures.
+
+===========================================================================================================================
+
+Overloading : 
+
+m1(int i)
+m1(double d)
+
+Two methods are said to be overloaded if and only if they have same name and different arguments type and number.
+
+===========================================================================================================================
+
+Case : 
+
+public void m1();
+public void m1(int i)
+public void m1(double d)
+
+call m1(10) --> m1(int i) will be called.
+call m1(10.5) -> m1(double d) will be called.
+
+===========================================================================================================================
+
+Case 1 : Automatic promotion in method overloading.
+
+class test {
+
+public void m1(int i){
+syso("int")
+}
+public void m1(float f){
+syso("float")
+}
+
+Argument Promotions :   
+
+byte -> short -
+               -
+                > int -> long -> float -> double
+            -
+char -> -
+
+t.m1(10) -> int
+t.m1(10.5f) -> float
+t.m1('c') -> int compiler promotes this char to int. After checking for exact match.
+this is called automatic promotion in overloading.
+t.m1(10l) -> long method is not present. long will be promoted to float. ans : float.
+t.m1(10.5) -> double type...no double argument is there. No matched method. Compilation error. Cannot find symbol(m1(double) at class test.
+
+To learn : What heppens in case of objects ? , what happens in case of mixed primitives and objects?
+ 
+===========================================================================================================================
+
+case 2 : 
+
+class test {
+
+public void m1(String s){
+syso("String")
+}
+public void m1(Object o){
+syso("Object")
+}
+
+t.m1(new Object()) -> Ans : Object (Exact match is getting the highest priority)
+t.m1("durga") -> String 
+t.m1(null) -> Ans : String (If the work can be completed by child then there is no need to go to parent)
+
+===========================================================================================================================
+
+case 3 : 
+
+class test {
+
+public void m1(String s2){
+syso("String")
+}
+public void m1(StringBuffer s2){
+syso("StringBuffer")
+}
+
+t.m1("durga") -> String (Exact match because "Durga" is exact match)
+t.m1(new Stringbuffer) -> StringBuffer (Exact match)
+t.m1(null) -> Compile time error -> reference to m1 is ambigious.
+
+===========================================================================================================================
+
+class test {
+
+public void m1(int i, float f){
+syso("int float version")
+}
+public void m1(float f, int i){
+syso("float int version")
+}
+
+t.m1(10, 10.5f) -> int float version
+t.m1(10.5f, 10) -> float int version
+t.m1(10,10) -> both methods can have promotion. hence ans :Compile time error -> reference to m1 is ambigious.
+t.m1(10.5f, 10.5f) -> CE : Cannot find symbol 
+--------------------------------------------------------------------------------------------------------------------------
+class test {
+
+public void m1(String s2){
+   syso("String")
+}
+public void m1(StringBuffer s2){
+   syso("StringBuffer")
+}
+
+t.m1("durga") -> String
+t.m1(new StringBuffer("Durga")) -> StringBuffer
+t.m1(null) -> Compilation error : reference to m1 is ambigious.
+--------------------------------------------------------------------------------------------------------------------------
+class test {
+
+public void m1(int x) {
+   syso("General method")
+}
+public void m1(int... x) {
+   syso("var-arg method")    --> Any number ifint arguments can be passed here.
+}
+
+t.m1() -> var arg can take any number of args so o/p : var-agr method.
+t.m1(10,20) -> var arg
+t.m1(10) -> both methods matched -> general method. because it is older version. 
+--------------------------------------------------------------------------------------------------------------------------
+class Animal {
+
+
+
+} 
+
+class Monkey extends Animal {
+
+
+
+}
+
+class test {
+
+public void m1(Animal a) {
+
+	syso("Animal version")
+}
+public void m1(monkey m) {
+	syso("Monkey version")
+}
+
+public static void main(String[] args) {
+	Test t = new Test();
+
+	Animal a = new Animal();
+	t.m1(a); -> Animal version
+
+	Monkey m = new Monkey();
+	t.m1(m); -> Monkey version
+
+	Animal am = new Monkey();
+	t.m1(am); -> Method resolution is always based on reference -> Animal version
+
+}
+}
+
+===========================================================================================================================
+
+Overriding : 
+
+Class P {
+
+method m1{}
+}
+method m2{}
+
+}
+}
+class c extends P {
+
+@override
+method m2{}
+}
+
+P p = new P();
+p.marry() -> parent method
+
+C c = new C();
+c.marry(); -> child method
+
+P p1 = new C();
+p1.marry() -> If marry method is overriden, then child method will be called else parent method
+
+Note : When child class has a method with same signature as of parent, then that method will be called as overriden method whether 
+you give @Overriden annotation or not.
+If the parent method is private then if you create a child method with same signature with @Overriden annotation, 
+then it will give compilation error(because private methods cannot be overriden) and if you don't give @Overriden annotation
+then that method will be child specific and won't give any error.
+
+Now consider marry method is private and C class method is not overriden :
+
+P p1 = new C();
+p1.marry() -> It will call parent class method.
+
+Case with final is little different, if parent class method is final, then in child class you cannot create a method with same name.
+Whether you use @Overrident annotation or not.
+
+Parent class has method m1, child class has method m1 with same signature without @Overridden annotation.
+Then that will also be called overriding.
+
+---------------------------------------------------------------------------------------------------------------------------
+
+Rules for overriding : 
+
+1) method names must be same.
+2) Arguments types must be same.
+3) return types must be same until 1.4 version
+4) from 1.5 version co-variant return types also allowed.
+
+class P 
+{
+	public Object m1() {
+		return null;
+	}
+}
+                                              Child types of parent return types are also allowed.
+class c extends P {
+	public String m1() {
+		return "Durga";
+	}
+
+}
+
+Co-variant return types concept is valid for Objects but not for primitives 
+if parent method return type is double then child method return type cannot be anything other than double like int or long.
+
+5) modifiers : private methods cannot be overidden 
+parent class private methods are not available to child and hence
+overriding concept not applicable for private methods.
+We can define exact same method in child without @override annotattion but this method will be child specific.
+
+If the parent class method is final then it cannot be overriden.
+
+parent class Abstract method must be overriden in child class to provide implementation.
+
+Lets say class A has method m1 implemented then class B which is a child of A can override this method without providing implememntation.
+method m1 in class B will be abstract hence class b will also be abstract.
+Now child class of B must implement this abstract method.
+Advantage  : We can stop the availability of parent method implementation to the next level child classes.
+
+
+
+Parent method | final                non-final    abstract/non-abstract      synchronized/non-synchronized      native/non-native     strictfp/non-strict-fp
+
+child method  | non-final/final       final       non-abstract/abstract      non-synchronized/synchronized      non-native/native     non-strictfp/strictfp
+
+=====================================================================================================================================================================
+
+               not possible          possible       possible                        possible                     possible               possible
+
+
+We cant reduce the scope of access modifiers in overriding.
+parent scope protected child is public -> valid
+parent scope is default child scope protected -> valid
+opposite are false.
+
+least to most accessible modifiers -> private > default> protected> public.
+
+=====================================================================================================================================================================
+
+Execptions in overriding : 
+
+runtime exception and its child classes(NullPointerexception, ClasscastException , ArithmaticException), error and its child classes are unchecked.
+Remaining are checked exeption.
+throwable is checked
+
+IOException checked,
+FileNotFound -> checked
+EOFException checked
+Exception checked
+InterruptedException -> Checked
+
+Rules in overriding: 
+
+1) If child class method throws any checked exception then parent class must throw same exception or its parent exception
+2) There are no rules for unchecked exception. unchecked exception can be thrown by any class.
+
+cases : 
+
+1) parent class : public void m1() throws Exception   (valid)                           1) --> here child class does not throw any exception. No need to worry.
+child class : public void m1()
+
+2) parent class : public void m1()                   (Invalid)                          2) --> child class throws checked eception but parent class dont.  
+child class : public void m1() throws Exception
+
+3) parent class : public void m1() throws Exception  (valid)                            3) Rule 1
+child class : public void m1() throws IOException
+
+4) parent -class : public void m1() throws IOException (Invalid)                         4) Rule 1 violated
+child class : public void m1() throws Exception
+
+5) parent class : public void m1() throws IOException   (Valid)                         5) Rule 1       
+child class : public void m1() throws FileNotFoundException, EOFException
+
+6) parent class : public void m1() throws IOException    (invalid)                      6) IOException is not a parent of Interrupted exception
+child class : public void m1() throws EOFException, InterruptedException
+
+7) parent class : public void m1() throws IOException   (valid)                         7) AE, CCE, NPE are unchecked exception. No need to worry.
+child class : public void m1() throws AE, CCE, NPE
+
+=====================================================================================================================================================================
+
+We cannot override non static method as static.
+
+=====================================================================================================================================================================
+
+Overriding with var-arg : 
+
+case 1: 
+
+class P {
+
+public void m1(int... x){
+syso("parent");
+}
+class C extends P {
+public void m1(int x){
+syso("child")
+}
+}
+
+P p = new P();
+p.m1(10) -- parent 
+
+C c = new C();
+c.m1(10) : child
+
+P p = new C();
+p.m1(10) :: parent method :: As method is not overriden and hence reference type will be used for method call.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+case 2 : 
+
+class P {
+int x = 888;
+}
+class C extends P {
+int x = 999;
+}
+
+class test {
+
+public static void main(String[] args){
+
+P p = new P();
+syso(p.x);  :: 888
+
+C c = new C();
+syso(c.x); :: 999
+
+P p1 = new C();
+syso(p1.x); :: This is not overriding as it is not vald for variables hence resolution is based on reference type hence ans is 888.
+
+}
+
+In this case whether the variables are static or non-static, rules are same answer wil always be same.
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
