@@ -1,7 +1,7 @@
 In spring boot you don't have to focus on configurations and you can directly focus on code.
 
 
-public class DemoApplication{
+public class DemoApplication {
 
 @SpringBootApplication
 public static void main(String []args){
@@ -29,7 +29,7 @@ By default @Autowired searches the object by object name.
 Laptop laptop;
 
 @Component("lap1")
-public class laptoop{
+public class Laptop{
 
 }
 
@@ -101,7 +101,7 @@ root package on which @SpringBootApplication is applied.
 
 When we return a bean from a rest controller method, that bean is converted in to desired format using HttpMessageConvert 
 that is configured via Spring boot auto-configuration.
-This bean must have getters in order to happen this conversion. 
+This bean must have getters in order to happen this conversion.
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -111,5 +111,5 @@ Spring boot starter parent  : It provides default configurations like maven plug
 It also help to maintain different versions of other dependencies. other dependencies inherit the version from this parent 
 starter.
 
-There are other starters as well like mentioned in above question
+There are other starters as well like mentioned in above question.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------

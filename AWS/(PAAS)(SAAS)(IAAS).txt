@@ -12,4 +12,5 @@ Rest of the things are managed by you only like Application, Data.
 Example : Amazon Elastic beanstalk (It is a container specially designed for deploying your applications. You can manually select OS, Application platform like java  here).
 
 SAAS :  (Software as a service) : Here you can use complete software as a service. You only need to consume the benifits.
-Example : DropBox (where you store your files) , Zendesk (It is a ticketing tool)
+Example : DropBox (where you store your files) , Zendesk (It is a ticketing tool).
+

@@ -11,7 +11,16 @@ impacting overall performance. Hence these are not performance wise up to the ma
 
 ***IMPORTANT***
 3) Suppose I have collection object , while one thread is iterating this collection object, by mistake if other thread
-tried to modify this collection , immediately iterator fails raising "ConcurrentModificationException"
+tried to modify this collection , immediately iterator fails raising "ConcurrentModificationException".
+It can occur in both multithreaded as well as Single Threaded Environment.
+
+The ConcurrentModificationException belongs to the Iterator and not the remove() method of the ArrayList, using normal 
+for loop will resolve this problem.
+
+Multithreaded environment - If a thread is traversing over a Collection using an Iterator and 
+another thread attempts to add or remove elements to the Collection.
+Single-threaded environment - When an element is attempted to be removed from an ArrayList using the remove() method while 
+it is being traversed using an enhanced for loop.
 
 Because of these problems traditional collection is not suitable for multithreaded scalable applications.
 
@@ -34,7 +43,7 @@ In hashtable complete object (16 buckets) lock is required.
 Where as in ConcurrentHashMap bucket level lock is required as lock for every bucket is maintained by JVM.
 It is also called a segment locking concept.
 
-How many locks you required is concurrency level and can be supplied to this HashMap using constructors.
+How many locks you required is called concurrency level and can be supplied to this HashMap using constructors.
 Constructor can also have one argument of fillRatio : After what percentage of Map is filled new hashMap will be created 
 internally by JVM as JVM keep on increasing size of HashMap as it keep filling.
 

@@ -29,7 +29,7 @@ Here you can you some pre-work before request go to application.
 
 Internal architecture of spring security : 
 
-1) User enter his credentials and send to backend application.
+1) User enter his credentials and send to backend application. 
 2) The request is received by tomcat container and web application.
 3) If you already have spring security dependency inside pom.xml a default security mechnism will be in place.
 4) Request will go to spring security filters and it will check if the user is already logged in or not.If user is already logged in it 

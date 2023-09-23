@@ -33,7 +33,7 @@ Hierarchy :
 1) Collection(I)
 2) Set (I)
 3) SortedSet(I)
-4) navigableSet(I)
+4) NavigableSet(I)
 5) TreeSet(C)
 
 1) Collection(I)
@@ -70,7 +70,7 @@ Difference between ArrayList and Vector :
 
 1) All methods of Vector are synchronized where are for ArrayList they are not
 2) Multiple threads can access ArrayList simultanuously and not Vector
-3) In Vector, Threads are required to wait and hence performance is not good
+3) In Vector, Threads are required to wait and hence performance is not good.
 
 How to get synchronized version of ArrayList?
 
@@ -98,7 +98,7 @@ Implements Serializable and Clonable interface.
 Cursors (To get objects one by one from collection) : 
 1) enumeration : Works only in case of legacy classes like Vector
 We get only read access and we cannot perform remove operation
-methods : elemnts(), hasMoreElements(), nextElement()
+methods : elements(), hasMoreElements(), nextElement()
 
 2) Iterator : Work in all Collections it is a universal cursor.
 can also perform remove operation.
@@ -154,10 +154,10 @@ In hashmap, I1.equals(I2) returns true hence I1 and I2 are duplicate keys.
 Where as in identity hashmap == operator is used for comparison hence I1 and I2 will not be duplicate keys
 
 WeakHashMap :  As name suggest it is weak.
-HashMap objects are eligible for GC even there is no external reference to it.
+HashMap objects are not eligible for GC even there is no external reference to it.
 Where as WeakHashMap becomes eligible for GC.
 
-If we set the key of map element as null even when that key is present in hashmap , that entry will be deleted.
+If we set the key of WeakHashMap element as null even when that key is present in hashmap , that entry will be deleted.
 These are best in case of cache implementation.
 Hence keys of WeakHashmap are weak reference types.
 

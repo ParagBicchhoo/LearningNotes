@@ -1,4 +1,4 @@
-NoSQL : Not only SQL : Becase NoSQL also support SQL.
+NoSQL : Not only SQL : Because NoSQL also support SQL.
 
 To meet the huge data demands there is need to scale the databases.
 And that's why they came up with the concept called as NoSQL.
@@ -60,8 +60,8 @@ drop table alien;
 ## Cassandra database data types : 
 
 int - 32 bits
-bigint 64 bits 
-smallint 16 bits 
+bigint 64 bits
+smallint 16 bits
 tinyint - 8 bits
 
 float 32 bits'

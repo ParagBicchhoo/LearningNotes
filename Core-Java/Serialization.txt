@@ -17,7 +17,7 @@ ObjectOutputStream oos = new ObjectOutputStream(fos);
 
 oos.writeObject(d1);
 
-In the same way we need FileInputStream and ObjectInputStream for deerailization;
+In the same way we need FileInputStream and ObjectInputStream for deserailization;
 
 FileInputStream fis = new FileInputStream("abc.txt");
 ObjectInputStream ois = new ObjectInputStream(fis);

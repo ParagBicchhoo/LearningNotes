@@ -1,0 +1,122 @@
+LSEG – IHBI  Attendee: Sai Manideep Kuna interviewer: Uladzislau Kaminski 
+
+Brief introduction about the tech stack and latest project. 
+Asked about the security aspects on how it is implemented in the last project. 
+Started with spring. Asked what is spring framework about? 
+How the dependency injection works? 
+======================================================================================
+Asked about bean scopes along with their explanation? 
+Singleton, prototype, session, global session, Request.
+======================================================================================
+
+In a singleton class, what if there is a prototype bean that is autowired? What happens and What is the issue and how do you rectify it? 
+ 
+What is @Transcational annotation in spring? 
+How @Transcational annotation works internally? (Questions followed based on the response) 
+What is JDK Dynamic proxy and CGLIB? 
+How CGLIB works internally (Explained about the Enhancer class and MethodInterceptor that are used to create the proxy for tx management internally) 
+What are the limitations of JDK Dynamic proxy? 
+Discussion happened on propagation levels on multiple transactions. 
+Does CGLIB works on final classes or final methods? 
+What if you need to have transaction management for final methods and final classes. How do you deal with that? 
+Does JDK Dynamic proxy supports self-invocation? 
+Came to springboot. What is the advantage you get by using springboot? 
+What is REST? When do you can an API RESTful?  
+Explain me few annotations you use to implement restful application in springboot? 
+
+================================================================================================================
+================================================================================================================
+
+Client : LIHK DEVS       1st  round questions
+
+
+1) Introduction - past experiences
+
+2) How do you integrate Swagger contracts with your API?
+
+3) What are the annotations that you've used while developing a springboot application? Discussion happened about 10 minutes overall based on the annotations I told.
+
+4) How do Microservice communicate with each other? What did you use in your past projects?
+
+5) What is profiling in spring, how did you use profiling in your last project?
+
+6) How do you configure databases in spring manually?
+
+7) How do you configure multiple databases in the same springboot application? How do you configure application.properties file?
+
+8) How do you do performance testing for springboot API?
+
+ 
+
+9) Have you used java 8? Explain me the features in java 8? Questions followed based on my answers?
+
+10) Questions on stream API and asked me to code in notepad for the few requirements based on Employee List
+
+11) Memory improvements in java-8
+
+12) How do you prevent memory leaks?
+
+13) Types of garbage collectors?
+
+14) Have you worked on any design patterns in the past? What are those and why you have used those DPs?
+
+15) List out the design patters you know in java? Covered Creational, Structural & Behavioral
+
+16) Explain singleton design pattern? Write the code to create singleton class in notepad.
+
+17) What is immutable class? How do you make a class immutable?
+
+ 
+
+18) What is your experience on clouds? Have you worked on AWS cloud? what are the services? - Questions will follow        based on the response you give
+
+19) Basic questions on Docker like how it works?
+
+ 
+
+20) What are the databases you have experience with?
+
+21) Can you explain me the types of joins in SQL DBs and what are the joins you have used in your past experience
+
+22) Given the requirement and asked me to write the query in notepad by performing inner join
+
+23) Asked more queries on grouping in SQL and also asked to write the same grouping query in java-8 streams
+
+ 
+
+like 1
+
+[11:48] Saimanideep Kuna
+
+EBSCO - IAM
+
+Brief introduction about the tech stack and latest project
+Started with microservices. Asked me what I like most working with Microservices architecture. (Questions followed based on the response. I started discussing with scaling services)
+Asked what the advantage is of scaling out microservices. What is the benefit?
+How do you communicate with other microservices
+Rest or Feign client? Which one is better according to you?
+What is the service discovery? What is the role of service discovery? How it works?
+What service discovery is used in your last project?
+How do you deal with the fault tolerance? Explained about the circuit breaker design pattern.
+How do you manage issues that span across multiple microservices? – Explained distributed tracking and tracing.
+Started springboot questions.
+Explain how springboot works? What is the advantage about springboot over spring?
+How do you define controllers in springboot application?
+What are the annotations? How @RequestMapping is used before?
+Started core java questions.
+Questions asked on diamond problems. With classes and interfaces with default methods
+Questions asked on garbage collection by giving the code snippet.
+Based on code snippet, asked about the static methods in the context of overloading and over riding
+Collections – Arrays vs Arraylist, when and what to use by giving scenarios.
+Tricky qstns on Hashcode and Equals. What if Equals always return true and hashcode is implemented properly. How does it effect usage of map and set datastructures
+Executor service – what are the types. Which one have you used in project?
+What is event driven architecture?
+How do you handle distributed transactions in microservices?
+Basics on docker, containerization etc in AWS context.
+What services have you used in AWS?
+Basic questions on AWS Fargeate, AWS ECS, AWS s3, EC2, Elastic Bean stalk
+Cloud related questions Infra As A Code(Cloud formation) services in AWS.
+What is difference between SAGA and CQRS? When to use those?
+Started Java 8: What map method accepts, filter?
+What is the forEach accepts.
+Given an assignment to create classes, data in the IDE and fulfil the requirement using java-8 streams.

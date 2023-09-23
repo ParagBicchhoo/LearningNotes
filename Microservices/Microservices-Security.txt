@@ -36,6 +36,24 @@ service to access the token.
 Client uses this codeto get token which is access token.
 This access token can be used to get the resources.
 
+Implementation for social authentication: 
+
+Social authentication cannot be leveraged for enterprise level application.
+
+If your application wants to access the resources of Github then you need to register your application with github.
+While registering callback url is the URL where application should be redirected after successful authentication.
+
+Create a bean of security filter chain
+http.authorizeRequest().anyRequest().authenticated().and().oauth2Login();
+
+Create an object of ClientRegistrationRepository:
+CommonOauth2Provider.GITHUB.getbuilder("github").clientId().clientSecret().build();
+CommonOauth2Provider contains some common provider such as GITHUB, GOOGLE< FACEBOOK, OCTA and their details.
+
+Create a controller that takes OAuth2AuthenticationToken Object as an input which will contain all information related to user.
+Once to hit this controller, you will be automatically redirected to github login page. Once you login you will be shown one window
+where it will ask your permission if you want to athorize to access the resources.
+
 2) Flow in microservices : 
 
 Client credentials flow is generally used here.

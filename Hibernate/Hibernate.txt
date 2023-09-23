@@ -354,13 +354,30 @@ hibernate-ehcache : for integration of ehcache and hibernate s
 
 By default second level cache is disabled in hibernate.cfg.xml , you have to enable it.
 
+Steps to implement : 
+
+Add maven dependency
+enable cache for the application
+create ehcache.xml
+make entities cacheable.
+
+Based on requirement, we can choose caching concurrency strategies : 
+
+Read_only = Used only when data in db does not change.
+Not-Strict_Read_Write = Can do dirty read. Whenever a commit is updated in db then only change is propogated to the cache.
+Read-Write = For strong consistancy we can use this. A soft lock will be applied on a cache until a transaction will be completed. 
+Transactional = Used for distributed transaction. When we have multiple dbs for same application.
+
+Use use cache, we have to annotate the object with @Cache and provide cache COncurrency Strategy.
+
 ======================================================================================================================================================
 
 Difference between get and load method in hibernate?
 
+If no data found, the get method return null where as load method throws an exception.
+Get method eagerly load the object whereas load method lazily load the object.
+Hence get is slower than load because it load the full object.
+If you are not sure if object exist then get else use load.
 
-
-
-
-
+======================================================================================================================================================
 

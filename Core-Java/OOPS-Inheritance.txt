@@ -485,7 +485,7 @@ C c = new C();
 syso(c.x); :: 999
 
 P p1 = new C();
-syso(p1.x); :: This is not overriding as it is not vald for variables hence reolution is based on reference type hence ans is 888.
+syso(p1.x); :: This is not overriding as it is not vald for variables hence resolution is based on reference type hence ans is 888.
 
 }
 

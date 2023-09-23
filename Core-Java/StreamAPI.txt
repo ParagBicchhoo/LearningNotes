@@ -1,0 +1,83 @@
+1) double average = employees.stream().mapToInt(x->x.getSalary()).average().getAsDouble();
+
+mapToInt create a different stream of integers from current stream based on value provided.
+
+2) products.stream().filter(x->x.getCategory().equals("Books")).filter(x->x.getPrice()>100).collect(Collectors.toList());
+
+3) Obtain a list of order with products belong to category “Baby”
+
+orders.stream().filter(x->x.getProducts().stream().anyMatch(y->y.getCategory().equalsIgnoreCase("baby"))).collect(Collectors.toList());
+
+4) products.filter(x->x.getCategory().equals("Toys")).map(x->0.9 * x.getPrice()).collect(Collectors.toList());
+
+5) List<Product> result = orderRepo.findAll()
+  .stream()
+  .filter(o -> o.getCustomer().getTier() == 2)
+  .filter(o -> o.getOrderDate().compareTo(LocalDate.of(2021, 2, 1)) >= 0)
+  .filter(o -> o.getOrderDate().compareTo(LocalDate.of(2021, 4, 1)) <= 0)
+  .flatMap(o -> o.getProducts().stream())
+  .distinct()
+  .collect(Collectors.toList());
+
+A stream can hold complex data structures like Stream<List<String>>. 
+In cases like this, flatMap() helps us to flatten the data structure to simplify further operations:
+
+In above case orders list contain another products list. So to simplify this and only have a single list
+of products flatmap is used.
+
+6)  Get the cheapest products of “Books” category
+
+Optional<Product> product = products.stream()..filter(x->x.getCategory().equals("Books").sorted(Comparator.comparing(Product::getPrice)).findFirst();
+Optional<Product> result = productRepo.findAll()
+        .stream()
+        .filter(p -> p.getCategory().equalsIgnoreCase("Books"))
+        .min(Comparator.comparing(Product::getPrice));
+
+7) Get the 3 most recent placed order
+List<Order> result = orderRepo.findAll()
+        .stream()
+        .sorted(Comparator.comparing(Order::getOrderDate).reversed())
+        .limit(3)
+        .collect(Collectors.toList());
+
+8) Obtain a data map with order id and order’s product count.
+
+orderRepo.findAll().stream().collect(Collectors.toMap(order-> order.getId(), order-> order.getProducts().size());
+
+9) Produce a data map with order records grouped by customer.
+This means customers will come under key and order will come under value
+
+orderRepo.findAll().stream().collect(Collectors.groupingBy(Order::getCustomer));
+
+10) Produce a data map with order record and product total sum
+
+orderRepo.findAll().stream().collect(Collectors.toMap(Function.identity, order->order.getProducts().stream().mapToDouble(x->x.getPrice()).sum()));
+
+11) Obtain a data map with list of product name by category.
+
+map<category, productNameList>
+
+This exercise helps you get familiar with the way to transform the data output of data map entries. 
+If you only use Collectors.groupingBy(Product::getCategory), then the output will be Map<Category, 
+List of Products> but the expected output should be Map<Category, List of Product Name>. 
+You can use Collectors.mapping() to convert product objects to product names for the data map construction.
+
+Map<String, List<String>> result = productRepo.findAll()
+        .stream()
+        .collect(
+            Collectors.groupingBy(
+                Product::getCategory,
+                Collectors.mapping(product -> product.getName(), Collectors.toList()))
+);
+
+12) Get the most expensive product by category
+Similar to data transformation using Collectors.mapping(), 
+Collectors.maxBy() helps to obtain the record with max value as part of data map construction. 
+By providing a comparator for product price, maxBy() is able to get the product with the largest value for each category.
+
+Map<String, Optional<Product>> result = productRepo.findAll()
+        .stream()
+        .collect(
+            Collectors.groupingBy(
+                Product::getCategory,
+                Collectors.maxBy(Comparator.comparing(Product::getPrice)))

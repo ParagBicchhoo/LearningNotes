@@ -1,0 +1,8 @@
+Nginx : 
+
+
+A reverse proxy is a server that sits in front of web servers and forwards client (e.g. web browser) requests to those web servers. 
+Reverse proxies are typically implemented to help increase security, performance, and reliability.
+
+It also support caching, load balancing, API gateway, all sorts of functionality in just one piece of software.
+

@@ -1,0 +1,81 @@
+This design pattern hides the system complexity and provides and interface to the client with the help of which, 
+client can access the system.
+
+interface Shape {
+
+void draw(){
+
+}
+
+}
+
+class Rectangle implements Shape {
+
+	void draw(){
+
+		syso("Rectangle");
+
+	}
+
+}
+
+class Circle implements Shape {
+	
+	void draw() {
+		
+		syso("Circle");
+
+	}
+}
+
+class Square implements Shape {
+
+	void draw() {
+
+		syso("Square");
+
+	}
+
+}
+
+public class ShapeMaker {
+
+	Rectangle rectangle;
+	Square square;
+	Circle circle;
+
+	ShapeMaker(){
+		this.rectangle = new Rectangle();
+		this.square = new Square();
+		this.circle = new Circle();
+	}
+	
+	public void drawCircle(){
+		circle.draw();
+	}
+
+	public void drawRectangle(){
+		rectangle.draw();
+	}
+	
+	public void drawSquare(){
+		square.draw();
+	}
+}
+
+Now we can provide this ShapeMaker class to client.
+
+Use the facade to draw various types of shapes.
+
+FacadePatternDemo.java
+
+public class FacadePatternDemo {
+   public static void main(String[] args) {
+      ShapeMaker shapeMaker = new ShapeMaker();
+
+      shapeMaker.drawCircle();
+      shapeMaker.drawRectangle();
+      shapeMaker.drawSquare();		
+   }
+}
+

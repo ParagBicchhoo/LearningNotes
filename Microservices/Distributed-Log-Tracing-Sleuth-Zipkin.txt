@@ -34,3 +34,6 @@ Zipkin will start in 9411 port.
 Add spring-cloud-starter-zipkin dependency to all microservices.
 open zipkin dashboard on localhost:9411 and click find traces.
 here you can find detailed logs per microservice. and time took to execute.
+
+Logs can be seen in splunk.
+Splunk is a powerful data analysis tool that can be used to monitor and troubleshoot a variety of systems

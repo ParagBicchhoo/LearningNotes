@@ -7,7 +7,7 @@ Need of constructors : Is to initialize an object. Where as new keyword is respo
 
 Rules : 
 
-1) Return type concept not applicable for contructors. Not even void. Compilor wil treat it as a method if void is given.
+1) Return type concept not applicable for contructors. Not even void. Compilor will treat it as a method if void is given.
 It is always legal to name class name same as method. But it is not a recomendable approach.
 
 2) Which modifiers are allowed for constructors : 
