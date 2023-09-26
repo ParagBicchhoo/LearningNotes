@@ -1,0 +1,20 @@
+Amazon ECS (Elastic Container Service) is a fully managed container orchestration service provided by AWS. 
+It allows users to run and scale containerized applications on the AWS cloud.
+
+Amazon ECS works by using a combination of Docker and AWS to manage and run containerized applications. 
+Users can define their application using a Dockerfile, and then use Amazon ECS to build, store, and run their containerized application. 
+Amazon ECS manages the underlying infrastructure, scaling containers in and out as needed to meet the demands of the application.
+
+Some benefits of using Amazon ECS include:
+
+Efficient resource utilization: Amazon ECS can automatically scale containers up or down based on the demands of the application, 
+ensuring that resources are used efficiently.
+
+High availability: Amazon ECS automatically distributes containers across multiple availability zones, ensuring high availability for applications.
+Easy to use: Amazon ECS provides a simple and intuitive interface for managing and deploying containerized applications.
+
+Amazon ECS is similar to other container orchestration platforms such as Kubernetes and Docker Swarm. However, 
+it is fully managed by AWS and integrates seamlessly with other AWS services, making it easy to use for those already familiar with the AWS ecosystem.
+
+ECR - Elastic container registry is somewhere the docker containers are stored in AWS. It is same as docker hub.
+

@@ -19,9 +19,9 @@ now if you do run java -version it will show older version
 Now run alternatives --config java
 It will show two versions
 select the number with latest one.
-Now java -version will show latest java.
+Now java --version will show latest java version.
 
-4) Now we need this jar in our EC@ instance
+4) Now we need this jar in our EC2 instance
 # First upload jar in S3 bucket after ceating a bucket
 # Click on jar and make this jar as public.
 # Copy object URL so that it can be downloaded to EC2 instance.

@@ -1,0 +1,48 @@
+Reference : Youtube TechWorld With Nana.
+
+Git OPS : Infrastructure as a code done right as all best practices.
+This makes infrastructure much easy to reproduce and replicate.
+It is not only about infrastructure as a code but also, 
+
+Configurations as a code
+Network as a code
+Security as a code and
+policy as a code.
+
+Instead of creating everything manually we define these in : 
+
+Teraform code,
+Ansible code,
+Kubernetes manifest file.
+
+Still the above process is manul and inefficient.
+
+Gitops treat the IAC same as application as a code.
+So in GIT-OPS we have separate GIT repository and CICD process for IAC.
+
+Whenever a change is comitted in main branch, new infrastructure is created.
+
+CD pipeline push vs pull model : 
+
+In Push model, when change is comitted in main branch, new infrastructure is created automatically.
+In pull model, here you have an agent installed in environment like k8s cluster, which actively pulls the changes from the repo.
+The agent will continuously check the state of code in repository and compare it with the actual state of infrastructure.
+If it see the changes, it will pull and apply the changes to get the desired state.
+
+Examples that work on pull based model are fluxcd and argocd which runs in kubernetes cluster and sync changes from Git repo to cluster.
+
+Advantage of GITOPS - Revert to last working state.
+
+CD workflow without argocd : 
+
+Test
+Build Image
+Push Image to dockerhub
+Update k8s manifest file
+kubectl apply
+
+However there are couple of challenges with this process like
+you need to install tools like kubectl, helm to access k8s cluster. Also need to configure access for K8s cluster in jenkins.
+
+This is not only configuration overhead but also security issue.
+Once Jenkins apply these changes to k8s cluster it has no further visibility.
