@@ -32,3 +32,68 @@ select distinct(e1.NAME) from employees e1 inner join employees e2 on e1.EMPLOYE
    "emailId" : "pv@gmail.com",
    "subjectId" : 1
 }
+
+=======================================================================================================================
+
+ACID Properties : 
+
+In order to maintain consistancy in a database, before and after a transaction certain properties are followed.
+These properties are ACID Properties. 
+
+1) Atomicity : Entire transaction happens at once or doesn't happen at all.
+
+Ex : Debit from A's account and credit in B's account. Either both the transaction will happen or no transaction.
+
+2) Consistancy : Database must be consistance before and after transaction.
+
+Ex : Total amount before and after transaction must be same.
+A : 500 - 200 = 300
+B : 600 + 200 = 800 
+
+Before : 500 + 600 = 1100
+After : 800 + 300 = 1100
+
+3) Isolation : This property ensures that multiple transactions can occur concurrently with leading to database inconsistancy.
+Changes occuring to one transaction will not be visible to another transaction unless changes are committed to the memory.
+
+4) Durability : 
+
+This property ensures that, once the transaction is completed and updates to the database are stored and written to the disk, they 
+persist even if the system failure occurs.
+
+=======================================================================================================================
+
+Indexing : 
+
+Indexing improves the database performance by reducing number of visits to disk system required to fulfil the sql query.
+
+Advantages : 
+1) Improves performace of search query.
+
+Disadvantages : 
+1) Takes memory.
+2) Takes time to create the index.
+3) Slow down the insert query as it would take extra time to update the indexes.
+
+Types of indexes : 
+
+1) Clustered Index : 
+
+Clustered index can only be created on primary key.
+Only one clustered index can be created.
+If we want to create another clustered index, we need to drop the primary key coloumn and create another key as a primary key and build new
+clustered index on that column. 
+
+2) Non-Clustered Index : 
+
+Non-clustered index are index on another columns other than primary key which columns are frequently used in search query.
+Any number of indexes can be created based on different parameters.
+
+=======================================================================================================================
+
+Normalization : 
+
+Is the process of minimizing redundancy from database. Normal forms are used to reduce this redundancy from 
+database tables.
+
+=======================================================================================================================

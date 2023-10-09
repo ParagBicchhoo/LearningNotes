@@ -28,6 +28,7 @@ OPTIONS :
 return data describing what other methods and operations the server supports.
 
 7) Architectural constrains for REST?
+
 1) Client server architecture
 2) Statelessness
 3) Uniform interface : There should be a uniform way of interacting with given server irrespective of the device and type

@@ -14,3 +14,11 @@ Does it have one responsibility
 
 # Classes that adhere to the SRP, tend to have high cohesion.
 Consider a class 
+
+2) Open for extension closed for modifications.
+
+3) The Liskov's substitution principle
+
+4) Interface segregation Principle.
+
+5) Dependency Inversion Principle.

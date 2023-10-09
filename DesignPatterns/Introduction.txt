@@ -14,6 +14,6 @@ Facade
 
 3) Behavioural design patterns : These patterns defines how classes communicate with each other
 Examples : 
-Observer, 
+Observer,
 Chain of responsibility, 
 Strategy

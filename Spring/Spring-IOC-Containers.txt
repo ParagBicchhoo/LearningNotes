@@ -144,7 +144,7 @@ Either class can be annotated with @Primary or the bean inside the class can be 
 
 The problem with @Primary annotation is it doesn't really narrow down the ambiguity but just mark the prefered ones.
 
-Second way to resolve this is to use @Qualifier annotation. Bean ambiguity will be resolved acording to name.
+Second way to resolve this is to use @Qualifier annotation. Bean ambiguity will be resolved acording to name of the component.
 Just use @Qualifier annotation at the place where interface is autowired.
 
 ===========================================================================================================================================================================================

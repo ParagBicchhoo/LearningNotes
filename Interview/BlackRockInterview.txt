@@ -1,0 +1,52 @@
+Interview questions : 
+
+1) Introduction
+2) Explain the use of final keyword in java.
+3) Explain about lambda expressions in java 8
+4) How prevention of duplicates are handled internally in sets in java collections.
+5) Why do we need equls and hashcode methods.
+6) Lets say we have a service and service is covered with all kind of tests like functional testing, perfromance testing, VAPT testing, 
+How will you convince your client that unit testing is still required.
+7) Explain dependency injection.
+
+8) What if the interface has two different implementation? What will happen during injecting the dependency? How to handle this scenarion?
+9) Kind of bean scopes in spring? which one is default?
+
+10) We have a Singleton bean and inside have a function and the Singleton bean has a dependency on a on another bean.
+And what we want to achieve in this function that whenever we call it, we get a new instance of this dependency and use that one to do some calculation.
+How to achieve this in spring?
+
+11) Have you defined yourself a CICD pipeline?
+12) What makes a service RESTFUL? Architectural constrainst of RESTFUL web service.
+13) What makes a service stateless. Explain with real time examples.
+
+14) Difference between 400 and 500 status codes.
+15) Explain docker and complete process until deployement if you have a docker file for the application.
+16) Difference between relational databases and nosql databases.
+17) Difrerent types of NoSQL databases.
+
+18) Let's assume the following scenario. You have a web service and this web service reads from a relational database.One day you get an alert 
+that the service can handle half as many requests as before.How would you investigate what the problem is and what would you do with it?
+
+19) Disadvantages of indexing in database.
+
+20) Difference between database sharding and database partitioning.
+
+
+Client interview : 
+
+1) Introduction
+2) Write a code using streams to compare two arraylists element by element if there are millions of records in a list.
+Design a very generalized persistant layer using generics : Scenarion : create read update and delete methods in a class and methods 
+should be valid for all relational database persistance, NOSQL database, Files.
+3) SQL queries to join two tables using inner join, right join, left join, sql queries with group by clause.
+4) Write pointcut expression using spring AOP.
+5) Spring bean scopes.
+6) There are millions of records in a database, REST API response expected time is 30 seconds, you need to update 5000 records in a single transaction,
+how to improve update query perfromance.
+7) How hashmap work internally?
+8) What if I add two same employee objects to hashmap key?
+9) How to make two employees same and override the value if two same employees added as a key.
+10) Difference between object level locking and class level locking in multithreading context.
+11) Explain executor service.
+12) Advantages of spring boot over spring.

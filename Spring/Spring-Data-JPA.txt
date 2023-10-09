@@ -60,6 +60,18 @@ in one place
 
 We write NamedQuery inside entity class.
 
+@Entity
+@Table
+@NamedQuery(name = "Employee.findByEmail",
+query = "select e from Employee e where e.email = ?1")
+public class Employee {
+   @Id
+   @Column
+   private int id;
+}
+
+Then repository will use this NamedQuery to fetch the employee records.
+
 ===========================================================================================================================================
 
 Auditing support in Spring Data JPA.
@@ -95,6 +107,7 @@ Page<Person> findByName(String name, pageable);
 ===========================================================================================================================================
 
 Transaction Propagation : 
+
 Scenarios are considered when @Transactional method is called from another @Transactional or non Transactional method.
 If calling method is transactional and called method is also transactional then will it create a new transaction or use existing one.
 This behavior is different for different propagation levels.
@@ -136,6 +149,8 @@ If called from another non transaction method then again it will throw an except
 ===========================================================================================================================================
 
 Isolations : 
+
+When two parallel transactions are going on, how the bahavior of cmommits affects another transactions.
 
 Read Uncommited : 
 

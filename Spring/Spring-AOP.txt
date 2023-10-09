@@ -1,5 +1,5 @@
 Spring AOP (Aspect oriented programming) is used to address cross cutting concerns within an application.
-Parts of the programs that are spanned from multiple parts of an application are called as Cross-cutting-concerns.
+Parts of the programs that are called from multiple parts of an application are called as Cross-cutting-concerns.
 
 Good examples of an aspects : logging, Auditing, Declarative transactions, Security, caching etc.
 
