@@ -1,0 +1,116 @@
+@BeforeTest -> Initialize something if you want.
+Example -> 1) Initialize an object. 2) Read something from files. (Read ReveueSourceType project example. Reading 
+configurations).
+
+@DisplayName : change the display name of test instead of method name. It can also be used at class level.
+
+Assumptions : 
+
+assumeTrue(null== bankAccount, "Account is null");
+
+If assumption is successful then tests will run further. In this case tests might get success or fail
+If assumption is failed then the test will be aborted.
+
+
+From Junit5 onwards we can execute Junits in order using @Order Annotation
+
+@Nested on inner class to run the inner class tests.
+
+To pass parameter to the test class which is already instantiated, Create a separate BankAccountParameterResolver which extends ParameterResolver.
+Instantiate an instance there and pass this instance as a parameter to method.
+
+@RepeatedTest(NumberOfTimesToRepeat)
+Let's say you want to test something with 5 random numbers.
+
+@Timeout -> to pass a certain timeout for a test to execute.
+
+You can set the parallel execution of tests by adding few properties in properties file.
+
+@Execution(ExecutionMode.Concurrent)
+
+@BeforeAll -> Used to prepare tests
+
+@AfterAll
+
+@BeforeEach
+
+@AfterEach
+
+Custom message to reports : [Surefire plugin and maven failsafe plugin], @DisplayName annotation and third argument to assertions.
+
+Conditional test execution : Certain OS, Certain JRE, System properties -> Not a good practice -> Make tests more complicated.
+
+Best Practices : 
+
+1) Keep unit tests simple and independent from other tests.
+2) Stick to naming convention
+3) They should not contain the copy of implementation code.
+4) Deterministic : If they pass first -> they should pass million times.
+If they fail at first they should fail all million times.
+This is achieved by independency
+
+Java Spring testing : To test contriollers, services and repository.
+
+
+Java : Automated API testing with REST assured.
+
+Why TDD? 
+
+1) Timely design validations, negotiations and feedback
+2) Executable documentation and acceptace criteria
+
+Test planning for @Controller layer : 
+
+Dependency : Spring boot starter test
+
+@WebMvcTest
+public class ProductControllerTest {
+
+	@Autowired
+	MockMvc mockMvc;
+
+	@Test
+	public void shouldGetProductDetails() throws Exception {
+		
+		mockMvc.perfrom(get("/api/products/id/1")).andExpect(ststus().isOk())
+		.andExpect(jsonPath("$.id", 1)
+		.andExpect(jsonPath("$.name", "Parag");
+
+		MvcResult mvcResult = mockMvc.perfrom(get("/api/products/id/1")).andExpect(ststus().isOk()).thenReturn();
+		String contentAsAString = mvcResult.getResponse().getContentAsString();
+		ProductResponseDto p = new ObjectMapper().readValue(contentAsAString, new ProductResponseDto());
+
+		assertThat or assertEquals.
+	}
+}
+
+@Timeout annotation can be used to timeout a test after certain period of time.
+
+Parallel test execution : 
+
+junit.parallel.jupiter.parallel.execution.enabled = true
+@Execution(ExecutionMode.Concurrent)
+
+If you remove above annotation they will run one by one.
+
+Conditional test execution : 
+
+We can run a cenrtain test on certain operating system or JRE
+Or based on certain system environment properties.
+
+@EnabledOnOs
+@EnabledOnJre
+@EnabledOnSystemProperty
+@EnabledOnEnvironmentVariable
+
+How to test @Controller layer?
+
+Use MockMvc framework to test.
+.perfrom method to call get, post call, put call etc.
+
+Do not use method mocking mechanism.
+
+
+
+
+

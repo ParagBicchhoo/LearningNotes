@@ -1,0 +1,7 @@
+ExecutorService : 
+
+methods : 
+
+executorService.execute() -> does not return anything
+executorService.submit() -> takes runnable or callable as an argument and return a future object
+in case of callable.

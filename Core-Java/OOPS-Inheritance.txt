@@ -1,4 +1,5 @@
 Inheritance: is-A relationship.
+Parent class methods are by default available to child class.
 
 Loop holes : 
 
@@ -11,8 +12,6 @@ class c extends P {
 method m2{}
 
 }
-
-Parent class methods are by default available to child class.
 
 P p = new P();
 p.m1 -> correct
@@ -29,7 +28,7 @@ p1.m2() -> Incorrect : compilation error
 C c = new P(); -> Compilation error.
 
 Here one important point to note is that, m1 method is not overriden in child class.
-We are just checking what methods can be called using what refernces. 
+We are just checking what methods can be called using what references. 
 
 ==========================================================================================================================
 

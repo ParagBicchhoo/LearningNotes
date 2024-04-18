@@ -63,3 +63,9 @@ public class FactoryMain(){
 	
 }
 
+Project example : 
+
+I remember building a framework on top of built in library functions to perfrom operations on S3 bucket.(put, delete)
+This functionality was also being used by another team.
+We had used Factory design pattern to provide them an access to different implementation classes.
+

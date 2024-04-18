@@ -303,3 +303,139 @@ Each time when you are using lambda expression to just referring a method, you c
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------
 
+DateTime API enhancements : 
+
+New classes introduced : 
+
+1) LocalDate methods LocalDate.now(), LocalDate.of()
+2) LocalTime
+3) LocalDateTime
+
+Above all objects are immutable.
+
+ld1.isAfter
+ld1.isBefore
+ld1.compareTo (Compare epoch time)
+ld1.isEqual
+ld1.plusDays
+ld1.plusMinutes
+
+Other classes : 
+MonthDay -> Represent only month and date. You can get an object of LocalDate from this by adding the year.
+MonthYear.
+Year
+
+In previous DateTime API 0th month would represent janauary while they have fixed it now by 1st month being janaury.
+
+Clock
+DateTimeFormatter : Can be used to format of date in a desired format
+
+Period : Used to calculate the period between two dates in year months and days
+
+Period.between(ld1, ld2);
+Period.getDays will only give you days part of year, months and days in above and not complete days which is adding of year, months and days.
+
+CronoUnit.days.between(ld1,ld2) -> This will calculate days.
+
+If we need difference smaller than days : Duration class.
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+Streams: 
+Intermediate operations are lazy in nature : 
+
+Stream.of("d2", "a2", "b1", "b3", "c")
+    .filter(s -> {
+        System.out.println("filter: " + s);
+        return true;
+    });
+
+It won't print anthing as there is no terminal operation.
+
+Order of execution : 
+
+All sets of operations that are being done on a stream are perfromed for one element first except for sorted as we need to 
+sort elemets first instead of executing other operations.
+
+Examples : 
+1)
+Stream.of("d2", "a2", "b1", "b3", "c")
+    .map(s -> {
+        System.out.println("map: " + s);
+        return s.toUpperCase();
+    })
+    .filter(s -> {
+        System.out.println("filter: " + s);
+        return s.startsWith("A");
+    })
+    .forEach(s -> System.out.println("forEach: " + s));
+
+// map:     d2
+// filter:  D2
+// map:     a2
+// filter:  A2
+// forEach: A2
+// map:     b1
+// filter:  B1
+// map:     b3
+// filter:  B3
+// map:     c
+// filter:  C
+
+2) Stream.of("d2", "a2", "b1", "b3", "c")
+    .sorted((s1, s2) -> {
+        System.out.printf("sort: %s; %s\n", s1, s2);
+        return s1.compareTo(s2);
+    })
+    .filter(s -> {
+        System.out.println("filter: " + s);
+        return s.startsWith("a");
+    })
+    .map(s -> {
+        System.out.println("map: " + s);
+        return s.toUpperCase();
+    })
+    .forEach(s -> System.out.println("forEach: " + s));
+Sorting is a special kind of intermediate operation. It’s a so called stateful operation since in order to sort a collection of elements you have to maintain state during ordering.
+
+Executing this example results in the following console output:
+
+sort:    a2; d2
+sort:    b1; a2
+sort:    b1; d2
+sort:    b1; a2
+sort:    b3; b1
+sort:    b3; d2
+sort:    c; b3
+sort:    c; d2
+filter:  a2
+map:     a2
+forEach: A2
+filter:  b1
+filter:  b3
+filter:  c
+filter:  d2
+
+First, the sort operation is executed on the entire input collection. In other words sorted is executed horizontally. 
+So in this case sorted is called eight times for multiple combinations on every element in the input collection.
+
+Always optimize the performance by reording the chain accordingly.
+better to keep filter first.
+
+Reusing Streams#
+Java 8 streams cannot be reused. As soon as you call any terminal operation the stream is closed:
+
+Stream<String> stream =
+    Stream.of("d2", "a2", "b1", "b3", "c")
+        .filter(s -> s.startsWith("a"));
+
+stream.anyMatch(s -> true);    // ok
+stream.noneMatch(s -> true);   // exception
+Calling noneMatch after anyMatch on the same stream results in the following exception:
+
+java.lang.IllegalStateException: stream has already been operated upon or closed
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:229)
+	at java.util.stream.ReferencePipeline.noneMatch(ReferencePipeline.java:459)
+	at com.winterbe.java8.Streams5.test7(Streams5.java:38)
+	at com.winterbe.java8.Streams5.main(Streams5.java:28)
+

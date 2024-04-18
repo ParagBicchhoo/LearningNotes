@@ -14,7 +14,7 @@ impacting overall performance. Hence these are not performance wise up to the ma
 tried to modify this collection , immediately iterator fails raising "ConcurrentModificationException".
 It can occur in both multithreaded as well as Single Threaded Environment.
 
-The ConcurrentModificationException belongs to the Iterator and not the remove() method of the ArrayList, using normal 
+The ConcurrentModificationException belongs to the Iterator and not the remove() method of the ArrayList, using iterator or normal 
 for loop will resolve this problem.
 
 Multithreaded environment - If a thread is traversing over a Collection using an Iterator and 

@@ -1,0 +1,10 @@
+JPA from scratch handson all features
+Kafka hands on
+Redis Handson
+Microservices Handson
+Docker Kubernetes handson
+Google cloud handson
+GIT with CMD and commands.
+GIT on IntelliJ
+How to create maven multi-module project
+

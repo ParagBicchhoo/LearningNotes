@@ -1,0 +1,82 @@
+Reference : Youtube channel Database star.
+
+Database design for chat application like whatsapp : 
+
+Requirements : 
+
+1) Send messages to other people
+2) Send the phone number or contact
+3) Contacts have first and last name, profile photo, phone number
+4) Text message only ( No audio ,video, GIF, images) 
+5) Multiple people in group message
+6) Groups can have names
+7) Removed from group = cannot see any further messages
+8) Added to a group = cannot see older messages
+
+Entities(Tables) : 
+
+1) message
+
+message_id  (PK)
+from_number
+to_number
+message_text
+sent_datetime
+contact_id  (FK) [Many to one relation with contact]
+group_id (FK) 
+
+2) contact
+
+contact_id (PK)
+first_name
+last_name
+profile_photo
+phone_number
+
+3) message_group
+
+group_id (PK)
+group name
+
+4) group_member
+
+contact_id (FK) 
+group_id (FK) []
+joined_datetime
+left_datetime
+
+
+Message can be sent to either group or to a contact. so message table will
+have two different FKs for contact_id and group_id
+Instead what we can do is replace the message_group table with conversation 
+so that the conversation can be a group as well as a contact person. 
+
+1) message [Will contain only information related to message and to which conversation this message belong to]
+Conversation can simply be a conversation with a contact or a conversation within a group.
+
+message_id  (PK)
+from_number
+to_number
+message_text
+sent_datetime
+conversation_id (FK)
+
+2) contact
+
+contact_id (PK)
+first_name
+last_name
+profile_photo
+phone_number
+
+3) conversation [Conversation can be a simple conversation with one person or group conversation]
+
+conversation_id (PK)
+conversation_name
+
+4) group_member [This table will ontain members within all group hence contact_id is associated with conversation_id]
+
+contact_id (FK) 
+conversation_id (FK) []
+joined_datetime
+left_datetime

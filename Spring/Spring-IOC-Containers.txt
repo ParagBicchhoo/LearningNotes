@@ -135,7 +135,7 @@ This is the example of low cohesive class because the window and the multiplicat
 To make it high cohesive, we would have to create a class Display and a class Multiply. 
 The Display will call Multiply’s method to get the result and display it. This way to develop a high cohesive solution.
 
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 If we autowire an interface which has multiple implementation classes then there occurs NoUniqueBeanDefinationException if interface is Autowired.
 Then to resolve this @Primary annotation is used.
@@ -147,9 +147,18 @@ The problem with @Primary annotation is it doesn't really narrow down the ambigu
 Second way to resolve this is to use @Qualifier annotation. Bean ambiguity will be resolved acording to name of the component.
 Just use @Qualifier annotation at the place where interface is autowired.
 
-===========================================================================================================================================================================================
+============================================================================================================================================================
 
+Lifecycle methods : 
 
+@PostConstruct
 
+After dependency injection, the method annotated with @PostConstruct is executed.
+Used to intialize objects like default user creation like Admin User.
 
+@PreDestroy
+Before the bean is destroyed method annotated with @PreDestroy will execute.
+Used to close connections like database.
+
+============================================================================================================================================================
 

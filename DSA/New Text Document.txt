@@ -1,0 +1,18 @@
+1) Selection sort : 
+
+1) Consider an entire array first. 
+2) Find the minimum element and put it at first position.
+3) Now, as minimum element is placed at it's actual position, ignore it.
+4) Start with 2nd element as if 2nd element is the first element of remaining array.
+5) Find the minimum element from this remaining array and place it at 2nd position.
+6) Repeat this process until the end of array.
+
+2) Bubble sort : 
+
+1) Start with comparing the adjecent elements.
+2) Swap the elements by comparing.
+3) Repeat the iteration unless there is no swap happen in inner for loop.
+4) If there happens no swap in inner loop, it means that array is sorted now.
+5) Maintain a flag to check if there happened at least one swap in inner loop.
+
+3) Merge Sort : 

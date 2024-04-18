@@ -1,0 +1,13 @@
+1) VDI issues slowness. Connect with helpdesk, and they execute some policies on system. For some days VDI will run good and become slow again.
+2) Random pipeline failures and no devops engineer to handle these issues.
+3) running pipeline everytime to check the code coverage and sonar issues. no permissions for adding plugins in IDE.(Running one pipeline takes any
+where between 10-20 minutes).
+4) Add test cases for previously writen entire class as it was not covered before sonar came into picture even if I make a small change.
+5) No good behaviour from team lead. getting frustrated over small things.
+6) 3 developments going on in parallel. Merge the code to create conflicts and break the code.
+7) My development wold required many times to merge the code manually which would again create conflicts merging back to source branch
+8) Hard dependencies between different modules. If someone make changes in his code it would affect my code, eg. persistence layer.
+9) No centaralized configuration management. Lots of configurations in lots of files to make it difficult to manage and tacle config issues.
+10) No testing team to verify developer's work. Developer himself responsible for doing end to end testing which he does not hold expertiese in.
+11) Publishing the pipeline in artiactory is another overhead. Publish pipeline has more steps and fails many time and we have to keep retryng.
+Until it takes 1.5-2 hour to successfully run the entire pipeline. And there are three servers to publish the jars for.

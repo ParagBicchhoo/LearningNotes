@@ -34,7 +34,7 @@ If you are not writting any of this, compiler will put super();
 10) If you write constructor inside an interface : compilation error.
 11) Abstract class can contain constructor : whenever you are creating child class of this abstract class this constrcutor will be executed.
 12) Every variable in interfaces are public static final so as these variables cannot be reassigened then what is the need to these.
-13) Variables cannot be written inside an interface hence no constrcutor.
+13) Variables cannot be written inside an interface hence no constructor.
 14) If m1 method is throwing an exception and m1 is called from m2 then m2 is responsible to handle that exception
 
 ===============================================================================================================================================
@@ -68,6 +68,7 @@ String s = "P";
 class c extends P {
 
 String s = "C";
+}
 
 public void m1(){
 syso(s) : prints C
@@ -116,7 +117,7 @@ P(int i){
 class C extends P{
 }
 
-Invalid case as class c construtor will call super with no arg and there is no constrcutor with no arg in P.
+Invalid case as class c constructor will call super with no arg and there is no constructor with no arg in P.
 
 5) 
 
@@ -131,11 +132,11 @@ class C extends P {
 
 As there is no constrcutor in C default constructor will do super call.
 And this compiler generated constructor will not be able to handle IOEception thrown by Constructor of class P.
-Hence invalid case - compilatiron error.
+Hence invalid case - compilation error.
 
 How to handle this? 
 we cannot use try catch inside constructor as first line should be super hence we can handle this by throwing 
-IOException or its parent by child class constructor : 
+IOException or its parent(like Exception) by child class constructor : 
 
 class P {
 

@@ -96,4 +96,23 @@ Normalization :
 Is the process of minimizing redundancy from database. Normal forms are used to reduce this redundancy from 
 database tables.
 
-=======================================================================================================================
+=======================================================================================================================\
+
+Select statement : 
+
+Important, when you want to bring another column which is derived from existing column use
+"case statements" and put conditions and finally [as "column_name" ] from employee.
+
+% is used for wildcards [select * from employees where name like "a%r%"
+_ means single any character
+[ab] means any among a and b.
+
+ILIKE - LIKE with case insensitive
+
+Print departments that are located in region ‘Americas’. List:
+- Department name
+- City, where the department is located
+ 
+How to join 4 tables : 
+select * from table1 inner join table2 on table1.col1 = table2.col3 inner join table3 on table2.col3 = table3.col4 inner join table4 on table3.col3 = table4
+.col6 where table1.col3 = 'Something';

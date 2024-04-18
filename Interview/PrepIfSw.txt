@@ -1,0 +1,3 @@
+1) Prepare a good use case for database operations using spring boot and JPA with all concepts in one 
+POC.
+2) Learn apache Kafka in deapth.

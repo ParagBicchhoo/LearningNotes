@@ -1,0 +1,42 @@
+In a topic you can have multiple partitions.
+Partitions are used to store the data.
+You can have let's say 3 partitions from which 3 consumers can read data simultaneously.
+
+You can have multiple consumers in a consumer group.
+
+Consumer labels themselves with a consumer group name.
+
+You can have multiple consumer groups which subscribe to a topic.
+
+A broker is a single machine in a Kafka cluster.
+
+Zookeper store metadata of kafka cluster.
+
+A record can be uniquely identified in a partition based of offset.
+
+These records can not be deleted or changed unless the retension period is over.
+
+Message or each record consist of key, value and a timestamp
+
+Directing a message to a partition is done using a message key.
+
+Partitioner will generate a hash value of a key and map it to a partitioner.
+
+Messages are written in a round robbin pattern to balance a load equally among different partitions.
+
+You can go ahead and specify the key of a message and message with same key will always go to same partition.
+
+Consumers keep track of messages it has consumed by keeping track of the offeset of messages.
+
+WHen the consumer is down, it can store the state. i.e. it can store the last offset from which it has read the data. And when up again, it will read from the next offset.
+
+Zookeper functionalities :
+1) Electing a controller : Controller is a broker and used to maintain leader follower relationship. When a node shuts down, it is controller that tells 
+other replicas to become a leader.
+So zookeper elects a controller and makes sure that there is only one controller in Kafka cluster.
+It also elects a new one if it crashes.
+
+2) Manages the metadata of kafka cluster.
+
+
+

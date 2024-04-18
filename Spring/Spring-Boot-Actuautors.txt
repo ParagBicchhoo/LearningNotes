@@ -9,7 +9,7 @@ Some important actuators endpoints :
 /metrics : To view application metrics such as memory used, memory free, threads, classes, system, system uptime etc.
 /env : To view the list of environment variables used in application.
 /beans : To view spring beans and its types, scopes and dependency.
-/health : To view the application health.
+/health : To view the application health. {status : "UP"}, {"status" : "DOWN"}
 /info : To view information about spring boot application.
 /trace : To view the list of traces of your REST endpoint.
 
@@ -20,4 +20,25 @@ Dependencies : spring-boot-admin-server, spring-boot-admin-server-ui
 Spring boot admin client : 
 
 Dependencies : Spring-boot-starter-admin-client and spring-boot-starter-actuators
+
+Spring boot actuators can easily integrate with tools like Datadog, New Relic and muchmore.
+It can be done using micrometer.
+
+All endpoints are not exoped by default. We need to expose them.(But exposing all fo them can be a security risk)
+managemet.endpoints.exposure.include=*
+/metric, /info will be available now.
+
+property show.health.details = always will also show database status in /actuator/health endpoint.
+
+/actuator will provide the information of all the endpoints those are exposed.
+
+You can customize your own actuators using annotations 
+
+@EndPoint 
+at class level to indicate the endpoint you want to expose.
+
+@ReadOperation
+@WriteOperation
+@DeleteOperation
+at method level.
 

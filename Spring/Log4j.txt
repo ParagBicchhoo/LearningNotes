@@ -1,0 +1,35 @@
+Problems with sysout
+
+It prints only logs on console and not in file
+println method is synchronized and slows down the perfromance
+
+Log4j is reliable, fast.
+
+LogManager.getLogger() gives you a logger according to behaviour configured in log4j2.properties/log4j2.xml
+
+behaviours in properties file : 
+
+Order : All trace debug info warn error fatal of
+
+Behaviours include layout indicating how to format the message
+filter tell upto which level to print the logs,. If you say debug all after debug will be printed like info warn error fatal of.
+
+destination -> console or file
+
+Object render -> how to print text or xml
+
+appenders = console
+appenders.console.layout.type = PatternLayout
+
+Spring boot user commons logging internally for logging.
+
+Log4j offer better way of configurability and features like passing logs to file and even database.
+
+MDC stands for mapped diagnostic context which help to provide contextual information to your logger/
+Example you want to print user id everywhere in logs
+Just put that inside MDC which is a key value based data structure.
+
+Thread context map is the equivalent of context.
+
+ThreadContextMap has bot stack and map.
+

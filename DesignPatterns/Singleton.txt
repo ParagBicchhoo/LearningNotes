@@ -7,17 +7,17 @@ if you define the class with singleton annotation, it will be thread safe. If tw
 
 
 public class Singleton {
-    private static Singleton singleInstance;
+    private static volatile Singleton singleInstance;
 
     private Singleton() {
     }
 
     public static Singleton getSingleInstance() {
-        if (singleInstance == null) {
-            synchronized (Singleton.class) {
-                if (singleInstance == null) {
-                    singleInstance = new Singleton();
-                }
+1        if (singleInstance == null) {
+2            synchronized (Singleton.class) {
+3                if (singleInstance == null) {
+4                    singleInstance = new Singleton();
+5                }
             }
         }
         return singleInstance;
@@ -26,12 +26,168 @@ public class Singleton {
 
 }
 
+Above pattern is a double checked locking on singleton deisgn pattern.
+Why double null check is needed ? Lets say I ommit the first check, This will make every coming thread to execute the 
+synchronized block even if the instance is not null and ready to be returned. Reducing the overall perfromance.
+If I omit the second null check, let's consider a scenario 4 threads come simultaneously and wait at line no. 2 for their turn to come,
+1st thread which was executed already made the instnace instantiation. Other threads which are waiting at line no.2 will still instantiate 
+the instance because there is no null check breaking the design pattern.
+
+The volatile keyword in Java is used to indicate that a variable's value can be modified by different threads. Used with the syntax, volatile dataType variableName = x; It ensures that changes made to a volatile variable by one thread are immediately visible to other threads.
+
+Without a volatile modifier, it's possible for another thread in Java to see half initialized state of _instance variable, but with volatile variable guaranteeing the happens-before relationship, all the write will happen on volatile _instance before any read of _instance variable.
+
 How to break singleton design pattern : 
 
 One way would be if we donot declare synchronize method in getSingleInstance then more than one object can be created.
+============================================================================================================================================================
+1) It can break if the class is Serializable
 
-It can break if the class is Serializable
-It can break if its 'Clonable`
-You can break by Reflection (I believe)
-it can break if multiple classloaders are loaded the class
+Serialization:- Serialization can also cause breakage of singleton property of singleton classes. Serialization is used to convert an object of a byte stream and save in a file or send it over a network. Suppose you serialize an object of a singleton class. Then if you de-serialize that object it will create a new instance and hence break the singleton pattern. 
+
+class Singleton implements Serializable {
+ 
+    // public instance initialized
+    // when loading the class
+    public static Singleton instance = new Singleton();
+ 
+    private Singleton()
+    {
+        // private constructor
+    }
+}
+ 
+public class GFG {
+ 
+    public static void main(String[] args)
+    {
+        try {
+            Singleton instance1 = Singleton.instance;
+            ObjectOutput out = new ObjectOutputStream(
+                new FileOutputStream("file.text"));
+            out.writeObject(instance1);
+            out.close();
+ 
+            // deserialize from file to object
+            ObjectInput in = new ObjectInputStream(
+                new FileInputStream("file.text"));
+ 
+            Singleton instance2
+                = (Singleton)in.readObject();
+            in.close();
+ 
+            System.out.println("instance1 hashCode:- "
+                               + instance1.hashCode());
+            System.out.println("instance2 hashCode:- "
+                               + instance2.hashCode());
+        }
+ 
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+To resolve above issue implement readResolve method that return same instence:
+
+// implement readResolve method
+    protected Object readResolve() { return instance; }
+
+============================================================================================================================================================
+
+2) It can break if its 'Clonable`
+
+Cloning is the concept to create duplicate objects. Using clone we can create copy of object. Suppose, we create clone of a singleton object, then it will create a copy that is there are two instances of a singleton class, hence the class is no more singleton. 
+
+class SuperClass implements Cloneable {
+ 
+    int i = 10;
+ 
+    @Override
+    protected Object clone()
+        throws CloneNotSupportedException
+    {
+        return super.clone();
+    }
+}
+ 
+// Singleton class
+class Singleton extends SuperClass {
+    // public instance initialized when loading the class
+    public static Singleton instance = new Singleton();
+ 
+    private Singleton()
+    {
+        // private constructor
+    }
+}
+ 
+public class GFG {
+    public static void main(String[] args)
+        throws CloneNotSupportedException
+    {
+        Singleton instance1 = Singleton.instance;
+        Singleton instance2 = (Singleton)instance1.clone();
+        System.out.println("instance1 hashCode:- "
+                           + instance1.hashCode());
+        System.out.println("instance2 hashCode:- "
+                           + instance2.hashCode());
+    }
+}
+
+To resolve this issue,
+
+override clone method in Singleton class and throw CloneNotSupportedException from it.
+
+@Override
+protected Object clone()
+    throws CloneNotSupportedException
+{
+    throw new CloneNotSupportedException();
+}
+
+============================================================================================================================================================
+3) You can break by Reflection
+Access the constructor with Reflection and set Constructor as accessible. Now we can create a new instence by accessing 
+the constructor. This can be solved by using enum : 
+public enum SingletonEnum {
+    INSTANCE;
+
+    int value;
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+}
+
+public class EnumDemo {
+
+    public static void main(String[] args) {
+        SingletonEnum singleton = SingletonEnum.INSTANCE;
+
+        System.out.println(singleton.getValue());
+        singleton.setValue(2);
+        System.out.println(singleton.getValue());
+    }
+}
+============================================================================================================================================================
+
+Advantages and Disadvantages of using Enum as Singleton in Java : 
+
+Advantages : 
+
+1) Enum Singletons are easy to write
+2) Enum Singletons handled Serialization by themselves
+3) Creation of Enum instance is thread-safe : Immutability
+
+Disadvantages : 
+
+Coding Constraints
+
+============================================================================================================================================================
+
 

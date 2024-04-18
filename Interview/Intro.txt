@@ -1,0 +1,13 @@
+Hi,
+I am parag vinchurkar.
+I am basically from Amravati Maharashtra.
+I started my career as a Java developer in TCS.
+My skills include core java, java 8, spring boot and microservices architecture.
+My roles and responsibilities include designing REST APIs using spring boot,
+writing Junit test cases using mockito framework with good code coverage and passing sonar quality gate,
+participating actively in daily scrum calls and complete the user stories and tasks that are assigned to me.
+I also have experince working with tools like apache kafka and RabbitMq.
+Along with that I also have experience working with CICD pipelines and I am familier with devops best practices.
+
+
+

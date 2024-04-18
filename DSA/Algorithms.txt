@@ -44,6 +44,8 @@ Topological Sorting
 
 Most used algorithms : 
 
+Sliding window algorithm.
+Two pointer technique.
 Binary Search Algorithm
 Breadth First Search (BFS) Algorithm
 Depth First Search (DFS) Algorithm
@@ -311,6 +313,6 @@ public static int[] insertionSort(int[] array) {
 	
 ==================================================================================
 
-Mearge Sort : 
+Merge Sort : 
 
 
