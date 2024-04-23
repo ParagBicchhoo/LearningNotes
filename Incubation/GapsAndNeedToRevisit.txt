@@ -8,3 +8,59 @@ GIT with CMD and commands.
 GIT on IntelliJ
 How to create maven multi-module project
 
+Sub Category-2	Question	Answer
+Exit clearance	 Is my leave encashment taxable or nontaxable?	It is nontaxable as per Income Tax rules
+Exit clearance	Do I need revenue stamp on the Declaration for leave encashment form?	It is optional to attest revenue stamp on the Declaration for leave encashment form.
+Exit clearance	Do I need revenue stamp on the Gratuity form?	It is optional to attest revenue stamp on the Gratuity form.
+Exit clearance	Do I need witness signatures on the Declaration for leave encashment form?	It is optional for witness to sign the Declaration for leave encashment form.
+Exit clearance	Do I need witness signatures on the Gratuity form?	It is optional for witness to sign the Gratuity form.
+Exit clearance	From whom should I get clearances?	All the below Stakeholders will provide clearances on UPSA on or before the last working day:
+• Hand over Desk keys/ID:  WFAAdministrativeIndia@epam.com
+• Insurance: Satya Danam (Contractor) <Satya_Danam@epam.com>
+• Certification and Library : Srikanth Jadhav <Srikanth_Jadhav@epam.com>
+• Laptop /Headsets: WFTITServicesIndia@epam.com
+• Bonuses / Recoveries/EL: Sasanka Yedlapati <Sasanka_Yedlapati@epam.com>
+Exit clearance	How and from where can I get the No due form?	You will receive a mail from the Exit Management Team post your resignation update in system by your RM
+Exit clearance	How do I know my last working day?	You need to connect with your manager or HRBP.
+Exit clearance	How do I know my notice period?	Your notice period is mentioned here: https://info.epam.com/policy/india/all-cities/terms-and-conditions/termination-of-employment.html
+Exit clearance	How do I know the number of my leaves encashed?	50% of current year accrued leaves and previous year balance if any. You can check on the vacation portal a day before last working day. www.vacation.epam.com >Detailed balance under "Compensation Days"
+Exit clearance	How should I pay my recovery amount as part of no dues?	Please reach out to WFA Exits India <WFAExitsIndia@epam.com>
+Exit clearance	How to know if I am eligible for gratuity?	If you have completed 4 years 190 days at EPAM, you are eligible for gratuity.
+Exit clearance	Is my gratuity taxable?	Gratuity amount is exempted upto 20 lacs.
+Exit clearance	When can I get Full &Final Settlement?	After all clearances have been completed, the Full & Final Settlement will be paid within 20 working days.
+Exit clearance	When do I get the experience letter?	You will get the experience letter from the Compensation and Benefits Team after Full & Final settlement.
+Exit clearance	When do I get the relieving letter?	Your relieving letter will be shared on the last working day.
+Exit clearance	Which email ID should we give for employee verification of the next organization?	You can send a mail to Org Ex-emp Verification IN <OrgEx-empVerificationIN@epam.com> for next employment verification
+Exit clearance	Whom should I reach out for any letter of recommendations post my exit?	You can reach out to the C&B team for recommendation letters. Please contact Org Compensation IN <OrgCompensationIN@epam.com>
+Exit clearance	Whom should I reach out for experience letter?	You can send a mail to WFA Exits India <WFAExitsIndia@epam.com> for your experience letter. 
+Exit clearance	Whom should I reach out for relieving letter?	You can reach out to the WFA Exits India <WFAExitsIndia@epam.com> for your relieving letter. 
+Exit clearance	Whom should I reach out to for pay slips and form 16?	You can download from Hrberry portal till 6 months from your last working day.
+Exit clearance	Whom should I reach out to the notice period waiver?	Please reach out to you RM and HRBP for discussion on Notice Period
+Exit clearance	Will I get my pending shift allowance paid along with my Full & Final settlement?	Yes, you will be paid your pending shift allowance along with Full & Final settlement.
+Exit clearance	Will someone collect my IT Assets (Laptop, headset) during COVID 19 pandemic situation?	Please contact Amritpal Singh (Amritpal_Singh@epam.com) from Admin team.
+Exit clearance	With whom should I share my FBP bill?	You can share the FBP bill with the Payroll Team before last working day. Mention your UID_Name in the subject and email the attached documents /scanned copies of the following to WFAPayrollIN@epam.com. For more details, please refer to the exit formalities email shared with you
+Exit clearance	With whom should I share my Tax proof submissions?	The tax proof submissions should be shared with Payroll Team before last working day. Mention your UID_Name in the subject and email the attached documents /scanned copies of the following to WFAPayrollIN@epam.com. For more details, please refer to the exit formalities email shared with you
+Exit clearance	Can I work during notice period?	Yes, an associate is expected to continue working during their notice period. Failure to do so can result in disciplinary action, including loss of pay or termination without notice
+Exit clearance	Can EPAM terminate the services of an associate without notice? 	In certain circumstances, EPAM may terminate an employee without notice, such as in cases of gross misconduct or breach of contract
+Exit clearance	What happens if an associate does not give the required notice?	If an associate does not give the required notice, they may be in breach of their employment contract, and EPAM may be entitled to withhold pay or other benefits
+Notice period	What is the notice period in EPAM	The notice period for EPAM fulltime associates are as follows:
+Associates
+Software Engineer/Executive to Dy. Project Manager/Assistant Manager - 60 Days
+
+1-Ass.Con/ Exe/ B-SE/ A-AC to 4TL/4AA/4LCON
+Software Engineer/Executive to Team Lead/Associate Architect/Lead Consultant - 60 Days
+
+Level 5 and above
+Project Manager/ Architect/Senior Lead Consultant and above - 90 Days
+
+Please refer the following link: https://info.epam.com/policy/india/all-cities/terms-and-conditions/termination-of-employment.html
+Notice period	Can I reduce my notice period	Associate may be provided an option of buying the notice period solely at the discretion of the company.
+Notice period	Can company relieve me earlier 	The company can terminate the services of an Associate by giving notice for the number of days as mentioned above or payment of salary in lieu thereof.
+Notice period	What is the process of resignation acceptance ?	Please find the detailed procedure:
+* Resignation has to be accepted by the Program Manager/ Function Head and notice period buy out option can be utilized by the Associate on acceptance from the Delivery Head and HR Head. The relieving date shall be communicated to the Associate by the Immediate Manager/ Project lead/ Project Manager /Program Manager/Delivery Head/ Function Head/Manager Support Functions
+* Function head shall advise HR on further actions along with his recommendation.
+* In case the Function head  has accepted to relieve the Associate from the duties of the organization, the Function head has to see that the charge is properly handed over by the relieving Associate and taken over by an Associate who is assigned to the task.
+* Associate shall get the ‘No Dues Form’ cleared by the concerned departments, for HR department to  initiate the full and final settlement process
+* The Exit interview shall be conducted by the Manager - HR and recorded in the provided format
+* The HR department shall issue a relieving letter on the date of relieving and service certificate after receiving a confirmation from Finance department stating that the F&F settlement process if completed.
+
