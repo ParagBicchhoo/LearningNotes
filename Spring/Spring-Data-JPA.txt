@@ -90,7 +90,7 @@ Sort.by() is an argument to findAll method.
 Pagination : 
 
 Pageable pageable = PageRequest.of(0, 5, SortBy("name").descending());
-Page<Person> findByName(String name, pageable);
+Page<Person> findByName(String name,Pageable pageable);
 
 ===========================================================================================================================================
 
@@ -101,14 +101,14 @@ This behavior is different for different propagation levels.
 
 1) Required : 
 
-If both calling and called methods are transactinal, and called method is called directly, it will create it's own transaction.
+If both calling and called methods are transactional, and called method is called directly, it will create it's own transaction.
 If it is called from another method which is transactional it will not create a separate transaction but will use existing one.
 If this transactional method is called from  non- transactional method, it will create a new transaction.
 This is the default type. If not provided any propagation, it will be considered by default.
 
 2) Support : 
 
-Lets say m1 method which is transactional(Propagation supports) called from m2 method(Transactional propagation Required)
+Let's say m1 method which is transactional(Propagation supports) called from m2 method(Transactional propagation Required)
 
 If the calling method has an existing transaction(m2), then called method(m1) will use that existing transaction and if called method is 
 called directly then it will not create it's own transaction.
@@ -124,7 +124,7 @@ Creates new transaction under all circumstances
 5) Never : 
 
 If the method is directly called, it does not create a transaction.
-If the method with never propagtion called from transactional it throws an exception.(IllegalTransactionStateException)
+If the method with never propagation called from transactional it throws an exception.(IllegalTransactionStateException)
 If the calling method does not have a transaction, it will not create it's own transaction.
 
 6) Mandatory : 
@@ -162,7 +162,7 @@ In other words, concurrent execution of a group of serializable transactions has
 
 Inheritance mapping strategies : 
 
-Lets say we have to perform payment and payment can be performed through credit card ad cheque
+Lets say we have to perform payment and payment can be performed through credit card and cheque
 
 Java supports inheritance but JPA does not so JPA defines some inheritance mapping strategies.
 
@@ -180,3 +180,21 @@ JPA will join tables in real time application.
 Two different classes for CreditCard and Cheque and joined with id.
 
 ===========================================================================================================================================
+
+There are two concurrency control mechanism
+1) Isolation levels discussed above
+2) Pessimistic lock
+
+Pessimistic lock allows to impose a lock on data by the time data is being updated.
+
+However, the isolation level is set once the connection is created, and it affects every
+statement within that connection. Luckily, we can use pessimistic locking,
+which uses database mechanisms for reserving more granular exclusive access to the data.
+
+We can use a pessimistic lock to ensure that no other transactions can modify or delete
+reserved data.
+There are two types of locks we can retain: an exclusive lock and a shared lock.
+We could read but not write in data when someone else holds a shared lock.
+In order to modify or delete the reserved data, we need to have an exclusive lock.
+
+We can acquire exclusive locks using ‘SELECT … FOR UPDATE’ statements.

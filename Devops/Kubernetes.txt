@@ -5,7 +5,8 @@ Something went down : Heal the application like restarting.
 
 Kubernetes helps us in doing this.
 
-On a hight level Kubernetes is a container orchestrator. On a granular level it is much more than only being a container orchestrator.
+On a higher level Kubernetes is a container orchestrator. On a granular level it is much more than only
+just being a container orchestrator.
 
 Components of Kubernetes  :  
 
@@ -26,9 +27,10 @@ Collection of worker nodes and control plane is called as kubernetes cluster.
 Kubectl : Is the kubernetes CLI command line tool.
 Kubectl will communicate with control plane and say I want to start 10 applications.
 This communication can happen in two ways : 
-1) Declarative way : You create a manifest file you write code in that and it happens. This is important. You will give that file to control plane via
+1) Declarative way : You create a manifest file you write code in that and it happens.
+This is important. You will give that file to control plane via
 Kubectl.
-2) Imperative way : You are giving some commands to your cluster.
+2) Imperative way : You are giving some commands to your cluster.1
 
 Microservices run on worker nodes.
 
@@ -37,28 +39,30 @@ Pod : is a scheduling unit in kubernetes.
 Worker node is a server.
 It has container runtime in it.
 Container runtime has a pod
-and pod has containers.
+and pod has containers(docker).
 
 Steps : 
 
-1) Create micropservices
-2) Conatainerize it.
-3) Put every container in pods
-4) Deploy these pods ito controllers.(Deployemnt controller, Job controller are the types of controllers in kubernetes where deployment one is the default one)
+1) Create microservices
+2) Containerize it.(Add every microservice in one container)
+3) Put every container in its own pod.
+4) Deploy these pods into controllers.(Deployment controller,
+Job controller are the types of controllers in kubernetes where deployment one is the default one)
 
 Control Plane : 
 
 Collection of various components that helps us to manage overall cluster.
-It has following capabilities : 
+It has the following capabilities :
 
-Control plane has a API server amd kubectl communicates with API server.
+Control plane has a API server and kubectl communicates with API server.
 
 
 One of the components of control plane is etcd. which is a database. With which API server will communicate
+etcd will contain information about control plane.
 And then there is controller manager which will communicate with API server.
 Another there is a scheduler.
 
-API server has certain endpoints which are used by kubectl to give certain commands like hey take this yml file which is a pod defination and create a pod.
+API server has certain endpoints which are used by kubectl to give certain commands like hey take this yml file which is a pod definition and create a pod.
 These files are also called as kubernetes manifest files. Often times this can get very complex but tools like monocle make files creation extremely easy.
 Controllers take care of how many pods should be running and their health. Controller manager take care of controllers.
 Controller managers has 4 functionalities : 
@@ -67,18 +71,21 @@ Controller managers has 4 functionalities :
 3) Differences : 
 4) Make the changes : 
 
-Scheduler will schedule the pods on worker nodes. Lets check which worker node is empty and best suited for it.
+Scheduler will schedule the pods on worker nodes. Let's check which worker node is empty and best suited for it.
 
 Architecture of kubernetes : 
 
 Worker node architecture :
 Components : 
 
-1) Kube proxy : It is responsible for networking. This will povides IP address to nodes.
+1) Kube proxy : It is responsible for networking. This will provide IP address to nodes. Help worker
+node to connect with outside network.
 
-2) Kubelet : it is on every worker node. It will listen to API server. 
+2) Kubelet : it is on every worker node. It will listen to API server. This will also communicate
+with container runtime.
 
-3) Container runtime : 
+3) Container runtime : containerd is the container runtime used by k8s. It pull the images from
+registry,pushing it, creating container out of it, runs it.
 
   
  

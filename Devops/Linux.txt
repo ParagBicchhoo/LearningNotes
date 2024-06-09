@@ -1,0 +1,215 @@
+root@277d474hgf:/#
+
+root -> current username
+277d474hgf -> hostname of the server
+/ -> current directory
+
+~ -> Home directory
+
+====================================================================================================================================================
+
+mkdir -> create a new folder
+cd -> change directory
+touch -> create a new file
+ls -> list all items in that directory
+ls -a -> list all items in dir including hidden dir
+ls -lrt -> Show more information about files in current directory
+cd .. -> go back a folder
+cd ../.. -> go back two folders
+echo $JAVA_HOME -> print
+history -> print all commands recently executed
+export -> set an environment variables
+pwd -> print present working directory
+cp filename directory -> copy filename file to directory
+cp filename.txt copy_filename.txt -> copy the contents of filename.txt to copy_filename.txt
+mv filename.txt directory
+mv file.txt newName.txt -> actually simply renamed the file
+ls -r -> recursively shows all files in all subdirectories
+rm file.txt -> remove file permanently (no recycle bin in linux. Hence it is fast)
+rm command is only for files
+if you want to delete a directory, rm -r -> Recursively delete all folder contents
+rm -rf -> f stands for force delete
+sudo -> superuser do -> for some commands you need admin permissions
+sudo ask for password.
+df -> disk free space usage in KB
+df -m -> disk free space usage in MB
+df -hg -> human readable and gigabytes
+du -> disk usage statistics
+head -> view first few lines of a file (10 lines)
+head -n 4 total.txt -> will show first 4 lines
+tail -> show line from behind from a file.
+tail -n 2 total.txt -> show last 2 lines
+whoami -> show current user
+alias gpom="git push origin main" -> this will not be permanent only for a specific shell session.
+~/.zprofile -> gpom="git push origin main" -> now gpom command will act as a git push origin main.
+
+====================================================================================================================================================
+
+ls -l shows permissions, owner, group , size, date modified, time , filename
+
+diff -> compares files line by line
+locate "*.txt" -> locate all files ending with .txt
+
+====================================================================================================================================================
+
+find works recursively
+
+find . -> everything mentioned in PWD
+find .. -> find everything in previous directory
+find . type d -> find folders in current directory
+find . type f -> find files in current directory
+find . type -f -name "two.txt" -> will find a exact file two.txt in PWD
+find . type -f -iname "two.txt" -> will find a case insensitive file two.txt in PWD (i is used for
+case sensitivity)
+find . -type f -mmin -20 -> find all files those are modified less than 20 minutes ago
+find . -type f -mmin +10 -> find all files those are modified more than 10 minutes ago
+find . -type f -mmin +2 -mmin -10 -> find all files those are modified less than 10 minutes ago and more than 2 minutes ago.
+find . -type f -mtime -20 -> 20 days ago
+find . -type f -maxdepth 1 -> in current folder only and not in subfolder
+find . -size +1k -> more than 1 KB files
+find . -empty -> find files those are empty
+find . -perm 777 -> find files with read write and execute permissions
+
+====================================================================================================================================================
+
+Permissions :
+
+Three types of permissions : read(r), write(w), execute(x)
+three types of people : user , user groups, others
+
+chmod u=rwx, g=rw, o=r upper.txt -> change the permissions
+chmod 777 upper.txt -> read write execute to all
+0 -> no permissions
+4 -> read
+2 -> write
+1 -> execute
+read + write - > 6
+read + execute -> 5
+
+====================================================================================================================================================
+
+sudo chown root upper.txt -> change the owner of the file
+cat upper.txt -> permission denied
+sudo cat upper.txt -> now i can do it
+sudo -> running the command as different user
+
+find . -type f -name "*.txt" -exec rm -rf {} + -> execute rm -rf command on the files which were found. All the files which
+were found using find command will go into this {} placeholder.
++ means concatenate all which were found
+
+====================================================================================================================================================
+
+grep -> global regular expression print
+grep search things written in files case sensitive
+
+grep "Kunal" names.txt -> prints kunal from names.txt
+grep -w "Kunal Kushwaha" names.txt -> shows complete word
+grep "Kunal Kush" -> will show kunal kushwaha
+grep -w "kunal Kush" -> wont show anything
+grep -i "kunal" -> case insensitive
+grep -n Kunal" names.txt -> shows line number
+grep -B 3 "Rahul" names.txt-> shows 3 lines before Rahul and Rahul
+suppose we dont know the exact file in which rahul is then : grep -win "Rahul" ./ .txt
+add -R to search recursively
+
+what files contains these matches in the current directory :  grep -wirl "kunal" .
+count: how many times a word kunal will appear in all files in current directory -> grep -wirc "Kunal".
+
+grep -p "\w" companies.txt -> shows all the words in companies.txt
+grep -p "\d{3}-\d{3}-\d{4}" companies.txt -> find a pattern with [3 nums - 3 nums - 4 nums]
+
+====================================================================================================================================================
+
+Learn linux regular expressions.
+
+history | grep "ls" -> history of all commands wil be input to grep and it will search all the commands with ls
+
+vi editor : :wq -> save file and close, :q! -> close without saving
+
+The cat command reads files sequentially, displaying their content to the terminal.
+
+It concatenates multiple files if specified, allowing for viewing, combining, or
+redirecting output to another file. Use cat file1 file2 > new file to merge or cat file
+to view a file's content.
+
+cat > Hello -> create a file named Hello and opens a editor
+My name is Parag.
+file is written with statement
+
+cat one.txt two.txt > total.txt -> merge the one and two files in total.txt
+cat one.txt two.txt -> print the concatenated contents of both files.
+echo "Hello World" > file.txt -> print Hello World in file.txt. And the existing contents of
+fi;e.txt will be overridden
+
+man echo -> give information about a echo command
+man git -> will give info about git command
+
+#Tunnelling
+cat file.txt | tr a-z A-Z > upper.txt
+-> take the output of file.txt and translate all lower case to upper case and store it in
+upper.txt
+
+pipe (|) -> output for the first command will be input for the second command
+tr -> translate
+> -> redirection
+
+mkdir -p random/middle/hello -> create a middle directory in between two existing folders
+-p means parent
+
+====================================================================================================================================================
+
+How does linux knows where the program is located or installed? example python, git
+This is because of environment variables.
+Whenever you execute a command like java, python, git, it will first check the path environment
+variable. Then it checks all the folders mentioned in this path variable.
+
+====================================================================================================================================================
+
+
+control a --> is used to go to the start of command line
+control e --> is used to go to the end of the command line
+control k --> is used to remove everything after a cursor
+control u --> will remove everything
+tab --> is used for autocompletion
+!ID eg.(!2747) --> for running any particular history id.
+!Find --> to run previous find command
+control r --> search previous commands
+we can use multiple commands with separator as ";"
+sort -r companies.txt --> it will sort contents in reverse order
+sort -f companies.txt --> case insensitive sorting
+sort -n companies.txt --> results in numerical order
+jobs --> process started by shell
+ping --> connectivity status
+wget $url --> download files from internet
+brew install wget --> to install wget
+top --> running processes and memory it is consuming
+kill $process id --> to kill/stop the process
+
+====================================================================================================================================================
+
+zip files.zip companies.txt --> for zipping file
+unzip files.zip --> for unzipping
+
+hostname --> domain name/hostname
+hostname -i --> ip address
+
+useradd user -> create new user
+passwd User --> create password for new user
+userdel Kunal --> delete user
+
+uname --> displays kernel
+uname -o --> gnu/linux
+unmae -r -> kernel version
+
+cat /etc/os/release -> operating sytem information
+ls cpu - cpu details
+free -h --> for checking free memory
+vmstat -> virtual memory
+
+====================================================================================================================================================
+
+
+
+
+
+

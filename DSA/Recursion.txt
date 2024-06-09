@@ -1,0 +1,37 @@
+1) Check whether the array is sorted or not using recursion :
+
+Though process :
+
+check if the first element is smaller than second and
+check if the remaining elements from seconds element are sorted.
+
+class Solution {
+    boolean arraySortedOrNot(int[] arr, int n) {
+        // code here
+        if(n<=1) return true;
+        return (arr[n-1]>=arr[n-2]) && arraySortedOrNot(arr, n-1);
+    }
+}
+
+===========================================================================================
+
+2) Linear search with recursion :
+
+Thought process : if target is present at index, the return index
+or find the target in remaining array and return it.
+
+static int findIndex(int[] arr, int target, int index){
+
+      if(index == arr.length){
+           return -1;
+      }
+
+      if(arr[index]==target) return index;
+      else {
+           return findIndex(arr, target, index+1);
+      }
+}
+
+===========================================================================================
+
+3)

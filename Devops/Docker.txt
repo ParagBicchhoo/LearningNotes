@@ -7,3 +7,99 @@ docker stop <container_id>
 docker start <container_id>
 docker ps -a : List all the containers which are running or not running.
 
+Docker containers use the Kernel of underlying operating system and it does not have it's own
+Kernel.
+Container are isolated environments.
+they don't know what is happening outside the container.
+
+Runtime allows to start and stop the containers
+Low level runtime :  runc : work with OS and start and stop contaners
+containerd : Higher level : managing runc, how to interact container with internet like pulling '
+the images.
+RKT
+
+There are so many runtimes available in the market, now which one to use?
+So they came up with a solution called as Open Container Initiative.
+It's a project under Linux foundation.
+They started two things Runtime specs and image specs.
+Kubernetes uses Container runtime interface : A plugin interface that enables kubelet to use wide
+variety of container runtimes without the use to recompile.
+The image that docker producer isn't a docker specific image, it's an OCI image(Open
+container initiative) image.
+Any OCI compliant image independent of tool you use to build it will look same to kubernetes.
+So both containerd and CRI-O know how to pull the image and run it.
+
+Docker engine is used to interact with docker server/daemen
+Docker CLI communicates with Docker server through REST API.
+
+Docker file can be considered as you dish recipe.
+
+                                   build                           run
+Docker file(List Of Instructions)---------> Docker image(class) ---------> Docker container(object)
+
+docker run -> Run an image to create a container
+docker images -> show images that are downloaded on system (if not available download from
+docker hub/registry
+docker also has operating systems in them
+
+docker run -it ubuntu : Run it in background(Interactive environment)
+The interactive mode in Docker allows us to execute commands while the container is in a
+running state.
+
+docker container exec -it <docker-it> bash -> Attach a bash to docker container and you can
+execute commands under the container.
+
+docker start - start the container
+docker stop <container-id>
+docker ps -a -> Also show all the containers that have stopped.
+docker rm <container-id>
+docker inspect <container-id> -> Give all the information about container
+docker logs
+docker prune -f -> Delete all the containers that are stopped (-f don't ask me again and do it)
+docker logs --since 5s <container-id>  : give logs of last 5 seconds only.
+
+docker run -d -p 8080:80 nginx :
+Whenever I go to localhost:8080, it will forward it inside container 80 port.
+This is called port forwarding.
+
+Share the changed container with someone :
+exit -> container will stop.
+docker start <container-id>
+docker commit -m "added names.txt file" <container-id> <image-name>(ubuntu:1.02)
+docker images -q -> Give ids of all docker images
+
+remove all images at once :
+docker rmi $(docker images -q) [It does not delete the running containers]
+
+There may be a file which is used by MongoDB image and Ubuntu image both.
+So there is no sense to download it for both.
+So while pulling the image, it downloads multiple images(also called as layers) which are the shared images by
+multiple images. which shows their hash as well.
+Every image has multiple layers.
+
+docker build - to build an image from a docker file.
+
+                                       Docker client
+                                            -
+                                            -
+                                       Docker Daemon
+                                            -
+                                            -
+                                        Containerd
+                                       -    -    -
+                                       -    -    -
+                                       -    -    -
+                                      Shim Shim Shim
+                                      runc runc runc
+                                        containers
+
+Docker client communicates with docker daemon using grpc protocol.
+runc create the container out of image.
+containerd is also used by kubernetes.
+
+Earlier, when daemon is stopped, running containers also used to be stopped. What if you want
+to update your daemon.
+That's where containerd and shim comes into picture.
+Once the container is started, runc will be removed, runc role is only to start the container.
+So shim will take over the runc to manage containers.
+Hence daemonless containers.
