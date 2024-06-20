@@ -8,14 +8,56 @@ Who controls/create the rules? : Internet society
 Client: sends the request to server
 Server: sends the response to client
 IP address: every device connected over internet to each other have IP address. eg. h.h.h.h (each h is having 0-255 numbers)
+            (its nothing but phonebook of internet)
             eg. google.com will connect to any of the IP address
             $ curl ipconfig.me -s
             Lets say there is an Internet service provider who provides us a modem/router, so all the devices connected to this modem will have the same IP address around the world.
             Inside that modem devices can be there. and modem will give local IP address to them as well using DHCP(Dynamic host configuration protocol).
+Modem : coverts digital signal to analog signal and vice versa.
+        eg. dital data in computer to electrical signal i.e telephone sides and get recovered as image
+Router: a device which rotes the data packets based on IP addresses
+Internet service provider: company which provides internet
+
+Topologies:
+1) BUS: computers connected to a chord or backbone. Limitations: if cable breaks no data transfer. everything gets transmitted via cable so only one person can send data at a time
+2) RING: every system communicates with one another. Limitations: if cable breaks no data transfer. Unnecessary calls are made.
+3) STAR: all computers are connected to single central system. Limitations: if central device fails, network goes down.
+4)TREE : (BUS & STAR). many stars connected into bus type of way.
+5) MESH: Every single computer is connected to every single computer. Limitations: expensive, so many wires are used, scalability issue.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+STRUCTURE OF NETWORK:
+
+
+
+
+
+
+
+
+
 NAT: Network Access translator: helps to decide from where the request has come.
 Ports: identifies an particular application in device. It's a 16 bit number
 Reserved ports: 0-1023
 Registered for specific application: 1024-49152    (MongodB: 27017, SQL:1433)
+1 mbps-mega bits per sec = 1000000 bits/sec
+1 gbps = 10^9 bits/sec
+1kbps = 1000 bits/sec
+submarinecables.com
+
+LAN: local area network: it works in small area like offices/houses
+MAN: metropaletial area network : across city
+WAN- wide area network : across countries (opticle fibre cables)
+1) SONET : SYNCHRONUS OPTICAL NETWORKING : CARRIES THE DATA USING OPTICLE FIBRE NETWORK SO CAN COVER LARGE AREA/DISTANCES
+2)FRAME RELAY: LOCAL AREA NETWORK TO WIDER AREA
+
+
+
+
+
+
+
 
 Packets:
 
