@@ -1,0 +1,21 @@
+Internet: Entire collection of global computer network
+www- world wide web is a project where all documents/links are stored.Everything is stored on web server.
+Protocol: a rule set by Internet society on how the particular thing to be sent over internet. (eg. email,videos,photos)
+TCP: Transmission control protocol: It ensures that data is reached completely
+UDP: User datagram protocol : not 100% data transfer eg. video conferencing.
+HTTP: hyper text transfer protocol: used by web client & server: Port 80
+Who controls/create the rules? : Internet society
+Client: sends the request to server
+Server: sends the response to client
+IP address: every device connected over internet to each other have IP address. eg. h.h.h.h (each h is having 0-255 numbers)
+            eg. google.com will connect to any of the IP address
+            $ curl ipconfig.me -s
+            Lets say there is an Internet service provider who provides us a modem/router, so all the devices connected to this modem will have the same IP address around the world.
+            Inside that modem devices can be there. and modem will give local IP address to them as well using DHCP(Dynamic host configuration protocol).
+NAT: Network Access translator: helps to decide from where the request has come.
+Ports: identifies an particular application in device. It's a 16 bit number
+Reserved ports: 0-1023
+Registered for specific application: 1024-49152    (MongodB: 27017, SQL:1433)
+
+Packets:
+
