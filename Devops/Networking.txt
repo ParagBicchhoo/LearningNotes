@@ -3,6 +3,11 @@ www- world wide web is a project where all documents/links are stored.Everything
 Protocol: a rule set by Internet society on how the particular thing to be sent over internet. (eg. email,videos,photos)
 TCP: Transmission control protocol: It ensures that data is reached completely
 UDP: User datagram protocol : not 100% data transfer eg. video conferencing.
+RTP: real time transport protocol.
+
+***Lets say, there are ABC points as server. When A makes a phonecall to C, C sends an acknowledgement to server B in form of response code. thats why it is known as RTP.
+whereas, in video conferencing, acknowledgement is not received so it is an eg of UDP***
+
 HTTP: hyper text transfer protocol: used by web client & server: Port 80
 Who controls/create the rules? : Internet society
 Client: sends the request to server
@@ -14,8 +19,8 @@ IP address: every device connected over internet to each other have IP address. 
             Lets say there is an Internet service provider who provides us a modem/router, so all the devices connected to this modem will have the same IP address around the world.
             Inside that modem devices can be there. and modem will give local IP address to them as well using DHCP(Dynamic host configuration protocol).
 Modem : coverts digital signal to analog signal and vice versa.
-        eg. dital data in computer to electrical signal i.e telephone sides and get recovered as image
-Router: a device which rotes the data packets based on IP addresses
+        eg. digital data in computer to electrical signal i.e telephone sides and get recovered as image
+Router: a device which routes the data packets based on IP addresses
 Internet service provider: company which provides internet
 
 Topologies:
@@ -29,8 +34,33 @@ Topologies:
 
 STRUCTURE OF NETWORK:
 
+OSI: open systems interconnection model
+its a standard for how servers/computers communicates with each other
 
+7 layers in OSI
+Application: its implemented in software eg. whatsapp or any other messenger
+Presentation:takes data from application in form of word, charac, number, etc. It translates data into binary form. encrypts/decrypts/compress/encode data. ssl is used. provide abstraction.
+Session:  it helps to setting up and managing the connection. enables sending and receiving the data followed by termination of connected session.
+Transport: segmentation, port no, sequence number, flow control, error control. It works using TCP & UDP
+Network: works for transmission of data for two computers in different network. logical addressing i.e ip address. assign senders and receivers ip address to data packets
+         and performs routing i.e moving data packets one to another. Loadbalancing happens here.
+Data Link: allows to communicate directly with computer / host. physical addressing is done here. MAC address is 12 digit alphanumeric number.
+          1. allows upper layer of osi model to access the frames. 2) controls how the data is placed and received from media using media access control.
+Physical: hardware section. transmits the bit from electrical segment like cables/ electrical signal/ wifi. converts the signal at receivers end
 
+TCP/IP Model: used pratically
+Application:
+Transport:
+Network:
+Data link:
+physical:
+
+Application layer:
+user interacts with this.
+whatsapp, browser, etc
+where: device
+Protocols:
+Client server architecture
 
 
 
