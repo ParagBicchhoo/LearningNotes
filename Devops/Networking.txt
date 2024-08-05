@@ -55,7 +55,7 @@ Network:
 Data link:
 physical:
 
-Application layer:
+Application layer:s
 user interacts with this.
 whatsapp, browser, etc
 where: device
