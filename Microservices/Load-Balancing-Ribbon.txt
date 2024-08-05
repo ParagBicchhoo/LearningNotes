@@ -1,14 +1,18 @@
 Load balancing in microservices : 
 
-*** Learn server side load balancing using zuul implementation .
-
 Server side load balancing : 
 
 Only one load balancer for entire application.
 Unless and until server side load balancer has an information about the new instance added to one of the microservices, 
 it will not send request to this new instance.
+API gateways like zuul know from Eureka client that new instance is added as zuul is also a eureka client.
+API gateway like zuul does server side load balancing.
+And it also inernally uses Ribbon client to do load balancing.
+
+=======================================================================================================================================
 
 Client side load balancing :
+
 One load balancer per microservice.
 @EnableRibbon(name="nameOfAppWhichNeedToBeLoadBalanced", configuration= "Configuration.class")
 in application.yml, define what are different list of servers where this application is running.
@@ -16,10 +20,14 @@ Disable ribbon eureka in applicaion.yml becasue eureka is also capable of load b
 restTemplate need to be @LoadBalanced. 
 each load balancer details need to register to Eureka.
 
+=======================================================================================================================================
+
 Netflix ribbon is the library or maven dependency that is used to do load balancing and 
 @LoadBalanced annotation is used along with RestTemaplate bean to divide the load
 To make my springboot application work like a load balancer we need to add annotation @RibbonClient in Springbootapplication class.
 Ribbon uses round robbin pattern.
+
+=======================================================================================================================================
 
 Eureka client is also capable of client side load balancing.
 Just register the instance of same microservice on another port

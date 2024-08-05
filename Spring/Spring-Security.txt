@@ -75,6 +75,8 @@ Now index.html, css.js will be whitelisted
 
 Create a user and store it in "in memory" database : 
 
+WebSecurityConfigurerAdaptor is now depricated and SecurityFilterChain is now used to secure a web application. 
+
 @Configuration
 @EnableWebSecurity
 class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {

@@ -1,0 +1,53 @@
+Database design for social media application facebook : 
+
+Features : 
+
+1) Signup and create profile
+2) As others profiles as friend
+3) Add posts that contain text, photos or videos
+4) See posts that friends have added. --> We can assume that this is a newsfeed feature so no changes in database.
+We can handle it at application level.
+5) Like and comment on posts that others have added.
+
+a) user_profile 
+
+id  (PK)
+email_address
+password
+country
+date_of_birth
+given_name
+surname
+
+Friendship between two people is a many to may relationship
+
+b) friendship
+
+profile_request
+profile_accept
+
+What if someone denies the request : We don't add that in a friendship table.
+
+c) user_post
+
+if (PK)
+profile_id (FK) 
+written_text
+media_location
+created_datetime
+
+d) Post_like
+
+id (PK)
+post_id (FK)
+profile_id (FK)
+created_time
+
+e) Post_comment
+
+id (PK)
+post_id (FK)
+profile_id (FK)
+comment_text
+created_time
+ 

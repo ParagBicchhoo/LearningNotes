@@ -181,3 +181,31 @@ public class SprinBootApplicationTest {
 
 ---------------------------------------------------------------------------------------------------------------------------------------
 
+
+@PrepareForTest is used to prepare the classes for testing which are having private, static or final methods.
+@PrepareForTest and powerMockito are connected.
+
+Internally PowerMockito make use of Java reflection.
+-----------------------------------------------------------------------
+Testing private methods.
+when(priceCalculatorSpy, "isCustomerAnonymous").thenReturn(false);
+verifyPrivate(priceCalculator).invoke("isCustomerAnonymous");
+
+-----------------------------------------------------------------------
+
+Testing static methods : 
+
+PowerMockito.mockStatic(Utils.class);
+when(Utils.print("Hello")).thenReturn(true);
+when(Utils.print("Wrong Message")).thenReturn(false);
+		
+assertTrue(Utils.print("Hello"));
+assertFalse(Utils.print("Wrong Message"));
+		
+PowerMockito.verifyStatic(Utils.class, atLeast(2));
+Utils.print(anyString());
+
+-----------------------------------------------------------------------
+
+
+

@@ -1,0 +1,18 @@
+1) Set the JAVA_HOME environment variable up to jdk-version folder path
+
+2) Set the M2_HOME and MVN_HOME environment variables.
+
+3) Java build path : Libraries 
+	a) JRE System Libraries[JDK-17]
+	b) Classpath - Maven dependencies
+
+4) Windows -> Preferences -> Installed JRE
+
+Select Java 17 path and apply close
+
+5) Configure Lombok
+Steps : 
+
+6) Configure SonarLint for quality pass and code coverage.
+
+7) How to configure GIT.

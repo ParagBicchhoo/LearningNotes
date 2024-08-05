@@ -1,0 +1,87 @@
+1) Strictfp is now become default for all methods where floating point calculations need to be done.
+These are mainly for scientific applications.
+
+=========================================================================================================================================
+
+2) Pattern matching for Switch statements. Now switch statements can also take objects as an argument. and match based on it.
+
+New syntax for switch statements so that a value can directly be returned from a switch case.
+To make switch statement more concise.
+
+Syso ( switch(d){
+	CASE NORTH, SOUTH -> 5;
+	default -> 4;
+}
+
+If we do not want to use -> operator and use : then we need to return value with yield .
+
+Syso ( switch(d){
+	CASE NORTH, SOUTH : yield 5;
+	default : yield 4;
+}
+
+Pattern matching for switch is a preview feature and Java has not actually committed but just introduced this new feature and 
+will be committed based on later feedback.
+
+public static void infoOnTypes(Object o) {
+
+switch(o){
+	case String s && s.startsWith("A") -> syso("String begining with A" + s);
+	case Integer i && i.intValue() > 10 -> syso("Integer > 10" + i);
+	case null -> syso("null");
+	default -> syso("Not Recognized");
+}
+
+
+=========================================================================================================================================
+
+3) Sealed classes or interfaces permit only specific classes or interfaces to extend or implement it.
+Making a class available for inheritance for certain classes.
+
+public sealed class Vehicle permits Car {
+
+}
+
+non sealed class Car extends Vehicle {
+
+}
+
+=========================================================================================================================================
+
+Records : 
+
+Simple Pojo classes make us write lot of boilerplate code and 
+if we want to have something only as a data carrier the Records are best suited.
+
+Records are by default immutable and final.
+
+We do not have to write boilerplate code like getter setters, constructors, hasCode, equals and toString methods.
+
+Records by default take arguments and they are called Components.
+Same component values are initialized.
+
+Records can have both static fields and static methods.
+Records can have instance methods but cannot have instance fields.
+
+A Record can implement an interface.
+
+ 
+=========================================================================================================================================
+
+Text-Blocks : 
+
+Text blocks are Strings starting with tripple qoutes : 
+
+String text = """
+	parag""";
+
+All String methods are applicable for text blocks.
+They are best to represent a json in String formats as there is no need to escape characters.
+
+String text = """
+	parag
+	""";
+
+All spaces before second """ are relative and will not considered.
+
+=========================================================================================================================================

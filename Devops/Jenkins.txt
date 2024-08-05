@@ -1,9 +1,11 @@
+Javatechie Youtube : 
+
 1) Jenkins is a continuous integration tool used to build code and deploy it in production.
 2) Continuous integration is a software development practice where developers regularly merge their code into central repository 
 after which automated builds and tests are run. 
 3) Jenkins provides hundreds of plugins to support building, deploying and automating any project.
 4) It is a server based system that runs in servlet container such as apache tomcat and it supports version control tools 
-like SVN tortoise, GIT to auttomate build.
+like SVN tortoise, GIT to automate build.
 
 Now lets understand more about continuous integration.In Continuous integration all the development work is integrated as 
 early as possible. Once I develop my code I move it to the repository. From repository I need to do the build. This build process 
@@ -34,6 +36,10 @@ Pipeline is a process of CD automation using jenkins job(items)
 Each job contains some processing inlets and outlets.
 Build-Deploy-test-release are some of the jobs and they are chained in a single pipeline.
 
+So overall pipeline is a combinations of jobs that gets executed in series.
+
 There are three types of pipelines :
 1) Build Plugin pipeline : If my application has less job to execute then go for it.
-2) Declarative 
+2) Declarative - If application has many jobs to execute go for this.
+3) Scripted - Write groovy scripts to build the pipeline.
+

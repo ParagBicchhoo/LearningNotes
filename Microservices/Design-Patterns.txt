@@ -23,7 +23,7 @@ The orchestrator handles the commands and events with the help of axon framework
 Circuitbreaker design pattern : 
 It is a part of fault tolerance.
 If one of the services is performing slow or poor then it is not a good choice to
-continuously burden it with more requests, and wait for that service to recover.
+continuously burden it with more requests, and better to wait for that service to recover.
 This is how microservices become fault taulerent.
 This can be achieved with the help of hystrix(Spring-cloud-starter-netflix-hystrix). Annotation @Enablecircuitbreaker 
 annotation in application class.
@@ -31,7 +31,11 @@ Add @HystrixCommand to methods that need circuit breaker. Lets say there is a me
 can become slow.
 Configure Hystrix behaviour. We can also leave everything default to make hystrix break circuit by its own parameters.
 Parameters while configuring hystrix : 
-1) HystrixCommand("fallBackMethod"="getFallBackcatalog")
+1) HystrixCommand("fallBackMethod"="getFallBackcatalog") - getFallBackCatalog method will be called if timeout happens. 
+
+Mathods annotated with HystrixCommand need to be called by object instance else Proxy class created on top of API call
+by Hystrix will not call this and the fallback method.
+
 2) commandProperties = @HystrixProperty (name = "timeout" -> After what time a timeout should happen
 , requestVolumeThresold -> How many requests that it needs to see , errorThreasoldPercentage : percentage number of requests failed to break 
 the circuit out of seen requests , sleepWindowInMilliSecs : how long circuit breaker gonna last before it picks up again)
@@ -40,7 +44,7 @@ There are following scenarios  :
 
 1) Service go down : Solution : Create multiple instances of services. 
 2) Microservice instance is slow : 
-Problem with threads :  Lets say a server has some concurrency. i.e. it has preconfigured value for
+Problem with threads :  Lets say a server has some reserved concurrency. i.e. it has preconfigured value for
 maximum number of threads it can operate on at a time. Let the value be 12.
 There are 3 microservices. One of them is slow. Now request come to slower mS. First thread calls that slower mS.
 Consequently lets say few more requests come for that slower mS. Now all threads are consumed to serve slower mS.
@@ -136,4 +140,25 @@ Flexibility to choose database for views. We can choose other databases for view
 Easy to scale.
 ---------------------------------------------------------------------------------------------------------------------------------------
 Event driven architecture
+=======================================================================================================================================
+
+BulkHead Design pattern for fault tolerance : 
+
+Problem with threads :  Lets say a server has some reserved concurrency. i.e. it has preconfigured value for
+maximum number of threads it can operate on at a time. Let the value be 12.
+There are 3 microservices. One of them is slow. Now request come to slower mS. First thread calls that slower mS.
+Consequently lets say few more requests come for that slower mS. Now all threads are consumed to serve slower mS.
+And as all the threads are consumed even not affected microservices are also affected due to this.
+
+In BulkHead design pattern there will be separate reserved concurrency(number of threads) for each microservice.
+
+Implementation : 
+
+In HystrixProperties, provide a property called as threadPoolProperties. The minute we define this property, it will create a separate threadpool
+
+@ThreadPoolProperties(
+	HystrixProperty(name="coreSize", value=20)
+	HystrixProperty(name="maxQueueSize" value=10) [How many requests waiting.]
+)
+
 =======================================================================================================================================

@@ -147,7 +147,7 @@ How to use embeddable objects or fields :
 public class Alien {
 
 @Id
-private in aid;
+private int aid;
 
 private String aname;
 private string color;

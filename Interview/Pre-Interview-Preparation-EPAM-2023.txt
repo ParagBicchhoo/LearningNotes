@@ -82,12 +82,6 @@ Client : LIHK DEVS       1st  round questions
 
 23) Asked more queries on grouping in SQL and also asked to write the same grouping query in java-8 streams
 
- 
-
-like 1
-
-[11:48] Saimanideep Kuna
-
 EBSCO - IAM
 
 Brief introduction about the tech stack and latest project
@@ -106,7 +100,7 @@ What are the annotations? How @RequestMapping is used before?
 Started core java questions.
 Questions asked on diamond problems. With classes and interfaces with default methods
 Questions asked on garbage collection by giving the code snippet.
-Based on code snippet, asked about the static methods in the context of overloading and over riding
+Based on code snippet, asked about the static methods in the context of overloading and overriding
 Collections – Arrays vs Arraylist, when and what to use by giving scenarios.
 Tricky qstns on Hashcode and Equals. What if Equals always return true and hashcode is implemented properly. How does it effect usage of map and set datastructures
 Executor service – what are the types. Which one have you used in project?
@@ -114,7 +108,7 @@ What is event driven architecture?
 How do you handle distributed transactions in microservices?
 Basics on docker, containerization etc in AWS context.
 What services have you used in AWS?
-Basic questions on AWS Fargeate, AWS ECS, AWS s3, EC2, Elastic Bean stalk
+Basic questions on AWS Fargeate, AWS ECS, AWS s3, EC2, Elastic Bean stalk.
 Cloud related questions Infra As A Code(Cloud formation) services in AWS.
 What is difference between SAGA and CQRS? When to use those?
 Started Java 8: What map method accepts, filter?

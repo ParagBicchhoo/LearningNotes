@@ -28,8 +28,15 @@ OPTIONS :
 return data describing what other methods and operations the server supports.
 
 7) Architectural constrains for REST?
+
 1) Client server architecture
 2) Statelessness
+
+Each request from the client to server must contain all the information needed to process that request and that information 
+cannot be stored at the server side for any future reference. This restriction is called Statelessness.
+The client is responsible for storing and handling the session-related information on its own side. 
+If any information is required from the previous request, the client will share it in the current request.
+
 3) Uniform interface : There should be a uniform way of interacting with given server irrespective of the device and type
 of application
 4) Layered system : Application architecture need to be in multiple layers.

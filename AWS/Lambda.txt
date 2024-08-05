@@ -1,5 +1,5 @@
 Lambda is also called as serverless computing. It let you run code without managing or provisioning servers.
-Lambda can run your code without even a need to server.
+Lambda can run your code without even a need of server.
 In case of servers like EC2 even if your application is idle you still need to pay for server because
 it is still running.
 Lambda provides a flexibility where in you only need to pay when your code will run on lambda.

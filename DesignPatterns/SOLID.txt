@@ -14,3 +14,51 @@ Does it have one responsibility
 
 # Classes that adhere to the SRP, tend to have high cohesion.
 Consider a class 
+
+Project example : 
+
+We had to validate events in our code where in we had different RevenueSourceTypes. We could validate these all RevenueSourceTypes 
+ideally in a single class but we created different validators for different revenue source types.
+
+2) Open for extension closed for modifications.
+
+Project example :
+
+We had a new requirement to onboard Revport as a separate RevenueSourceType in our project.
+We did the modifications to minimal number of classes. 
+All the classes like :
+EventValidator, StateMachineConfig, Persistence Layer and almost everything was designed in an abstract manner so that whenever
+there are any new enhancements, everything could be onboarded in a super easy manner without breaking the existing functionality and offcourse
+reusing the common functionalities as well. 
+
+3) The Liskov's substitution principle
+
+The principle defines that objects of a superclass shall be replaceable with objects of its subclasses without breaking the application. 
+That requires the objects of your subclasses to behave in the same way as the objects of your superclass.
+
+Because Square is a type of Rectangle , it should be able to replace Rectangle objects without causing any issues
+
+Project example :
+
+
+4) Interface segregation Principle.
+Client should not be forced to implement the interfaces those are irrelevant to them.
+CRUDRepository and PagingAndSOrtingRepository are great examples of interface seggregation principle.
+
+Project example :
+I have worked on an ETL project where in there were multiple ETLs our application had.
+
+DimensionETL -> populate dimension tables with values
+FactETL -> read the dimension data, convert them to events and populate fact tables (3 functionalities)
+HealthCheckETL -> repair the older data if there are some config changes.
+
+Idelaly we could create a ParentETL which would hold all these functionalities and implementation classes could
+implement that particular interface but as the some methods for some interfaces would become obsolete, we seggregated
+these into separate interfaces.
+
+5) Dependency Inversion Principle.
+Dependency Inversion is the strategy of depending upon interfaces or abstract functions and classes rather than upon concrete functions and classes.
+
+Project example :
+Whenever we are working on a project, we are always using the interfaces to inject the dependencies to have a loose coupling between them.
+And then we can use @Qualifier annotation to differentiate among different implementation based on names. 

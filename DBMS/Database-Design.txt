@@ -1,0 +1,43 @@
+Udemy : Fundamentals of Database Engineering by Hussein Nasse : 
+
+How tables and indexes are stored on disk?
+
+Most database don't work with the fields that are provided by 
+They maintain their own row_id.
+in mysql -innodb it is same as the primary key.
+
+Page : 
+
+Dependning on the storage model, the rows are stored in logical pages.
+The database doesn't read a single row , it reads a page or more in a single IO and we get lot of rows in that IO.
+Each page has a size. 8KB im postgres and 16KB in a mysql.
+Assume each page holds 3 rows, then with 1001 rows you will have 1001/3 = 333 pages.
+Page is a memory location on disk of fixed size (Bunch of bytes)
+
+IO : 
+
+IO operaion (read/write) is a read request to the disk.
+We try to minimize this as much as possible.
+And IO can fetch one page or more depending on the disk partitions and other factors.
+The database filter out what you don't want and throw it away.
+An IO cannot read a single row. Its page with many rows in it you get them for free. 
+You want to minimize the number of IOs as they are expensive.
+Some IOs in OS goes to the OS cache and not disk.
+
+Heap : 
+
+Heap is the data structure where the table is stored with all it's pages one after another.
+This is where the actual data is stored including everything.
+Traversing the heap is expensive and we need to read so many data to find what we need.
+This is why we need indexes that help us tell exactly what part of the heap we need to read. What page of 
+the heap we need to pull.
+
+Index : 
+
+An index is another data structure separate from heap that has pointers to the heap.
+It has part of the data and used to quickly search for something.
+You can index on one column or more.
+The index is also stored as page and cost IO to fetch entries from the index.
+The smaller the index, the more it can fit the memory the faster the search.
+Popular data structure for index is b-trees.
+

@@ -59,14 +59,105 @@ Write capacity unit :
 1 W.C.U = 1 KB
 
 Dynamo DB are more used in an application where read is more frequent operation.
-Sacn search the table based on a specific field. Where as query search the table based on primary key.
+Scan search the table based on a specific field. Where as query search the table based on primary key.
 For global tables, replicas will be created in different regions.Streams need to be enabled to use global tables.
 
+DynamoDB supports both document and key-value structures.
 
+# What are the key features of DynamoDB?
+Highly Scalable without any intervention from the user.
+It has a latency of microseconds.
+Serverless and enterprise-ready.
+Encryption at Rest.
+On-demand backup and restore.
+Point-in-time recovery.
 
+Advantages : 
 
+We can store any amount of data with the unlimited storage provided by the DynamoDB service.
+The data we store replicates over many availability regions. It allows to easily cope with global-scale applications 
+and make sensitive information highly available.
+It is highly cost-effective, and the users have to pay only for what they use.
+Easy administration and the user doesn't have to worry about software patching, setup, and configuration because AWS fully manages DynamoDB.
+DynamoDB has an advanced system for reporting and highly secured user authentication mechanisms to provide maximum security over sensitive data.
 
+Disadvantages : 
 
+No triggers and lack server-side scripts.
+No table joins possible.
+Data querying is highly limited.
+The cost can be unpredictable with spikes in usage.
 
+The DynamoDBMapper class is an entry point that allows access to DynamoDB endpoints, enabling users to handle the database. 
+Users can perform CRUD operations, run queries, and scan against tables. 
+And this class is only available for Java.
 
+DynamoDB supports two types of primary keys:
 
+Partition key: A simple primary key, composed of one attribute known as the partition key. 
+Attributes in DynamoDB are similar in many ways to fields or columns in other database systems.
+
+Partition key and sort key: Referred to as a composite primary key, this type of key is composed of two attributes. 
+The first attribute is the partition key, and the second attribute is the sort key. All data under a partition key is sorted by the sort key value. 
+The following is an example.
+
+DynamoDB stores data as groups of attributes, known as items. Items are similar to rows or records in other database systems. 
+DynamoDB stores and retrieves each item based on the primary key value, which must be unique. 
+Items are distributed across 10-GB storage units, called partitions (physical storage internal to DynamoDB)
+
+5 ways to fetch data from DynamoDB
+GetItem
+Query
+Scan
+BatchGet
+TransactRead
+
+Encryption at Rest is a security mechanism DynamoDB uses to protect sensitive data. 
+This database service uses the AWS KMS (AWS Key Management Service) keys to encrypt all the data at rest. 
+There are three types of AWS KMS keys to select from:
+
+AWS owned key
+AWS managed key
+Customer managed key
+
+DAX (Amazon DynamoDB Accelerator) is a type of in-memory cache. 
+Even when it is millions of requests per second, DynamoDB Accelerator provides a performance up to 10 times the original rate. 
+In addition, it is fully managed and is highly available.
+
+DynamoDB Global Tables allow users to replicate their data over different regions of choice. 
+That makes the data highly available and quickly delivered across global applications of enormous size. 
+Every data write made to a global table is replicated over all the regions having replicas of the same table.
+
+BatchGetItem allows retrieving attributes of one or more items from one or more tables using the primary key. 
+There is a limitation of 16MB up to which this operation can return items.
+
+An index is a data structure that enhances the data retrieval speed from the database. 
+However, it costs some storage space and additional writes to the database to maintain the index data structure.
+
+DynamoDB has two types of indexes:
+
+Global secondary index
+
+GSI Example
+Consider this table that contains Uuid as primary key, UserId and Data attributes.
+
+| Uuid(Partition Key) | UserId | Data |
+
+With this base table key schema, it can answer queries to retrieve data for a uuid. 
+However, to get all data for a user id, it would have to do a scan query and get all the items that have matching user id.
+
+To be able to get all data for a user efficiently, you can use a global secondary index that has UserId as its primary key (partition key). 
+Using this index, you can do a query to retrieve all data for a user.
+
+Local secondary index
+
+Local Secondary Index enables different sorting order of the same list of items as LSI uses the same partition key as base table but different sort key. 
+Consider this table that uses composite keys: UserId as partition key, ArticleName as sort key and other attributes: DateCreated and Data.
+
+|UserId(Partition Key) | ArticleName(Sort Key) | DateCreated | Data| 
+With this base table key schema, it can answer queries to retrieve all the article sorted by names for a specific user(query by UserId). 
+However, to retrieve all the articles associated with a user sorted by date created, you would have to retrieve all the articles first and sort them.
+
+With a local secondary index that has UserId as its partition key and DateCreated as its sort key, you can retrieve a user’s articles sorted by date created.
+
+|UserId(Partition Key) | DateCreated(Sort Key) | ArticleName | Data|

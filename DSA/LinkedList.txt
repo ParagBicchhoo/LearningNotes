@@ -7,7 +7,7 @@ Now in this case if you want to remove the middle node.
 
 Then current.next = current.next.next will remove the middle node.
 
-Example : Given the head of a linked list and an integer val, 
+Example 1: Given the head of a linked list and an integer val, 
 remove all the nodes of the linked list that has Node.val == val, and return the new head.
 Input: head = [1,2,6,3,4,5,6], val = 6
 Output: [1,2,3,4,5]
@@ -32,6 +32,44 @@ class Solution {
         }
 
         return dummy.next;
+    }
+}
+
+Important : 
+
+If you want to print all the elements in LL, do not travers with head unless it becomes null as
+next time you will traverse with head it will already be null.
+
+Do not change head unless you are changing the struture of a linked list like adding an element
+or removing an element.
+
+So instead take a temporary variable and assign head to it and move it until end.
+
+Example 2 : Swap alternate nodes in LinkedList : 
+
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        
+        if(head==null || head.next==null){
+            return head;
+        }
+
+       return swap(head, head, head.next);
+    }
+
+    public ListNode swap(ListNode head, ListNode l1, ListNode l2){
+
+       if(l1!=null && l2==null) return l1;
+       if(l1==null || l2==null) return head;
+
+       l1.next = l2.next;
+       l2.next = l1;
+
+       head = l2;
+       if(l1.next ==null || l2.next == null) return head;
+       head.next.next= swap(head, l2.next.next, l1.next.next);
+
+       return head;
     }
 }
 

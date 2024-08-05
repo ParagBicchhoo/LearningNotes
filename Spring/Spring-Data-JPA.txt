@@ -36,6 +36,35 @@ spring.jpa.show-sql=true  --> Show sql queries on console in case of derived que
 spring.jpa.properties.hibernate.format_sql=true -- show them in good format
 
 ===========================================================================================================================================
+Simply, @Id: This annotation specifies the primary key of the entity.
+
+@GeneratedValue: This annotation is used to specify the primary key generation strategy to use. i.e Instructs database to generate a value for this field automatically. If the strategy is not specified by default AUTO will be used.
+
+GenerationType enum defines four strategies:
+
+Generation Type. TABLE,
+Generation Type. SEQUENCE,
+Generation Type. IDENTITY
+Generation Type. AUTO
+GenerationType.SEQUENCE
+
+With this strategy, underlying persistence provider must use a database sequence to get the next unique primary key for the entities.
+
+GenerationType.TABLE
+
+With this strategy, the underlying persistence provider must use a database table to generate/keep the next unique primary key for the entities.
+
+GenerationType.IDENTITY
+
+This GenerationType indicates that the persistence provider must assign primary keys for the entity using a database identity column. IDENTITY column is typically used in SQL Server. This special type column is populated internally by the table itself without using a separate sequence. If underlying database doesn't support IDENTITY column or some similar variant then the persistence provider can choose an alternative appropriate strategy. In this examples we are using H2 database which doesn't support IDENTITY column.
+
+GenerationType.AUTO
+
+This GenerationType indicates that the persistence provider should automatically pick an appropriate strategy for the particular database. This is the default GenerationType, i.e. if we just use @GeneratedValue annotation then this value of GenerationType will be used.
+
+Reference:- https://www.logicbig.com/tutorials/java-ee-tutorial/jpa/jpa-primary-key.html
+
+===========================================================================================================================================
 
 CrudRepository<PojoClass, primaryKeyType>
 CrudRepository<Contact, Integer>
@@ -49,7 +78,7 @@ Person findByEmailAndLastName(String email, String lastName);
 Introducer : tell jpa that what to do : (find, read, query, get are same), count, Distinct
 Criteria : tell jpa criteria : And , OR.
 
-@Query annotation allow to write queries in JPQL where className and fieldNames are used for table names and field names of table.
+@Query annotation allow to write queries in JPQL where className and fieldNames are used for table names and column names of table.
 In @Query if nativeQuery true is passed then query can be written in native sql language.
 
 @NamedQuery is used in case of big application where 1000's of queries are scattered across the application. So all queries are placed 
@@ -59,6 +88,18 @@ in one place
 @NamedNativeQuery - define native query.
 
 We write NamedQuery inside entity class.
+
+@Entity
+@Table
+@NamedQuery(name = "Employee.findByEmail",
+query = "select e from Employee e where e.email = ?1")
+public class Employee {
+   @Id
+   @Column
+   private int id;
+}
+
+Then repository will use this NamedQuery to fetch the employee records.
 
 ===========================================================================================================================================
 
@@ -95,6 +136,7 @@ Page<Person> findByName(String name,Pageable pageable);
 ===========================================================================================================================================
 
 Transaction Propagation : 
+
 Scenarios are considered when @Transactional method is called from another @Transactional or non Transactional method.
 If calling method is transactional and called method is also transactional then will it create a new transaction or use existing one.
 This behavior is different for different propagation levels.
@@ -136,6 +178,8 @@ If called from another non transaction method then again it will throw an except
 ===========================================================================================================================================
 
 Isolations : 
+
+When two parallel transactions are going on, how the bahavior of commits affects another transactions.
 
 Read Uncommited : 
 
